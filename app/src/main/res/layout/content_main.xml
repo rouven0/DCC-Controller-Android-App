@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <FrameLayout
+        android:id="@+id/simpleFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/tabLayout_margin">
+
+        <!--Hauptmenü-->
+        <Button
+            android:id="@+id/mainMenuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin"
+            android:text="@string/menu_main"
+            android:textSize="16sp"/>
+
+        <!--Menü für Presets-->
+        <Button
+            android:id="@+id/presetsMenuButton"
+            android:layout_marginStart="@dimen/menuButtonMargin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin"
+            android:text="@string/menu_presets"
+            android:textSize="14sp"/>
+
+        <!--Weichen-->
+        <Button
+            android:id="@+id/switchMenuButton"
+            android:layout_marginStart="@dimen/menuButtonMargin_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin"
+            android:text="@string/menu_switch"
+            android:textSize="12sp"/>
+
+        <Button
+            android:id="@+id/switchSetStandardActionbutton"
+            android:layout_marginStart="@dimen/menuButtonMargin_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin"
+            android:text="@string/action_setstandard_sw"
+            android:textSize="10sp"
+            tools:ignore="SmallSp" />
+
+        <Button
+            android:id="@+id/switchSetToCenterActionButton"
+            android:layout_marginStart="@dimen/menuButtonMargin_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin"
+            android:text="@string/action_settocenter"
+            android:textSize="10sp"
+            tools:ignore="SmallSp" />
+
+        <Button
+            android:id="@+id/switchCalibrateActionButton"
+            android:layout_marginStart="@dimen/menuButtonMargin_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin"
+            android:text="@string/action_calibrate"
+            android:textSize="8sp"
+            tools:ignore="SmallSp" />
+
+        <!--Gleisabschnitte-->
+        <Button
+            android:id="@+id/sectionMenuButton"
+            android:layout_marginStart="@dimen/menuButtonMargin_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin"
+            android:text="@string/menu_sections"
+            android:textSize="12sp"/>
+
+        <Button
+            android:id="@+id/sectionSetStandardActionbutton"
+            android:layout_marginStart="@dimen/menuButtonMargin_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin"
+            android:text="@string/action_setstandard_se"
+            android:textSize="10sp"
+            tools:ignore="SmallSp" />
+
+        <Button
+            android:id="@+id/sectionsAllOffActionbutton"
+            android:layout_marginStart="@dimen/menuButtonMargin_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin"
+            android:text="@string/action_allsectionsoff"
+            android:textSize="10sp"
+            tools:ignore="SmallSp" />
+
+        <!--Neu verbinden-->
+        <Button
+            android:id="@+id/reconnectActionButton"
+            android:layout_marginStart="@dimen/menuButtonMargin_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin"
+            android:text="@string/action_reconnect"
+            android:textSize="12sp"/>
+
+        <!--Reset-->
+        <Button
+            android:id="@+id/resetActionButton"
+            android:layout_marginStart="@dimen/menuButtonMargin_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin"
+            android:text="@string/action_reset"
+            android:textSize="14sp"/>
+
+        <!--Licht-->
+        <Button
+            android:id="@+id/lightActionButton"
+            android:layout_marginStart="@dimen/menuButtonMargin_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin"
+            android:text="@string/action_light"
+            android:textSize="14sp"/>
+
+    </FrameLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        tools:ignore="MissingConstraints">
+
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <TextView
+        android:id="@+id/localDevIdTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="top|end"
+        android:layout_marginBottom="3dp"
+        android:layout_marginStart="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/localIpTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="top|end"
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/runningDevIdTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="top|end"
+        android:layout_marginBottom="3dp"
+        android:layout_marginEnd="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/boardIpTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="top|end"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/portTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="top|end"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
