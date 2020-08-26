@@ -111,7 +111,7 @@ public class FullscreenActivity extends AppCompatActivity {
         });
     }
 
-    private void createMenuButtons(final int[] idArray) { //TODO Funtionen einbauen
+    private void createMenuButtons(final int[] idArray) {
         for (int i = 0; i < menuButtons.length; i++) {
             menuButtons[i] = findViewById(idArray[i]);
             setMenuButtonSize(menuButtons[i], getScreenRatio());
