@@ -7,7 +7,7 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/simpleFrameLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -17,58 +17,59 @@
         <!--Hauptmenü-->
         <Button
             android:id="@+id/mainMenuButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/button_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:text="@string/menu_main"
             android:textSize="16sp" />
 
         <!--Menü für Presets-->
         <Button
             android:id="@+id/presetsMenuButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/menuButtonMargin"
-            android:layout_marginTop="@dimen/button_margin"
+            app:layout_constraintStart_toEndOf="@id/mainMenuButton"
+            app:layout_constraintTop_toTopOf="parent"
             android:text="@string/menu_presets"
             android:textSize="14sp" />
 
         <!--Weichen-->
         <Button
             android:id="@+id/switchMenuButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/menuButtonMargin_2"
-            android:layout_marginTop="@dimen/button_margin"
+            app:layout_constraintStart_toEndOf="@id/presetsMenuButton"
+            app:layout_constraintTop_toTopOf="parent"
             android:text="@string/menu_switch"
             android:textSize="12sp" />
 
         <Button
             android:id="@+id/switchSetStandardActionbutton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/menuButtonMargin_3"
-            android:layout_marginTop="@dimen/button_margin"
+            app:layout_constraintStart_toEndOf="@id/switchMenuButton"
+            app:layout_constraintTop_toTopOf="parent"
             android:text="@string/action_setstandard_sw"
             android:textSize="10sp"
             tools:ignore="SmallSp" />
 
         <Button
             android:id="@+id/switchSetToCenterActionButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/menuButtonMargin_4"
-            android:layout_marginTop="@dimen/button_margin"
+            app:layout_constraintStart_toEndOf="@id/switchSetStandardActionbutton"
+            app:layout_constraintTop_toTopOf="parent"
             android:text="@string/action_settocenter"
             android:textSize="10sp"
             tools:ignore="SmallSp" />
 
         <Button
             android:id="@+id/switchCalibrateActionButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/menuButtonMargin_5"
-            android:layout_marginTop="@dimen/button_margin"
+            app:layout_constraintStart_toEndOf="@id/switchSetToCenterActionButton"
+            app:layout_constraintTop_toTopOf="parent"
             android:text="@string/action_calibrate"
             android:textSize="8sp"
             tools:ignore="SmallSp" />
@@ -76,29 +77,29 @@
         <!--Gleisabschnitte-->
         <Button
             android:id="@+id/sectionMenuButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/menuButtonMargin_3"
-            android:layout_marginTop="@dimen/button_margin"
+            app:layout_constraintStart_toEndOf="@id/switchMenuButton"
+            app:layout_constraintTop_toTopOf="parent"
             android:text="@string/menu_sections"
             android:textSize="12sp" />
 
         <Button
             android:id="@+id/sectionSetStandardActionbutton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/menuButtonMargin_4"
-            android:layout_marginTop="@dimen/button_margin"
+            app:layout_constraintStart_toEndOf="@id/sectionMenuButton"
+            app:layout_constraintTop_toTopOf="parent"
             android:text="@string/action_setstandard_se"
             android:textSize="10sp"
             tools:ignore="SmallSp" />
 
         <Button
             android:id="@+id/sectionsAllOffActionbutton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/menuButtonMargin_5"
-            android:layout_marginTop="@dimen/button_margin"
+            app:layout_constraintStart_toEndOf="@id/sectionSetStandardActionbutton"
+            app:layout_constraintTop_toTopOf="parent"
             android:text="@string/action_allsectionsoff"
             android:textSize="10sp"
             tools:ignore="SmallSp" />
@@ -106,24 +107,24 @@
         <!--Neu verbinden-->
         <Button
             android:id="@+id/reconnectActionButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/menuButtonMargin_2"
-            android:layout_marginTop="@dimen/button_margin"
+            app:layout_constraintStart_toEndOf="@id/presetsMenuButton"
+            app:layout_constraintTop_toTopOf="parent"
             android:text="@string/action_reconnect"
             android:textSize="12sp" />
 
         <!--Licht-->
         <Button
             android:id="@+id/lightActionButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/menuButtonMargin_3"
-            android:layout_marginTop="@dimen/button_margin"
+            app:layout_constraintStart_toEndOf="@id/reconnectActionButton"
+            app:layout_constraintTop_toTopOf="parent"
             android:text="@string/action_light"
             android:textSize="14sp" />
 
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/localIpTextView"
