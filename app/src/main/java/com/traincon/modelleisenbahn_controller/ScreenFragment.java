@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ToggleButton;
 
+import java.net.SocketException;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -162,7 +163,7 @@ public class ScreenFragment extends Fragment {
     }
 
     //Alle Schalter werden entsprechend der Stellungen auf dem Brett angezeigt
-    public void update() {
+    public void update() throws InterruptedException, SocketException {
         boardManager.requestSwitchStates();
         for (int i = 0; i < boardManager.switchStates.length; i++) {
             if (boardManager.switchStates[i] == 0) {

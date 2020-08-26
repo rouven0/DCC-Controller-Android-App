@@ -7,6 +7,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import static android.content.ContentValues.TAG;
@@ -41,8 +44,8 @@ public class BoardManager {
                     mainSocket.connect(new InetSocketAddress(host, port));
                     socketInputStream = new DataInputStream(mainSocket.getInputStream());
                     socketOutputStream = new DataOutputStream(mainSocket.getOutputStream());
-                    Log.d(TAG, receive(18));
-                } catch (IOException e) {
+                    receive(18);
+                } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -52,16 +55,16 @@ public class BoardManager {
     }
 
     //Weiche auf dem Brett stellen
-    public void setSwitch(int targetSwitch, int targetState){
+    public void setSwitch(int targetSwitch, int targetState) {
         switchStates[targetSwitch]=targetState;
-        Log.d(TAG, "te"); //Todo durch send() ersetzen
+        send(":S0166N"+(99 - targetState)+"0011230"+Integer.toHexString(targetSwitch).toUpperCase()+";");
         Log.d(TAG, "setSwitch: Weiche: "+ (targetSwitch + 1) +" auf Status: "+ targetState);
     }
 
     //Gleisaschnitt auf dem Brett umschalten
     public void setSection(int targetSection, int targetState){
         sectionStates[targetSection]=targetState;
-        send("test");
+        send(":S0166N"+(99 - targetState)+"0011240"+Integer.toHexString(targetSection).toUpperCase()+";");
         Log.d(TAG, "setSection: Gleisabschnitt: "+ (targetSection + 1) +" auf Status: "+ targetState);
     }
 
@@ -81,9 +84,16 @@ public class BoardManager {
 
     //Weichenpositionen abfragen
     //Wird in ScreenFragment.update aufgerufen
-    protected void requestSwitchStates(){
-        send(":Y"); //Todo ersetzen
-        receive(18);
+    protected void requestSwitchStates() throws InterruptedException, SocketException {
+        send(":S0166N71006503;");
+        String receivedSwitchStates_0 = receive(18);
+        send(":S0166N71006504;");
+        String receivedSwitchStates_1 = receive(18);
+
+        //Datenpuffer
+        mainSocket.setSoTimeout(300);
+        receive(4096);
+        mainSocket.setSoTimeout(60000);
     }
 
     //String an das Brett senden
@@ -92,7 +102,8 @@ public class BoardManager {
             @Override
             public void run() {
                 try {
-                    socketOutputStream.writeChars(message);
+                    byte[] bMessage = message.getBytes(StandardCharsets.UTF_8);
+                    socketOutputStream.write(bMessage);
                 } catch (IOException | NullPointerException e) {
                     e.printStackTrace();
                 }
@@ -103,7 +114,7 @@ public class BoardManager {
     }
 
     //String vom Brett empfangen
-    private String receive(int lenght){
+    private String receive(int lenght) throws InterruptedException {
         final String[] message = new String[]{""};
         final byte[] rawMessage = new byte[lenght];
 
@@ -116,12 +127,13 @@ public class BoardManager {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    message[0] = message[0]+Byte.decode((Byte.toString(rawMessage[i])));
+                    message[0] += (char)rawMessage[i];
                 }
             }
         });
         thread.start();
-        Log.d(TAG, "m: "+message[0]);
+        thread.join();
+        Log.d(TAG, "received "+message[0]);
         return message[0];
     }
 }

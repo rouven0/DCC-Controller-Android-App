@@ -189,6 +189,7 @@ public class FullscreenActivity extends AppCompatActivity {
         });
 
         //Weichen 3 Runden
+        //Todo funktion einfügen
         menuButtons[3].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,6 +203,7 @@ public class FullscreenActivity extends AppCompatActivity {
         });
 
         //Weichen Alle auf Mitte
+        //Todo funktion einfügen
         menuButtons[4].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,6 +217,7 @@ public class FullscreenActivity extends AppCompatActivity {
         });
 
         //Weichen Nachstellen
+        //Todo funktion einfügen
         menuButtons[5].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -249,6 +252,7 @@ public class FullscreenActivity extends AppCompatActivity {
         });
 
         // Gleisabschnitte 3 Runden
+        //Todo funktion einfügen
         menuButtons[7].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -262,6 +266,7 @@ public class FullscreenActivity extends AppCompatActivity {
         });
 
         //Gleisabschnitte Alle ausschalten
+        //Todo funktion einfügen
         menuButtons[8].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -282,12 +287,13 @@ public class FullscreenActivity extends AppCompatActivity {
                 for (int i = 1; i < idArray.length; i++) {
                     menuButtons[i].setVisibility(View.INVISIBLE);
                 }
-
+                boardManager.connect();
                 isMenuOpen = false;
             }
         });
 
         //Reset
+        //Todo funktion einfügen
         menuButtons[10].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
