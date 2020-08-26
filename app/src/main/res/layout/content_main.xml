@@ -113,22 +113,12 @@
             android:text="@string/action_reconnect"
             android:textSize="12sp" />
 
-        <!--Reset-->
-        <Button
-            android:id="@+id/resetActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/menuButtonMargin_3"
-            android:layout_marginTop="@dimen/button_margin"
-            android:text="@string/action_reset"
-            android:textSize="14sp" />
-
         <!--Licht-->
         <Button
             android:id="@+id/lightActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/menuButtonMargin_4"
+            android:layout_marginStart="@dimen/menuButtonMargin_3"
             android:layout_marginTop="@dimen/button_margin"
             android:text="@string/action_light"
             android:textSize="14sp" />

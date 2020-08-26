@@ -22,7 +22,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.Objects;
 
 public class FullscreenActivity extends AppCompatActivity {
-    final public Button[] menuButtons = new Button[12];
+    final public Button[] menuButtons = new Button[11];
 
     private boolean isMenuOpen = false;
     private boolean isPresetMenuOpen = false;
@@ -51,11 +51,11 @@ public class FullscreenActivity extends AppCompatActivity {
         TextView boardIpTextView = findViewById(R.id.boardIpTextView);
         localDevIdTextView.setText("Gerätenummer: "+devId);
         localIpTextView.setText("Eigene Ip: "+ ipAddress);
-        runningDevIdTextView.setText("Aktives Gerät: "+"-"); //Todo Ersetzen
+        runningDevIdTextView.setText("Aktives Gerät: "+"-");
         boardIpTextView.setText("Ip der Platine: "+host);
 
         createTabLayout();
-        int[] menuButtonIdArray = new int[]{R.id.mainMenuButton, R.id.presetsMenuButton, R.id.switchMenuButton, R.id.switchSetStandardActionbutton, R.id.switchSetToCenterActionButton, R.id.switchCalibrateActionButton, R.id.sectionMenuButton, R.id.sectionSetStandardActionbutton, R.id.sectionsAllOffActionbutton, R.id.reconnectActionButton, R.id.resetActionButton, R.id.lightActionButton};
+        int[] menuButtonIdArray = new int[]{R.id.mainMenuButton, R.id.presetsMenuButton, R.id.switchMenuButton, R.id.switchSetStandardActionbutton, R.id.switchSetToCenterActionButton, R.id.switchCalibrateActionButton, R.id.sectionMenuButton, R.id.sectionSetStandardActionbutton, R.id.sectionsAllOffActionbutton, R.id.reconnectActionButton, R.id.lightActionButton};
         createMenuButtons(menuButtonIdArray);
 
         boardManager = new BoardManager(devId, host, port);
@@ -128,7 +128,6 @@ public class FullscreenActivity extends AppCompatActivity {
                     menuButtons[1].setVisibility(View.VISIBLE);
                     menuButtons[9].setVisibility(View.VISIBLE);
                     menuButtons[10].setVisibility(View.VISIBLE);
-                    menuButtons[11].setVisibility(View.VISIBLE);
                     isMenuOpen = true;
                 } else {
                     //Menu Schließen
@@ -151,7 +150,6 @@ public class FullscreenActivity extends AppCompatActivity {
                     menuButtons[6].setVisibility(View.VISIBLE);
                     menuButtons[9].setVisibility(View.INVISIBLE);
                     menuButtons[10].setVisibility(View.INVISIBLE);
-                    menuButtons[11].setVisibility(View.INVISIBLE);
                     isPresetMenuOpen = true;
                 } else {
                     menuButtons[0].setVisibility(View.VISIBLE);
@@ -159,7 +157,6 @@ public class FullscreenActivity extends AppCompatActivity {
                     menuButtons[6].setVisibility(View.INVISIBLE);
                     menuButtons[9].setVisibility(View.VISIBLE);
                     menuButtons[10].setVisibility(View.VISIBLE);
-                    menuButtons[11].setVisibility(View.VISIBLE);
                     isPresetMenuOpen = false;
                 }
             }
@@ -189,7 +186,6 @@ public class FullscreenActivity extends AppCompatActivity {
         });
 
         //Weichen 3 Runden
-        //Todo funktion einfügen
         menuButtons[3].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -198,12 +194,12 @@ public class FullscreenActivity extends AppCompatActivity {
                     menuButtons[i].setVisibility(View.INVISIBLE);
                 }
                 menuButtons[0].setVisibility(View.VISIBLE);
+                boardManager.switchPreset_3r();
                 isMenuOpen = false;
             }
         });
 
         //Weichen Alle auf Mitte
-        //Todo funktion einfügen
         menuButtons[4].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -212,12 +208,12 @@ public class FullscreenActivity extends AppCompatActivity {
                     menuButtons[i].setVisibility(View.INVISIBLE);
                 }
                 menuButtons[0].setVisibility(View.VISIBLE);
+                boardManager.switchSetToCenter();
                 isMenuOpen = false;
             }
         });
 
         //Weichen Nachstellen
-        //Todo funktion einfügen
         menuButtons[5].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -226,6 +222,7 @@ public class FullscreenActivity extends AppCompatActivity {
                     menuButtons[i].setVisibility(View.INVISIBLE);
                 }
                 menuButtons[0].setVisibility(View.VISIBLE);
+                boardManager.switchCalibrate();
                 isMenuOpen = false;
             }
         });
@@ -252,7 +249,6 @@ public class FullscreenActivity extends AppCompatActivity {
         });
 
         // Gleisabschnitte 3 Runden
-        //Todo funktion einfügen
         menuButtons[7].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -261,12 +257,12 @@ public class FullscreenActivity extends AppCompatActivity {
                     menuButtons[i].setVisibility(View.INVISIBLE);
                 }
                 menuButtons[0].setVisibility(View.VISIBLE);
+                boardManager.sectionPreset_3r();
                 isMenuOpen = false;
             }
         });
 
         //Gleisabschnitte Alle ausschalten
-        //Todo funktion einfügen
         menuButtons[8].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -275,6 +271,7 @@ public class FullscreenActivity extends AppCompatActivity {
                     menuButtons[i].setVisibility(View.INVISIBLE);
                 }
                 menuButtons[0].setVisibility(View.VISIBLE);
+                boardManager.sectionsAllOff();
                 isMenuOpen = false;
             }
         });
@@ -292,22 +289,8 @@ public class FullscreenActivity extends AppCompatActivity {
             }
         });
 
-        //Reset
-        //Todo funktion einfügen
-        menuButtons[10].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Menu Schließen
-                for (int i = 1; i < idArray.length; i++) {
-                    menuButtons[i].setVisibility(View.INVISIBLE);
-                }
-
-                isMenuOpen = false;
-            }
-        });
-
         //Licht
-        menuButtons[11].setOnClickListener(new View.OnClickListener() {
+        menuButtons[10].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Menu Schließen

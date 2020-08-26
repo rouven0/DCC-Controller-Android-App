@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
@@ -94,6 +93,68 @@ public class BoardManager {
         mainSocket.setSoTimeout(300);
         receive(4096);
         mainSocket.setSoTimeout(60000);
+    }
+
+    //Funktionen aus dem Menü
+    //Weichen 3 Runden
+    protected void switchPreset_3r(){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(int i=0; i<switchStates.length; i++){
+                    if(i==0 || (2<i && i<10)){
+                        setSwitch(i, 1);
+                    }
+                    else{
+                        setSwitch(i, 0);
+                    }
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        thread.start();
+    }
+
+    //Weichen auf mitte
+    protected void switchSetToCenter(){
+        send(":S0166N9900112310;");
+    }
+
+    //Weichen nachjustieren
+    protected void switchCalibrate(){
+        send(":S0166N9900112311;");
+    }
+
+    //Gleise 3 runden
+    protected void sectionPreset_3r(){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(int i=0; i<sectionStates.length; i++){
+                    if((1<i && i<4) || (5<i && i<8) || (9<i && i<12)){
+                        setSection(i, 1);
+                    }
+                    else{
+                        setSection(i, 0);
+                    }
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        thread.start();
+    }
+
+    //Alle Gleise ausschalten
+    protected void sectionsAllOff(){
+        send(":S0166N9900112410;");
     }
 
     //String an das Brett senden

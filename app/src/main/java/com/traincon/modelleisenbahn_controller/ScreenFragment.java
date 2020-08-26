@@ -1,9 +1,4 @@
 package com.traincon.modelleisenbahn_controller;
-//------------
-//Fertig, wenn möglich nicht mehr ändern
-//
-//
-//-----------
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -47,7 +42,7 @@ public class ScreenFragment extends Fragment {
         FrameLayout frameLayout = rootView.findViewById(R.id.frameLayout_imageView);
         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) frameLayout.getLayoutParams();
         boolean switchIsBackgroundcolor = false;
-        int[] switchRotationArray = new int[]{270, 255, 255, 270, 240, 270, 90, 75, 255, 270, 255, 255, 45, 105, 90, 90};
+        int[] switchRotationArray = new int[]{90, 255, 255, 270, 240, 270, 90, 75, 255, 270, 255, 255, 45, 105, 90, 90};
         float[][] switchPositionArray = new float[][]{
                 {740, 389},
                 {350, 520},
