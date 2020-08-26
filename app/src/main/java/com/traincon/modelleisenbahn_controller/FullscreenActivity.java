@@ -1,11 +1,11 @@
 package com.traincon.modelleisenbahn_controller;
 
 import android.annotation.SuppressLint;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -28,7 +28,7 @@ public class FullscreenActivity extends AppCompatActivity {
     private boolean isPresetMenuOpen = false;
     private boolean isSwitchMenuOpen = false;
     private boolean isSectionMenuOpen = false;
-    protected BoardManager boardManager;
+    private BoardManager boardManager;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -49,21 +49,21 @@ public class FullscreenActivity extends AppCompatActivity {
         TextView localIpTextView = findViewById(R.id.localIpTextView);
         TextView runningDevIdTextView = findViewById(R.id.runningDevIdTextView);
         TextView boardIpTextView = findViewById(R.id.boardIpTextView);
-        TextView portTextView = findViewById(R.id.portTextView);
         localDevIdTextView.setText("Gerätenummer: "+devId);
         localIpTextView.setText("Eigene Ip: "+ ipAddress);
         runningDevIdTextView.setText("Aktives Gerät: "+"-"); //Todo Ersetzen
         boardIpTextView.setText("Ip der Platine: "+host);
-        portTextView.setText("Port: " + port);
 
         createTabLayout();
         int[] menuButtonIdArray = new int[]{R.id.mainMenuButton, R.id.presetsMenuButton, R.id.switchMenuButton, R.id.switchSetStandardActionbutton, R.id.switchSetToCenterActionButton, R.id.switchCalibrateActionButton, R.id.sectionMenuButton, R.id.sectionSetStandardActionbutton, R.id.sectionsAllOffActionbutton, R.id.reconnectActionButton, R.id.resetActionButton, R.id.lightActionButton};
         createMenuButtons(menuButtonIdArray);
 
-        boardManager = new BoardManager();
+        boardManager = new BoardManager(devId, host, port);
+        boardManager.connect();
     }
 
     private void createTabLayout() {
+        //Tablayout einrichten
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         TabLayout.Tab firsttab = tabLayout.newTab();
         firsttab.setText("Fahrtsteuerung");
@@ -72,13 +72,15 @@ public class FullscreenActivity extends AppCompatActivity {
         secondtab.setText("Interaktiver gleisplan");
         tabLayout.addTab(secondtab);
         final Fragment[] fragment = {null};
-        //An anfang das fragment_controller anzeigen
+
+        //Am Anfang das fragment_controller anzeigen
         fragment[0] = new ControllerFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.simpleFrameLayout, Objects.requireNonNull(fragment[0]));
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.commit();
+
         //Bei änderungen im Tablayout
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -306,7 +308,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 for (int i = 1; i < idArray.length; i++) {
                     menuButtons[i].setVisibility(View.INVISIBLE);
                 }
-
+                boardManager.setLight();
                 isMenuOpen = false;
             }
         });
@@ -335,6 +337,6 @@ public class FullscreenActivity extends AppCompatActivity {
                 height = height / i;
             }
         }
-        return width + ":" + height;
+        return width +":"+height;
     }
 }

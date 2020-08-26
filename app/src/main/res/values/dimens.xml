@@ -1,6 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="tabLayout_margin">47dp</dimen>
     <dimen name="section_width">60dp</dimen>
     <dimen name="section_height">25dp</dimen>
     <dimen name="button_margin">-3dp</dimen>
