@@ -88,7 +88,11 @@ public class BoardManager {
         send(":S0166N71006504;");
         String receivedSwitchStates_1 = receive(18);
         //Datenpuffer
-        receive(socketInputStream.available());
+        try {
+            receive(socketInputStream.available());
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
         //Werte übertragen
         receivedSwitchStates_0 = receivedSwitchStates_0.substring(15,17);
         receivedSwitchStates_1 = receivedSwitchStates_1.substring(15,17);
