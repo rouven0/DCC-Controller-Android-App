@@ -7,7 +7,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
@@ -33,7 +32,6 @@ public class BoardManager {
         Arrays.fill(sectionStates, 0);
     }
 
-     //Verbindng zur Platine auf dem Brett aufbauen und Willkommensnachricht auslesen
     public void connect() {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -44,13 +42,13 @@ public class BoardManager {
                     socketInputStream = new DataInputStream(mainSocket.getInputStream());
                     socketOutputStream = new DataOutputStream(mainSocket.getOutputStream());
                     receive(18);
+                    Log.d(TAG, devId);
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         });
         thread.start();
-       //Log.d(TAG, "connect: "+recieve());
     }
 
     //Weiche auf dem Brett stellen
@@ -83,17 +81,44 @@ public class BoardManager {
 
     //Weichenpositionen abfragen
     //Wird in ScreenFragment.update aufgerufen
-    protected void requestSwitchStates() throws InterruptedException, SocketException {
+    protected void requestSwitchStates() throws InterruptedException, IOException {
+        //Abfragen
         send(":S0166N71006503;");
         String receivedSwitchStates_0 = receive(18);
         send(":S0166N71006504;");
         String receivedSwitchStates_1 = receive(18);
-
         //Datenpuffer
-        mainSocket.setSoTimeout(300);
-        receive(4096);
-        mainSocket.setSoTimeout(60000);
+        receive(socketInputStream.available());
+        //Werte übertragen
+        receivedSwitchStates_0 = receivedSwitchStates_0.substring(15,17);
+        receivedSwitchStates_1 = receivedSwitchStates_1.substring(15,17);
+        StringBuilder receivedSwitchStatesBinary_0;
+        StringBuilder receivedSwitchStatesBinary_1;
+        try {
+            //Zur Binärzahl
+            receivedSwitchStatesBinary_0 = new StringBuilder(Integer.toBinaryString(Integer.parseInt(receivedSwitchStates_0, 16)));
+            receivedSwitchStatesBinary_1 = new StringBuilder(Integer.toBinaryString(Integer.parseInt(receivedSwitchStates_1, 16)));
+            while (receivedSwitchStatesBinary_0.length()<8){
+                receivedSwitchStatesBinary_0.insert(0, "0");
+            }
+            while (receivedSwitchStatesBinary_1.length()<8){
+                receivedSwitchStatesBinary_1.insert(0, "0");
+            }
+            //Invertieren
+            receivedSwitchStatesBinary_0.reverse();
+            receivedSwitchStatesBinary_1.reverse();
+            //Übertragen
+            for(int i=0; i<receivedSwitchStatesBinary_0.length(); i++){
+                switchStates[i]=Integer.parseInt(String.valueOf(receivedSwitchStatesBinary_0.charAt(i)));
+            }
+            for(int i=0; i<receivedSwitchStatesBinary_1.length(); i++){
+                switchStates[i+receivedSwitchStatesBinary_0.length()]=Integer.parseInt(String.valueOf(receivedSwitchStatesBinary_1.charAt(i)));
+            }
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+        }
     }
+
 
     //Funktionen aus dem Menü
     //Weichen 3 Runden
@@ -155,6 +180,7 @@ public class BoardManager {
     //Alle Gleise ausschalten
     protected void sectionsAllOff(){
         send(":S0166N9900112410;");
+        Arrays.fill(sectionStates, 0);
     }
 
     //String an das Brett senden
@@ -185,7 +211,7 @@ public class BoardManager {
                 for(int i=0; i<rawMessage.length; i++){
                     try {
                         rawMessage[i]=socketInputStream.readByte();
-                    } catch (IOException e) {
+                    } catch (IOException | NullPointerException e) {
                         e.printStackTrace();
                     }
                     message[0] += (char)rawMessage[i];
@@ -194,7 +220,6 @@ public class BoardManager {
         });
         thread.start();
         thread.join();
-        Log.d(TAG, "received "+message[0]);
         return message[0];
     }
 }

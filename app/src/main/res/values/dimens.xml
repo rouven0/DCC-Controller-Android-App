@@ -1,12 +1,6 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="section_width">60dp</dimen>
     <dimen name="section_height">25dp</dimen>
-    <dimen name="button_margin">-3dp</dimen>
-    <dimen name="menuButtonMargin" tools:ignore="PxUsage">153px</dimen>
-    <dimen name="menuButtonMargin_2" tools:ignore="PxUsage">306px</dimen>
-    <dimen name="menuButtonMargin_3" tools:ignore="PxUsage">459px</dimen>
-    <dimen name="menuButtonMargin_4" tools:ignore="PxUsage">612px</dimen>
-    <dimen name="menuButtonMargin_5" tools:ignore="PxUsage">765px</dimen>
 
 </resources>

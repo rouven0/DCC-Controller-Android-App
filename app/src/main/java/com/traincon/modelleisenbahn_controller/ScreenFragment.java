@@ -2,13 +2,14 @@ package com.traincon.modelleisenbahn_controller;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ToggleButton;
 
-import java.net.SocketException;
+import java.io.IOException;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -38,6 +39,7 @@ public class ScreenFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        //Gleisplan einrichten
         View rootView = inflater.inflate(R.layout.fragment_screen, container, false);
         FrameLayout frameLayout = rootView.findViewById(R.id.frameLayout_imageView);
         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) frameLayout.getLayoutParams();
@@ -100,6 +102,22 @@ public class ScreenFragment extends Fragment {
         frameLayout.setLayoutParams(layoutParams);
         placeSwitches(rootView, switchPositionArray, switchIdArray, switchSwitchCompatArray, switchRotationArray, switchIsBackgroundcolor);
         placeSections(rootView, sectionPositionArray, sectionIdArray, sectionToggleButtonArray);
+
+        //Alle Schalter werden entsprechend der Stellungen auf dem Brett angezeigt
+        final Handler handler = new Handler();
+
+        final Runnable updateRunnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    update();
+                    handler.postDelayed(this, 1000);
+                } catch (InterruptedException | IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        handler.post(updateRunnable);
         return rootView;
     }
 
@@ -157,8 +175,8 @@ public class ScreenFragment extends Fragment {
         }
     }
 
-    //Alle Schalter werden entsprechend der Stellungen auf dem Brett angezeigt
-    public void update() throws InterruptedException, SocketException {
+
+    private void update() throws InterruptedException, IOException {
         boardManager.requestSwitchStates();
         for (int i = 0; i < boardManager.switchStates.length; i++) {
             if (boardManager.switchStates[i] == 0) {
