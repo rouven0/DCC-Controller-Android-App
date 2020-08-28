@@ -86,7 +86,7 @@ public class ControllerFragment extends Fragment {
             resetButtonArray[n].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    seekBarArray[finalN].setProgress(0);
+                    seekBarArray[finalN].setProgress(50);
                 }
             });
         }
