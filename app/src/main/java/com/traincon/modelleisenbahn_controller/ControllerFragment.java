@@ -62,7 +62,7 @@ public class ControllerFragment extends Fragment {
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                    textViewArray[finalN].setText(Float.toString(i-50));
+                    textViewArray[finalN].setText(Integer.toString(i-50));
                 }
 
                 @Override

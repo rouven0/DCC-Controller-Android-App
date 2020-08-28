@@ -61,9 +61,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:max="50"
-            android:min="-50"
-            android:progress="0"/>
+            android:max="100"
+            android:min="0"
+            android:progress="50"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/button_reset_2"
@@ -95,9 +95,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:max="50"
-            android:min="-50"
-            android:progress="0"/>
+            android:max="100"
+            android:min="0"
+            android:progress="50"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/button_reset_3"
