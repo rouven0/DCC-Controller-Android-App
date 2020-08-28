@@ -22,7 +22,8 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.Objects;
 
 public class FullscreenActivity extends AppCompatActivity {
-    final public Button[] menuButtons = new Button[11];
+    final private int[] menuButtonIdArray = new int[]{R.id.mainMenuButton, R.id.presetsMenuButton, R.id.switchMenuButton, R.id.switchSetStandardActionbutton, R.id.switchSetToCenterActionButton, R.id.switchCalibrateActionButton, R.id.sectionMenuButton, R.id.sectionSetStandardActionbutton, R.id.sectionsAllOffActionbutton, R.id.reconnectActionButton, R.id.lightActionButton};
+    final private Button[] menuButtons = new Button[menuButtonIdArray.length];
 
     private boolean isMenuOpen = false;
     private boolean isPresetMenuOpen = false;
@@ -55,7 +56,6 @@ public class FullscreenActivity extends AppCompatActivity {
         boardIpTextView.setText("Ip der Platine: "+host);
 
         createTabLayout();
-        int[] menuButtonIdArray = new int[]{R.id.mainMenuButton, R.id.presetsMenuButton, R.id.switchMenuButton, R.id.switchSetStandardActionbutton, R.id.switchSetToCenterActionButton, R.id.switchCalibrateActionButton, R.id.sectionMenuButton, R.id.sectionSetStandardActionbutton, R.id.sectionsAllOffActionbutton, R.id.reconnectActionButton, R.id.lightActionButton};
         createMenuButtons(menuButtonIdArray);
 
         boardManager = new BoardManager(devId, host, port);

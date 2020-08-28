@@ -6,6 +6,7 @@
     </issue>
     <issue id="IconLocation">
         <ignore path="src/main/res/drawable/gleisplan_numbered.png" />
+        <ignore path="src/main/res/drawable/reset.png" />
         <ignore path="src/main/res/drawable/train_icon.png" />
     </issue>
 </lint>

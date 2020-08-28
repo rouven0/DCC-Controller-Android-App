@@ -12,6 +12,7 @@ import java.util.Arrays;
 
 import static android.content.ContentValues.TAG;
 
+@SuppressWarnings("unused")
 public class BoardManager {
     public final int[] switchStates = new int[16];
     public final int[] sectionStates = new int[13];
@@ -42,7 +43,6 @@ public class BoardManager {
                     socketInputStream = new DataInputStream(mainSocket.getInputStream());
                     socketOutputStream = new DataOutputStream(mainSocket.getOutputStream());
                     receive(18);
-                    Log.d(TAG, devId);
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -20,8 +20,8 @@ import androidx.fragment.app.Fragment;
 public class ScreenFragment extends Fragment {
     final private int[] switchIdArray = {R.id.switch_1, R.id.switch_2, R.id.switch_3, R.id.switch_4, R.id.switch_5, R.id.switch_6, R.id.switch_7, R.id.switch_8, R.id.switch_9, R.id.switch_10, R.id.switch_11, R.id.switch_12, R.id.switch_13, R.id.switch_14, R.id.switch_15, R.id.switch_16};
     final private int[] sectionIdArray = {R.id.section_1, R.id.section_2, R.id.section_3, R.id.section_4, R.id.section_5, R.id.section_6, R.id.section_7, R.id.section_8, R.id.section_9, R.id.section_10, R.id.section_11, R.id.section_12, R.id.section_13};
-    final private SwitchCompat[] switchSwitchCompatArray = new SwitchCompat[16];
-    final private ToggleButton[] sectionToggleButtonArray = new ToggleButton[13];
+    final private SwitchCompat[] switchSwitchCompatArray = new SwitchCompat[switchIdArray.length];
+    final private ToggleButton[] sectionToggleButtonArray = new ToggleButton[sectionIdArray.length];
     private String screenRatio;
     private BoardManager boardManager;
 

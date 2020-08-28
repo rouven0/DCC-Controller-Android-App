@@ -25,7 +25,15 @@
 
     <string name="contentDescription_gp">Gleisplan</string>
 
-    <string name="temp_comingSoon">Kommt bald</string>
+    <string name="default_seekBarTextView">0</string>
+
+    <string name="takeOver">Übernahme</string>
+    <string name="takeOver_single">Einzeln</string>
+    <string name="takeOver_12">1 &lt;&lt; 2</string>
+    <string name="takeOver_13">1 &lt;&lt; 3</string>
+    <string name="takeOver_23">2 &lt;&lt; 3</string>
+    <string name="takeOver_123">1 &lt;&lt; 2 &lt;&lt; 3</string>
+    <string name="confirm">Bestätigen</string>
 
 
 </resources>

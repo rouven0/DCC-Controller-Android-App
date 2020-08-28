@@ -1,5 +1,6 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="takeover_margin">40dp</dimen>
     <dimen name="section_width">60dp</dimen>
     <dimen name="section_height">25dp</dimen>
 

@@ -1,13 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ControllerFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/temp_comingSoon" />
-</FrameLayout>
+    <FrameLayout
+        android:id="@+id/frame_Con1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/frame_Con2">
+        <TextView
+            android:id="@+id/sText_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/takeover_margin"
+            android:text="@string/default_seekBarTextView"
+            android:textColor="@color/colorBackgroundDark"/>
+        <SeekBar
+            android:id="@+id/seekBar_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="false"
+            android:max="50"
+            android:min="-50"
+            android:progress="0" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_reset_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:clickable="true"
+            android:src="@drawable/reset" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_Con2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/frame_Con1"
+        app:layout_constraintEnd_toStartOf="@id/frame_Con3">
+        <TextView
+            android:id="@+id/sText_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/takeover_margin"
+            android:text="@string/default_seekBarTextView"
+            android:textColor="@color/colorBackgroundDark"/>
+        <SeekBar
+            android:id="@+id/seekBar_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:max="50"
+            android:min="-50"
+            android:progress="0"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_reset_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:src="@drawable/reset"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_Con3"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/frame_Con2"
+        app:layout_constraintEnd_toStartOf="@id/frame_TakeOver">
+        <TextView
+            android:id="@+id/sText_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/takeover_margin"
+            android:text="@string/default_seekBarTextView"
+            android:textColor="@color/colorBackgroundDark"/>
+        <SeekBar
+            android:id="@+id/seekBar_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:max="50"
+            android:min="-50"
+            android:progress="0"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_reset_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:src="@drawable/reset"/>
+    </FrameLayout>
+
+    <RadioGroup
+        android:id="@+id/frame_TakeOver"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/takeover_margin"
+        android:layout_marginStart="@dimen/fab_margin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/frame_Con3"
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBackgroundDark"
+            android:text="@string/takeOver"
+            android:textSize="17sp"/>
+        <RadioButton
+            android:id="@+id/takeOver_single"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fab_margin"
+            android:text="@string/takeOver_single"
+            android:checked="true"/>
+        <RadioButton
+            android:id="@+id/takeOver_12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fab_margin"
+            android:text="@string/takeOver_12"/>
+        <RadioButton
+            android:id="@+id/takeOver_13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fab_margin"
+            android:text="@string/takeOver_13"/>
+        <RadioButton
+            android:id="@+id/takeOver_23"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fab_margin"
+            android:text="@string/takeOver_23"/>
+        <RadioButton
+            android:id="@+id/takeOver_123"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fab_margin"
+            android:text="@string/takeOver_123"/>
+        <Button
+            android:id="@+id/button_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fab_margin"
+            android:text="@string/confirm"/>
+    </RadioGroup>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
