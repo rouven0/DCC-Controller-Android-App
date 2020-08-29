@@ -135,7 +135,7 @@ public class ControllerFragment extends Fragment {
     }
 
     private void update(){
-        //Entsprechend der übernahme setzen
+        //Entsprechend der Übernahme setzen
         switch (takeOver){
             case 0:
                 break;

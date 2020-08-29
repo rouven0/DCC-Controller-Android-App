@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class FullscreenActivity extends AppCompatActivity {
@@ -284,6 +285,11 @@ public class FullscreenActivity extends AppCompatActivity {
                 for (int i = 1; i < idArray.length; i++) {
                     menuButtons[i].setVisibility(View.INVISIBLE);
                 }
+                try {
+                    boardManager.disconnect();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 boardManager.connect();
                 isMenuOpen = false;
             }
@@ -327,5 +333,14 @@ public class FullscreenActivity extends AppCompatActivity {
             }
         }
         return width +":"+height;
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            boardManager.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

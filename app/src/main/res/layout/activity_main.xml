@@ -40,8 +40,7 @@
             android:layout_height="60dp"
             android:hint="@string/input_ipEntry"
             android:inputType="textNoSuggestions"
-            android:singleLine="true"
-            android:text="@string/sugessted_ipEntry"/>
+            android:singleLine="true"/>
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/portEntry"
@@ -50,8 +49,7 @@
             android:layout_marginTop="60dp"
             android:hint="@string/input_portEntry"
             android:inputType="textNoSuggestions"
-            android:singleLine="true"
-            android:text="@string/suggested_portEntry"/>
+            android:singleLine="true"/>
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/devIdEntry"

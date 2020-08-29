@@ -2,9 +2,7 @@
     <string name="app_name">Modelleisenbahn-Controller</string>
 
     <string name="input_ipEntry">Hostname</string>
-    <string name="sugessted_ipEntry">192.168.179.95</string>
     <string name="input_portEntry">Port</string>
-    <string name="suggested_portEntry">5550</string>
     <string name="input_devIdEntry">Gerätenummer (Leer≙2)</string>
 
     <!-- Strings für das Menü-->

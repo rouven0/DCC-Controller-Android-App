@@ -51,6 +51,10 @@ public class BoardManager {
         thread.start();
     }
 
+    public void disconnect() throws IOException {
+        mainSocket.close();
+    }
+
     //Weiche auf dem Brett stellen
     public void setSwitch(int targetSwitch, int targetState) {
         switchStates[targetSwitch]=targetState;
@@ -202,6 +206,7 @@ public class BoardManager {
             }
         });
         thread.start();
+        lightState=false;
     }
 
     //String vom Brett empfangen

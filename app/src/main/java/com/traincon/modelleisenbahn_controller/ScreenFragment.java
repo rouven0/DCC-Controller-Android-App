@@ -42,47 +42,12 @@ public class ScreenFragment extends Fragment {
         //Gleisplan einrichten
         View rootView = inflater.inflate(R.layout.fragment_screen, container, false);
         FrameLayout frameLayout = rootView.findViewById(R.id.frameLayout_imageView);
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) frameLayout.getLayoutParams();
         boolean switchIsBackgroundcolor = false;
         int[] switchRotationArray = new int[]{90, 255, 255, 270, 240, 270, 90, 75, 255, 270, 255, 255, 45, 105, 90, 90};
-        float[][] switchPositionArray = new float[][]{
-                {740, 389},
-                {350, 520},
-                {855, 385},
-                {275, 547},
+        float[][] switchPositionArray = new float[][]{{740, 389}, {350, 520}, {855, 385}, {275, 547}, {930, 371}, {400, 545}, {310, 555}, {903, 398}, {810, 440}, {235, 577}, {575, 553}, {700, 515}, {120, 230}, {310, 216}, {180, 6}, {600, 6}};
+        float[][] sectionPositionArray = new float[][]{{590, 390},{570, 430},{550, 470},{390, 132},{550, 235}, {550, 270},{530, 510},{390, 172},{460, 575},{800, 575},{100, 80},{350, 0},{450, 25}};
 
-                {930, 371},
-                {400, 545},
-                {310, 555},
-                {903, 398},
-
-                {810, 440},
-                {235, 577},
-                {575, 553},
-                {700, 515},
-
-                {120, 230},
-                {310, 216},
-                {180, 6},
-                {600, 6}};
-
-        float[][] sectionPositionArray = new float[][]{
-                {590, 390},
-                {570, 430},
-                {550, 470},
-                {390, 132},
-                {550, 235},
-                {550, 270},
-
-                {530, 510},
-                {390, 172},
-                {460, 575},
-                {800, 575},
-
-                {100, 80},
-                {350, 0},
-                {450, 25}};
-
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) frameLayout.getLayoutParams();
         if ("16:9".equals(screenRatio)) {
             layoutParams.setMargins(42, 0, 42, 0);
         } else {
@@ -98,8 +63,8 @@ public class ScreenFragment extends Fragment {
                 sectionPositionArray[i][1] = sectionPositionArray[i][1] * 168 / 100;
             }
         }
-
         frameLayout.setLayoutParams(layoutParams);
+
         placeSwitches(rootView, switchPositionArray, switchIdArray, switchSwitchCompatArray, switchRotationArray, switchIsBackgroundcolor);
         placeSections(rootView, sectionPositionArray, sectionIdArray, sectionToggleButtonArray);
 
