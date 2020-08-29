@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Modelleisenbahn-Controller</string>
 
+    <string name="action_loadLast">Zuletzt verwendet</string>
     <string name="input_ipEntry">Hostname</string>
     <string name="input_portEntry">Port</string>
     <string name="input_devIdEntry">Gerätenummer (Leer≙2)</string>

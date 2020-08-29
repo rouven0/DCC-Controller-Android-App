@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.view.View;
+import android.widget.Button;
 
 import java.util.Objects;
 
@@ -28,7 +29,13 @@ public class MainActivity extends AppCompatActivity {
         final TextInputEditText portEntry = findViewById(R.id.portEntry);
         final TextInputEditText devIdEntry = findViewById(R.id.devIdEntry);
         //Letzten stand laden
-        loadLastConectedBoard(ipEntry, portEntry);
+        Button loadLast = findViewById(R.id.loadLast);
+        loadLast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadLastConectedBoard(ipEntry, portEntry);
+            }
+        });
         //Startbutton
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
