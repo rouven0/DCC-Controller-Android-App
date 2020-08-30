@@ -39,7 +39,6 @@ public class FullscreenActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.content_main);
-
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         @SuppressWarnings("deprecation") String ipAddress = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
 
@@ -55,260 +54,264 @@ public class FullscreenActivity extends AppCompatActivity {
         localIpTextView.setText("Eigene Ip: "+ ipAddress);
         runningDevIdTextView.setText("Aktives Gerät: "+"-");
         boardIpTextView.setText("Ip der Platine: "+host);
-
-        createTabLayout();
-        createMenuButtons(menuButtonIdArray);
+        createTabLayout.start();
+        createMenuButtons.start();
 
         boardManager = new BoardManager(devId, host, port);
         boardManager.connect();
     }
 
-    private void createTabLayout() {
-        //Tablayout einrichten
-        TabLayout tabLayout = findViewById(R.id.tabLayout);
-        TabLayout.Tab firsttab = tabLayout.newTab();
-        firsttab.setText("Fahrtsteuerung");
-        tabLayout.addTab(firsttab);
-        TabLayout.Tab secondtab = tabLayout.newTab();
-        secondtab.setText("Interaktiver gleisplan");
-        tabLayout.addTab(secondtab);
-        final Fragment[] fragment = {null};
+    private Thread createTabLayout = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            //Tablayout einrichten
+            TabLayout tabLayout = findViewById(R.id.tabLayout);
+            TabLayout.Tab firsttab = tabLayout.newTab();
+            firsttab.setText("Fahrtsteuerung");
+            tabLayout.addTab(firsttab);
+            TabLayout.Tab secondtab = tabLayout.newTab();
+            secondtab.setText("Interaktiver gleisplan");
+            tabLayout.addTab(secondtab);
+            final Fragment[] fragment = {null};
 
-        //Am Anfang das fragment_controller anzeigen
-        fragment[0] = new ControllerFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.simpleFrameLayout, Objects.requireNonNull(fragment[0]));
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        fragmentTransaction.commit();
+            //Am Anfang das fragment_controller anzeigen
+            fragment[0] = new ControllerFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.simpleFrameLayout, Objects.requireNonNull(fragment[0]));
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            fragmentTransaction.commit();
 
-        //Bei änderungen im Tablayout
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
-                        fragment[0] = new ControllerFragment();
-                        break;
-                    case 1:
-                        fragment[0] = new ScreenFragment(boardManager, getScreenRatio());
-                        break;
+            //Bei änderungen im Tablayout
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    switch (tab.getPosition()) {
+                        case 0:
+                            fragment[0] = new ControllerFragment();
+                            break;
+                        case 1:
+                            fragment[0] = new ScreenFragment(boardManager, getScreenRatio());
+                            break;
+                    }
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.simpleFrameLayout, Objects.requireNonNull(fragment[0]));
+                    fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    fragmentTransaction.commit();
+
                 }
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.simpleFrameLayout, Objects.requireNonNull(fragment[0]));
-                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                fragmentTransaction.commit();
 
-            }
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+                }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
-    }
-
-    private void createMenuButtons(final int[] idArray) {
-        for (int i = 0; i < menuButtons.length; i++) {
-            menuButtons[i] = findViewById(idArray[i]);
-            setMenuButtonSize(menuButtons[i], getScreenRatio());
-            if (i > 0) {
-                menuButtons[i].setVisibility(View.INVISIBLE);
-            }
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+                }
+            });
         }
+    });
 
-        //Hauptmenu
-        menuButtons[0].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isMenuOpen) {
-                    menuButtons[1].setVisibility(View.VISIBLE);
-                    menuButtons[9].setVisibility(View.VISIBLE);
-                    menuButtons[10].setVisibility(View.VISIBLE);
-                    isMenuOpen = true;
-                } else {
-                    //Menu Schließen
-                    for (int i = 1; i < idArray.length; i++) {
-                        menuButtons[i].setVisibility(View.INVISIBLE);
+    private Thread createMenuButtons = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            for (int i = 0; i < menuButtons.length; i++) {
+                menuButtons[i] = findViewById(menuButtonIdArray[i]);
+                setMenuButtonSize(menuButtons[i], getScreenRatio());
+                if (i > 0) {
+                    menuButtons[i].setVisibility(View.INVISIBLE);
+                }
+            }
+
+            //Hauptmenu
+            menuButtons[0].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!isMenuOpen) {
+                        menuButtons[1].setVisibility(View.VISIBLE);
+                        menuButtons[9].setVisibility(View.VISIBLE);
+                        menuButtons[10].setVisibility(View.VISIBLE);
+                        isMenuOpen = true;
+                    } else {
+                        //Menu Schließen
+                        for (int i = 1; i < menuButtonIdArray.length; i++) {
+                            menuButtons[i].setVisibility(View.INVISIBLE);
+                        }
+
+                        isMenuOpen = false;
+                    }
+                }
+            });
+
+            //Presets
+            menuButtons[1].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!isPresetMenuOpen) {
+                        menuButtons[0].setVisibility(View.INVISIBLE);
+                        menuButtons[2].setVisibility(View.VISIBLE);
+                        menuButtons[6].setVisibility(View.VISIBLE);
+                        menuButtons[9].setVisibility(View.INVISIBLE);
+                        menuButtons[10].setVisibility(View.INVISIBLE);
+                        isPresetMenuOpen = true;
+                    } else {
+                        menuButtons[0].setVisibility(View.VISIBLE);
+                        menuButtons[2].setVisibility(View.INVISIBLE);
+                        menuButtons[6].setVisibility(View.INVISIBLE);
+                        menuButtons[9].setVisibility(View.VISIBLE);
+                        menuButtons[10].setVisibility(View.VISIBLE);
+                        isPresetMenuOpen = false;
+                    }
+                }
+            });
+
+            //Weichen
+            menuButtons[2].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!isSwitchMenuOpen) {
+                        menuButtons[1].setVisibility(View.INVISIBLE);
+                        menuButtons[3].setVisibility(View.VISIBLE);
+                        menuButtons[4].setVisibility(View.VISIBLE);
+                        menuButtons[5].setVisibility(View.VISIBLE);
+                        menuButtons[6].setVisibility(View.INVISIBLE);
+                        isSwitchMenuOpen = true;
+                    } else {
+                        menuButtons[1].setVisibility(View.VISIBLE);
+                        menuButtons[3].setVisibility(View.INVISIBLE);
+                        menuButtons[4].setVisibility(View.INVISIBLE);
+                        menuButtons[5].setVisibility(View.INVISIBLE);
+                        menuButtons[6].setVisibility(View.VISIBLE);
+                        isSwitchMenuOpen = false;
                     }
 
+                }
+            });
+
+            //Weichen 3 Runden
+            menuButtons[3].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Menu Schließen
+                    for (int i = 1; i < menuButtonIdArray.length; i++) {
+                        menuButtons[i].setVisibility(View.INVISIBLE);
+                    }
+                    menuButtons[0].setVisibility(View.VISIBLE);
+                    boardManager.switchPreset_3r();
                     isMenuOpen = false;
                 }
-            }
-        });
+            });
 
-        //Presets
-        menuButtons[1].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isPresetMenuOpen) {
-                    menuButtons[0].setVisibility(View.INVISIBLE);
-                    menuButtons[2].setVisibility(View.VISIBLE);
-                    menuButtons[6].setVisibility(View.VISIBLE);
-                    menuButtons[9].setVisibility(View.INVISIBLE);
-                    menuButtons[10].setVisibility(View.INVISIBLE);
-                    isPresetMenuOpen = true;
-                } else {
+            //Weichen Alle auf Mitte
+            menuButtons[4].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Menu Schließen
+                    for (int i = 1; i < menuButtonIdArray.length; i++) {
+                        menuButtons[i].setVisibility(View.INVISIBLE);
+                    }
                     menuButtons[0].setVisibility(View.VISIBLE);
-                    menuButtons[2].setVisibility(View.INVISIBLE);
-                    menuButtons[6].setVisibility(View.INVISIBLE);
-                    menuButtons[9].setVisibility(View.VISIBLE);
-                    menuButtons[10].setVisibility(View.VISIBLE);
-                    isPresetMenuOpen = false;
+                    boardManager.switchSetToCenter();
+                    isMenuOpen = false;
                 }
-            }
-        });
+            });
 
-        //Weichen
-        menuButtons[2].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isSwitchMenuOpen) {
-                    menuButtons[1].setVisibility(View.INVISIBLE);
-                    menuButtons[3].setVisibility(View.VISIBLE);
-                    menuButtons[4].setVisibility(View.VISIBLE);
-                    menuButtons[5].setVisibility(View.VISIBLE);
-                    menuButtons[6].setVisibility(View.INVISIBLE);
-                    isSwitchMenuOpen = true;
-                } else {
-                    menuButtons[1].setVisibility(View.VISIBLE);
-                    menuButtons[3].setVisibility(View.INVISIBLE);
-                    menuButtons[4].setVisibility(View.INVISIBLE);
-                    menuButtons[5].setVisibility(View.INVISIBLE);
-                    menuButtons[6].setVisibility(View.VISIBLE);
-                    isSwitchMenuOpen = false;
+            //Weichen Nachstellen
+            menuButtons[5].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Menu Schließen
+                    for (int i = 1; i < menuButtonIdArray.length; i++) {
+                        menuButtons[i].setVisibility(View.INVISIBLE);
+                    }
+                    menuButtons[0].setVisibility(View.VISIBLE);
+                    boardManager.switchCalibrate();
+                    isMenuOpen = false;
                 }
+            });
 
-            }
-        });
+            //Gleisabschnitte
+            menuButtons[6].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!isSectionMenuOpen) {
+                        menuButtons[1].setVisibility(View.INVISIBLE);
+                        menuButtons[2].setVisibility(View.INVISIBLE);
+                        menuButtons[7].setVisibility(View.VISIBLE);
+                        menuButtons[8].setVisibility(View.VISIBLE);
+                        isSectionMenuOpen = true;
+                    } else {
+                        menuButtons[1].setVisibility(View.VISIBLE);
+                        menuButtons[2].setVisibility(View.VISIBLE);
+                        menuButtons[7].setVisibility(View.INVISIBLE);
+                        menuButtons[8].setVisibility(View.INVISIBLE);
+                        isSectionMenuOpen = false;
+                    }
 
-        //Weichen 3 Runden
-        menuButtons[3].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Menu Schließen
-                for (int i = 1; i < idArray.length; i++) {
-                    menuButtons[i].setVisibility(View.INVISIBLE);
                 }
-                menuButtons[0].setVisibility(View.VISIBLE);
-                boardManager.switchPreset_3r();
-                isMenuOpen = false;
-            }
-        });
+            });
 
-        //Weichen Alle auf Mitte
-        menuButtons[4].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Menu Schließen
-                for (int i = 1; i < idArray.length; i++) {
-                    menuButtons[i].setVisibility(View.INVISIBLE);
+            // Gleisabschnitte 3 Runden
+            menuButtons[7].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Menu Schließen
+                    for (int i = 1; i < menuButtonIdArray.length; i++) {
+                        menuButtons[i].setVisibility(View.INVISIBLE);
+                    }
+                    menuButtons[0].setVisibility(View.VISIBLE);
+                    boardManager.sectionPreset_3r();
+                    isMenuOpen = false;
                 }
-                menuButtons[0].setVisibility(View.VISIBLE);
-                boardManager.switchSetToCenter();
-                isMenuOpen = false;
-            }
-        });
+            });
 
-        //Weichen Nachstellen
-        menuButtons[5].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Menu Schließen
-                for (int i = 1; i < idArray.length; i++) {
-                    menuButtons[i].setVisibility(View.INVISIBLE);
+            //Gleisabschnitte Alle ausschalten
+            menuButtons[8].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Menu Schließen
+                    for (int i = 1; i < menuButtonIdArray.length; i++) {
+                        menuButtons[i].setVisibility(View.INVISIBLE);
+                    }
+                    menuButtons[0].setVisibility(View.VISIBLE);
+                    boardManager.sectionsAllOff();
+                    isMenuOpen = false;
                 }
-                menuButtons[0].setVisibility(View.VISIBLE);
-                boardManager.switchCalibrate();
-                isMenuOpen = false;
-            }
-        });
+            });
 
-        //Gleisabschnitte
-        menuButtons[6].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isSectionMenuOpen) {
-                    menuButtons[1].setVisibility(View.INVISIBLE);
-                    menuButtons[2].setVisibility(View.INVISIBLE);
-                    menuButtons[7].setVisibility(View.VISIBLE);
-                    menuButtons[8].setVisibility(View.VISIBLE);
-                    isSectionMenuOpen = true;
-                } else {
-                    menuButtons[1].setVisibility(View.VISIBLE);
-                    menuButtons[2].setVisibility(View.VISIBLE);
-                    menuButtons[7].setVisibility(View.INVISIBLE);
-                    menuButtons[8].setVisibility(View.INVISIBLE);
-                    isSectionMenuOpen = false;
+            // Neu verbinden
+            menuButtons[9].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Menu Schließen
+                    for (int i = 1; i < menuButtonIdArray.length; i++) {
+                        menuButtons[i].setVisibility(View.INVISIBLE);
+                    }
+                    try {
+                        boardManager.disconnect();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    boardManager.connect();
+                    isMenuOpen = false;
                 }
+            });
 
-            }
-        });
-
-        // Gleisabschnitte 3 Runden
-        menuButtons[7].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Menu Schließen
-                for (int i = 1; i < idArray.length; i++) {
-                    menuButtons[i].setVisibility(View.INVISIBLE);
+            //Licht
+            menuButtons[10].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Menu Schließen
+                    for (int i = 1; i < menuButtonIdArray.length; i++) {
+                        menuButtons[i].setVisibility(View.INVISIBLE);
+                    }
+                    boardManager.setLight();
+                    isMenuOpen = false;
                 }
-                menuButtons[0].setVisibility(View.VISIBLE);
-                boardManager.sectionPreset_3r();
-                isMenuOpen = false;
-            }
-        });
-
-        //Gleisabschnitte Alle ausschalten
-        menuButtons[8].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Menu Schließen
-                for (int i = 1; i < idArray.length; i++) {
-                    menuButtons[i].setVisibility(View.INVISIBLE);
-                }
-                menuButtons[0].setVisibility(View.VISIBLE);
-                boardManager.sectionsAllOff();
-                isMenuOpen = false;
-            }
-        });
-
-        // Neu verbinden
-        menuButtons[9].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Menu Schließen
-                for (int i = 1; i < idArray.length; i++) {
-                    menuButtons[i].setVisibility(View.INVISIBLE);
-                }
-                try {
-                    boardManager.disconnect();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                boardManager.connect();
-                isMenuOpen = false;
-            }
-        });
-
-        //Licht
-        menuButtons[10].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Menu Schließen
-                for (int i = 1; i < idArray.length; i++) {
-                    menuButtons[i].setVisibility(View.INVISIBLE);
-                }
-                boardManager.setLight();
-                isMenuOpen = false;
-            }
-        });
-
-    }
+            });
+        }
+    });
 
     private void setMenuButtonSize(Button menuButton, String screenRatio) {
         if ("16:9".equals(screenRatio)) {

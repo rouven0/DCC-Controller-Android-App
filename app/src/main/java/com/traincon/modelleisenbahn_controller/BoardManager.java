@@ -189,6 +189,7 @@ public class BoardManager {
     protected void sectionsAllOff(){
         send(":S0166N9900112410;");
         Arrays.fill(sectionStates, 0);
+        lightState=false;
     }
 
     //String an das Brett senden
@@ -206,7 +207,6 @@ public class BoardManager {
             }
         });
         thread.start();
-        lightState=false;
     }
 
     //String vom Brett empfangen

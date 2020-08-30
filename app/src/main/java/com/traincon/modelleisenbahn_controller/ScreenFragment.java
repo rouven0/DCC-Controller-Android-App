@@ -23,6 +23,8 @@ public class ScreenFragment extends Fragment {
     final private SwitchCompat[] switchSwitchCompatArray = new SwitchCompat[switchIdArray.length];
     final private ToggleButton[] sectionToggleButtonArray = new ToggleButton[sectionIdArray.length];
     private String screenRatio;
+    final private Handler handler = new Handler();
+    private Runnable updateRunnable;
     private BoardManager boardManager;
 
 
@@ -69,9 +71,7 @@ public class ScreenFragment extends Fragment {
         placeSections(rootView, sectionPositionArray, sectionIdArray, sectionToggleButtonArray);
 
         //Alle Schalter werden entsprechend der Stellungen auf dem Brett angezeigt
-        final Handler handler = new Handler();
-
-        final Runnable updateRunnable = new Runnable() {
+        updateRunnable = new Runnable() {
             @Override
             public void run() {
                 try {
@@ -160,5 +160,10 @@ public class ScreenFragment extends Fragment {
                 sectionToggleButtonArray[i].setChecked(true);
             }
         }
+    }
+
+    public void onDestroy(){
+        super.onDestroy();
+        handler.removeCallbacks(updateRunnable);
     }
 }
