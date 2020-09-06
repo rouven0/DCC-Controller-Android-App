@@ -61,7 +61,7 @@ public class FullscreenActivity extends AppCompatActivity {
         boardManager.connect();
     }
 
-    private Thread createTabLayout = new Thread(new Runnable() {
+    private final Thread createTabLayout = new Thread(new Runnable() {
         @Override
         public void run() {
             //Tablayout einrichten
@@ -113,7 +113,7 @@ public class FullscreenActivity extends AppCompatActivity {
         }
     });
 
-    private Thread createMenuButtons = new Thread(new Runnable() {
+    private final Thread createMenuButtons = new Thread(new Runnable() {
         @Override
         public void run() {
             for (int i = 0; i < menuButtons.length; i++) {
