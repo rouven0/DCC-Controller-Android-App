@@ -12,15 +12,15 @@ import java.util.Arrays;
 
 import static android.content.ContentValues.TAG;
 
-@SuppressWarnings("unused")
 public class BoardManager {
-    public final int[] switchStates = new int[16];
-    public final int[] sectionStates = new int[13];
+    public final boolean[] switchStates = new boolean[16];
+    public final boolean[] sectionStates = new boolean[13];
     public boolean lightState = false;
     public final String devId;
     public final String host;
     public final int port;
     public Socket mainSocket;
+    private final CBusAsciiMessageBuilder cBusAsciiMessageBuilder;
     private DataInputStream socketInputStream;
     private DataOutputStream socketOutputStream;
 
@@ -29,8 +29,9 @@ public class BoardManager {
         devId = devid;
         host=hst;
         port=prt;
-        Arrays.fill(switchStates, 0);
-        Arrays.fill(sectionStates, 0);
+        Arrays.fill(switchStates, false);
+        Arrays.fill(sectionStates, false);
+        cBusAsciiMessageBuilder = new CBusAsciiMessageBuilder(getCanId()); //Gerätenummer wird zur CANID
     }
 
     public void connect() {
@@ -56,16 +57,25 @@ public class BoardManager {
     }
 
     //Weiche auf dem Brett stellen
-    public void setSwitch(int targetSwitch, int targetState) {
+    public void setSwitch(int targetSwitch, boolean targetState) {
         switchStates[targetSwitch]=targetState;
-        send(":S0166N"+(99 - targetState)+"0011230"+Integer.toHexString(targetSwitch).toUpperCase()+";");
+        if(targetState){
+            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_ASON, "00", "11", "23","0"+Integer.toHexString(targetSwitch).toUpperCase()));
+        } else {
+            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_ASOF, "00", "11", "23","0"+Integer.toHexString(targetSwitch).toUpperCase()));
+        }
         Log.d(TAG, "setSwitch: Weiche: "+ (targetSwitch + 1) +" auf Status: "+ targetState);
     }
 
     //Gleisaschnitt auf dem Brett umschalten
-    public void setSection(int targetSection, int targetState){
+    public void setSection(int targetSection, boolean targetState){
         sectionStates[targetSection]=targetState;
-        send(":S0166N"+(99 - targetState)+"0011240"+Integer.toHexString(targetSection).toUpperCase()+";");
+        if(targetState){
+            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_ASON, "00", "11", "24", "0"+Integer.toHexString(targetSection).toUpperCase()));
+        } else {
+            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_ASOF, "00", "11", "24", "0"+Integer.toHexString(targetSection).toUpperCase()));
+        }
+        //send(":S0166N"+(99 - targetState)+"0011240"+Integer.toHexString(targetSection).toUpperCase()+";");
         Log.d(TAG, "setSection: Gleisabschnitt: "+ (targetSection + 1) +" auf Status: "+ targetState);
     }
 
@@ -74,12 +84,12 @@ public class BoardManager {
         if(!lightState){
             lightState=true;
             Log.d(TAG, "setLight: Licht angeschaltet");
-            send(":S0166N980011240D;");
+            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_ASON, "00", "11", "24", "0D"));
         }
         else{
             lightState=false;
             Log.d(TAG, "setLight: Licht ausgeschaltet");
-            send(":S0166N990011240D;");
+            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_ASOF, "00", "11", "24", "0D"));
         }
     }
 
@@ -87,9 +97,11 @@ public class BoardManager {
     //Wird in ScreenFragment.update aufgerufen
     protected void requestSwitchStates() throws InterruptedException, IOException {
         //Abfragen
-        send(":S0166N71006503;");
+        //send(":S0166N71006503;");
+        send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_NVRD, "00", "65", "03"));
         String receivedSwitchStates_0 = receive(18);
-        send(":S0166N71006504;");
+        //send(":S0166N71006504;");
+        send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_NVRD, "00", "65", "04"));
         String receivedSwitchStates_1 = receive(18);
         //Datenpuffer
         try {
@@ -117,16 +129,15 @@ public class BoardManager {
             receivedSwitchStatesBinary_1.reverse();
             //Übertragen
             for(int i=0; i<receivedSwitchStatesBinary_0.length(); i++){
-                switchStates[i]=Integer.parseInt(String.valueOf(receivedSwitchStatesBinary_0.charAt(i)));
+                switchStates[i]=String.valueOf(receivedSwitchStatesBinary_0.charAt(i)).equals("1");
             }
             for(int i=0; i<receivedSwitchStatesBinary_1.length(); i++){
-                switchStates[i+receivedSwitchStatesBinary_0.length()]=Integer.parseInt(String.valueOf(receivedSwitchStatesBinary_1.charAt(i)));
+                switchStates[i+receivedSwitchStatesBinary_0.length()]=String.valueOf(receivedSwitchStatesBinary_1.charAt(i)).equals("1");
             }
         } catch (NumberFormatException e){
             e.printStackTrace();
         }
     }
-
 
     //Funktionen aus dem Menü
     //Weichen 3 Runden
@@ -136,10 +147,10 @@ public class BoardManager {
             public void run() {
                 for(int i=0; i<switchStates.length; i++){
                     if(i==0 || (2<i && i<10)){
-                        setSwitch(i, 1);
+                        setSwitch(i, true);
                     }
                     else{
-                        setSwitch(i, 0);
+                        setSwitch(i, false);
                     }
                     try {
                         Thread.sleep(500);
@@ -154,12 +165,12 @@ public class BoardManager {
 
     //Weichen auf mitte
     protected void switchSetToCenter(){
-        send(":S0166N9900112310;");
+        send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_ASON, "00", "11", "23", "10"));
     }
 
     //Weichen nachjustieren
     protected void switchCalibrate(){
-        send(":S0166N9900112311;");
+        send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_ASON, "00", "11", "23", "11"));
     }
 
     //Gleise 3 runden
@@ -169,10 +180,10 @@ public class BoardManager {
             public void run() {
                 for(int i=0; i<sectionStates.length; i++){
                     if((1<i && i<4) || (5<i && i<8) || (9<i && i<12)){
-                        setSection(i, 1);
+                        setSection(i, true);
                     }
                     else{
-                        setSection(i, 0);
+                        setSection(i, false);
                     }
                     try {
                         Thread.sleep(100);
@@ -187,8 +198,8 @@ public class BoardManager {
 
     //Alle Gleise ausschalten
     protected void sectionsAllOff(){
-        send(":S0166N9900112410;");
-        Arrays.fill(sectionStates, 0);
+        send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_ASON, "00", "11", "24", "10"));
+        Arrays.fill(sectionStates, false);
         lightState=false;
     }
 
@@ -230,5 +241,24 @@ public class BoardManager {
         thread.start();
         thread.join();
         return message[0];
+    }
+
+    private String getCanId(){
+        String canId = "";
+        switch (devId){
+            case "1":
+                canId = "0165";
+                break;
+            case "2":
+                canId = "0166";
+                break;
+            case "3":
+                canId = "0167";
+                break;
+            case "4":
+                canId = "0168";
+                break;
+        }
+        return canId;
     }
 }

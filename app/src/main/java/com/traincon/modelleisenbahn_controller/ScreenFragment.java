@@ -6,11 +6,9 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ToggleButton;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
@@ -32,7 +30,6 @@ public class ScreenFragment extends Fragment {
         // Required empty public constructor
     }
 
-    @SuppressLint("ValidFragment")
     public ScreenFragment(BoardManager bManager, String ratio) {
         screenRatio = ratio;
         boardManager = bManager;
@@ -43,31 +40,21 @@ public class ScreenFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         //Gleisplan einrichten
         View rootView = inflater.inflate(R.layout.fragment_screen, container, false);
-        FrameLayout frameLayout = rootView.findViewById(R.id.frameLayout_imageView);
-        boolean switchIsBackgroundcolor = false;
         int[] switchRotationArray = new int[]{90, 255, 255, 270, 240, 270, 90, 75, 255, 270, 255, 255, 45, 105, 90, 90};
         float[][] switchPositionArray = new float[][]{{740, 389}, {350, 520}, {855, 385}, {275, 547}, {930, 371}, {400, 545}, {310, 555}, {903, 398}, {810, 440}, {235, 577}, {575, 553}, {700, 515}, {120, 230}, {310, 216}, {180, 6}, {600, 6}};
         float[][] sectionPositionArray = new float[][]{{590, 390},{570, 430},{550, 470},{390, 132},{550, 235}, {550, 270},{530, 510},{390, 172},{460, 575},{800, 575},{100, 80},{350, 0},{450, 25}};
 
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) frameLayout.getLayoutParams();
-        if ("16:9".equals(screenRatio)) {
-            layoutParams.setMargins(42, 0, 42, 0);
-        } else {
-            layoutParams.setMargins(0, 73, 0, 0);
+        if (!"16:9".equals(screenRatio)){ //Todo entfernen und für alle geräte kompatibel machen(constraints)
             for (int i = 0; i < switchPositionArray.length; i++) {
                 switchPositionArray[i][0] = switchPositionArray[i][0] * 165 / 100;
                 switchPositionArray[i][1] = switchPositionArray[i][1] * 168 / 100;
             }
-            switchIsBackgroundcolor = true;
-
             for (int i = 0; i < sectionPositionArray.length; i++) {
                 sectionPositionArray[i][0] = sectionPositionArray[i][0] * 165 / 100;
                 sectionPositionArray[i][1] = sectionPositionArray[i][1] * 168 / 100;
             }
         }
-        frameLayout.setLayoutParams(layoutParams);
-
-        placeSwitches(rootView, switchPositionArray, switchIdArray, switchSwitchCompatArray, switchRotationArray, switchIsBackgroundcolor);
+        placeSwitches(rootView, switchPositionArray, switchIdArray, switchSwitchCompatArray, switchRotationArray);
         placeSections(rootView, sectionPositionArray, sectionIdArray, sectionToggleButtonArray);
 
         //Alle Schalter werden entsprechend der Stellungen auf dem Brett angezeigt
@@ -87,27 +74,17 @@ public class ScreenFragment extends Fragment {
     }
 
     //Alle Weichenschalter an die richtigen Positionen verschieben
-    private void placeSwitches(View view, float[][] positionArray, int[] idArray, final SwitchCompat[] switchCompatArray, int[] rotationArray, boolean isBackroundColor) {
+    private void placeSwitches(View view, float[][] positionArray, int[] idArray, final SwitchCompat[] switchCompatArray, int[] rotationArray) {
         for (int i = 0; i < idArray.length; i++) {
             switchCompatArray[i] = view.findViewById(idArray[i]);
             switchCompatArray[i].setTranslationX(positionArray[i][0]);
             switchCompatArray[i].setTranslationY(positionArray[i][1]);
             switchCompatArray[i].setRotation(rotationArray[i]);
-            if (isBackroundColor) {
-                switchCompatArray[i].setBackgroundColor(getResources().getColor(R.color.colorBackgroundDark, Objects.requireNonNull(getActivity()).getTheme()));
-            }
-            //Weichen stellen, wenn der Schalter betätigt wurde
             final int finalI = i;
             switchCompatArray[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int targetState;
-                    if (switchCompatArray[finalI].isChecked()) {
-                        targetState = 1; //abzweig
-                    } else {
-                        targetState = 0; //gerade
-                    }
-                    boardManager.setSwitch(finalI, targetState);
+                    boardManager.setSwitch(finalI, switchCompatArray[finalI].isChecked());
                 }
             });
         }
@@ -128,13 +105,13 @@ public class ScreenFragment extends Fragment {
             toggleButtonArray[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int targetState;
+                    /*int targetState;
                     if (toggleButtonArray[finalI].isChecked()) {
                         targetState = 1;
                     } else {
                         targetState = 0;
-                    }
-                    boardManager.setSection(finalI, targetState);
+                    }*/
+                    boardManager.setSection(finalI, toggleButtonArray[finalI].isChecked());
                 }
             });
         }
@@ -144,21 +121,11 @@ public class ScreenFragment extends Fragment {
     private void update() throws InterruptedException, IOException {
         boardManager.requestSwitchStates();
         for (int i = 0; i < boardManager.switchStates.length; i++) {
-            if (boardManager.switchStates[i] == 0) {
-                switchSwitchCompatArray[i].setChecked(false);
-            }
-            if (boardManager.switchStates[i] == 1) {
-                switchSwitchCompatArray[i].setChecked(true);
-            }
+            switchSwitchCompatArray[i].setChecked(boardManager.switchStates[i]);
         }
 
         for (int i = 0; i < boardManager.sectionStates.length; i++) {
-            if (boardManager.sectionStates[i] == 0) {
-                sectionToggleButtonArray[i].setChecked(false);
-            }
-            if (boardManager.sectionStates[i] == 1) {
-                sectionToggleButtonArray[i].setChecked(true);
-            }
+           sectionToggleButtonArray[i].setChecked(boardManager.sectionStates[i]);
         }
     }
 

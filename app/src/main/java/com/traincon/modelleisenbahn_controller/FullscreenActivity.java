@@ -4,19 +4,17 @@ import android.annotation.SuppressLint;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.content.Intent;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
-import android.text.format.Formatter;
+
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.TextView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
@@ -39,21 +37,11 @@ public class FullscreenActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.content_main);
-        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-        @SuppressWarnings("deprecation") String ipAddress = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
 
         Intent intent = getIntent();
         String devId = intent.getStringExtra("deviceId");
         String host = intent.getStringExtra("host");
         int port = intent.getIntExtra("port", 0);
-        TextView localDevIdTextView = findViewById(R.id.localDevIdTextView);
-        TextView localIpTextView = findViewById(R.id.localIpTextView);
-        TextView runningDevIdTextView = findViewById(R.id.runningDevIdTextView);
-        TextView boardIpTextView = findViewById(R.id.boardIpTextView);
-        localDevIdTextView.setText("Gerätenummer: "+devId);
-        localIpTextView.setText("Eigene Ip: "+ ipAddress);
-        runningDevIdTextView.setText("Aktives Gerät: "+"-");
-        boardIpTextView.setText("Ip der Platine: "+host);
         createTabLayout.start();
         createMenuButtons.start();
 
@@ -78,7 +66,7 @@ public class FullscreenActivity extends AppCompatActivity {
             fragment[0] = new ControllerFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.simpleFrameLayout, Objects.requireNonNull(fragment[0]));
+            fragmentTransaction.replace(R.id.constraintLayout, Objects.requireNonNull(fragment[0]));
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.commit();
 
@@ -96,7 +84,7 @@ public class FullscreenActivity extends AppCompatActivity {
                     }
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.simpleFrameLayout, Objects.requireNonNull(fragment[0]));
+                    fragmentTransaction.replace(R.id.constraintLayout, Objects.requireNonNull(fragment[0]));
                     fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                     fragmentTransaction.commit();
 
