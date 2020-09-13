@@ -10,186 +10,246 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:src="@drawable/gleisplan_numbered_alt"
             android:foregroundGravity="bottom"
-            android:contentDescription="@string/contentDescription_gp"/>
+            android:contentDescription="@string/contentDescription_gp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:thumbTint="@color/colorSwitchThumb"
-            app:trackTint="@color/colorSwitchTrack"/>
+            app:trackTint="@color/colorSwitchTrack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:thumbTint="@color/colorSwitchThumb"
-            app:trackTint="@color/colorSwitchTrack"/>
+            app:trackTint="@color/colorSwitchTrack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:thumbTint="@color/colorSwitchThumb"
-            app:trackTint="@color/colorSwitchTrack"/>
+            app:trackTint="@color/colorSwitchTrack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:thumbTint="@color/colorSwitchThumb"
-            app:trackTint="@color/colorSwitchTrack"/>
+            app:trackTint="@color/colorSwitchTrack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:thumbTint="@color/colorSwitchThumb"
-            app:trackTint="@color/colorSwitchTrack"/>
+            app:trackTint="@color/colorSwitchTrack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:thumbTint="@color/colorSwitchThumb"
-            app:trackTint="@color/colorSwitchTrack"/>
+            app:trackTint="@color/colorSwitchTrack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:thumbTint="@color/colorSwitchThumb"
-            app:trackTint="@color/colorSwitchTrack"/>
+            app:trackTint="@color/colorSwitchTrack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:thumbTint="@color/colorSwitchThumb"
-            app:trackTint="@color/colorSwitchTrack"/>
+            app:trackTint="@color/colorSwitchTrack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:thumbTint="@color/colorSwitchThumb"
-            app:trackTint="@color/colorSwitchTrack"/>
+            app:trackTint="@color/colorSwitchTrack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:thumbTint="@color/colorSwitchThumb"
-            app:trackTint="@color/colorSwitchTrack"/>
+            app:trackTint="@color/colorSwitchTrack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:thumbTint="@color/colorSwitchThumb"
-            app:trackTint="@color/colorSwitchTrack"/>
+            app:trackTint="@color/colorSwitchTrack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:thumbTint="@color/colorSwitchThumb"
-            app:trackTint="@color/colorSwitchTrack"/>
+            app:trackTint="@color/colorSwitchTrack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:thumbTint="@color/colorSwitchThumb"
-            app:trackTint="@color/colorSwitchTrack"/>
+            app:trackTint="@color/colorSwitchTrack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:thumbTint="@color/colorSwitchThumb"
             app:trackTint="@color/colorSwitchTrack"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:thumbTint="@color/colorSwitchThumb"
-            app:trackTint="@color/colorSwitchTrack"/>
+            app:trackTint="@color/colorSwitchTrack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:thumbTint="@color/colorSwitchThumb"
-            app:trackTint="@color/colorSwitchTrack"/>
+            app:trackTint="@color/colorSwitchTrack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <ToggleButton
             android:id="@+id/section_1"
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"/>
+            android:textColor="@color/colorSectionText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
             android:id="@+id/section_2"
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"/>
+            android:textColor="@color/colorSectionText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
             android:id="@+id/section_3"
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"/>
+            android:textColor="@color/colorSectionText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
             android:id="@+id/section_4"
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"/>
+            android:textColor="@color/colorSectionText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
             android:id="@+id/section_5"
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"/>
+            android:textColor="@color/colorSectionText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
             android:id="@+id/section_6"
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"/>
+            android:textColor="@color/colorSectionText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
             android:id="@+id/section_7"
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"/>
+            android:textColor="@color/colorSectionText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
             android:id="@+id/section_8"
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"/>
+            android:textColor="@color/colorSectionText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
             android:id="@+id/section_9"
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"/>
+            android:textColor="@color/colorSectionText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
             android:id="@+id/section_10"
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"/>
+            android:textColor="@color/colorSectionText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
             android:id="@+id/section_11"
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"/>
+            android:textColor="@color/colorSectionText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
             android:id="@+id/section_12"
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"/>
+            android:textColor="@color/colorSectionText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
             android:id="@+id/section_13"
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"/>
+            android:textColor="@color/colorSectionText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

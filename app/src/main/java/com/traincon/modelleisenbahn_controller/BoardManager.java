@@ -2,6 +2,8 @@ package com.traincon.modelleisenbahn_controller;
 
 import android.util.Log;
 
+import com.traincon.CBusAsciiMessage.CBusAsciiMessageBuilder;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
