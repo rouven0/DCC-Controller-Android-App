@@ -1,7 +1,6 @@
 package com.traincon.modelleisenbahn_controller;
 
 import android.annotation.SuppressLint;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -79,7 +77,7 @@ public class FullscreenActivity extends AppCompatActivity {
                             fragment[0] = new ControllerFragment();
                             break;
                         case 1:
-                            fragment[0] = new ScreenFragment(boardManager, getScreenRatio());
+                            fragment[0] = new ScreenFragment(boardManager);
                             break;
                     }
                     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -87,7 +85,6 @@ public class FullscreenActivity extends AppCompatActivity {
                     fragmentTransaction.replace(R.id.constraintLayout, Objects.requireNonNull(fragment[0]));
                     fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                     fragmentTransaction.commit();
-
                 }
 
                 @Override
@@ -106,9 +103,8 @@ public class FullscreenActivity extends AppCompatActivity {
         public void run() {
             for (int i = 0; i < menuButtons.length; i++) {
                 menuButtons[i] = findViewById(menuButtonIdArray[i]);
-                setMenuButtonSize(menuButtons[i], getScreenRatio());
                 if (i > 0) {
-                    menuButtons[i].setVisibility(View.INVISIBLE);
+                    menuButtons[i].setVisibility(View.GONE);
                 }
             }
 
@@ -124,7 +120,7 @@ public class FullscreenActivity extends AppCompatActivity {
                     } else {
                         //Menu Schließen
                         for (int i = 1; i < menuButtonIdArray.length; i++) {
-                            menuButtons[i].setVisibility(View.INVISIBLE);
+                            menuButtons[i].setVisibility(View.GONE);
                         }
 
                         isMenuOpen = false;
@@ -137,16 +133,16 @@ public class FullscreenActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (!isPresetMenuOpen) {
-                        menuButtons[0].setVisibility(View.INVISIBLE);
+                        menuButtons[0].setVisibility(View.GONE);
                         menuButtons[2].setVisibility(View.VISIBLE);
                         menuButtons[6].setVisibility(View.VISIBLE);
-                        menuButtons[9].setVisibility(View.INVISIBLE);
-                        menuButtons[10].setVisibility(View.INVISIBLE);
+                        menuButtons[9].setVisibility(View.GONE);
+                        menuButtons[10].setVisibility(View.GONE);
                         isPresetMenuOpen = true;
                     } else {
                         menuButtons[0].setVisibility(View.VISIBLE);
-                        menuButtons[2].setVisibility(View.INVISIBLE);
-                        menuButtons[6].setVisibility(View.INVISIBLE);
+                        menuButtons[2].setVisibility(View.GONE);
+                        menuButtons[6].setVisibility(View.GONE);
                         menuButtons[9].setVisibility(View.VISIBLE);
                         menuButtons[10].setVisibility(View.VISIBLE);
                         isPresetMenuOpen = false;
@@ -159,17 +155,17 @@ public class FullscreenActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (!isSwitchMenuOpen) {
-                        menuButtons[1].setVisibility(View.INVISIBLE);
+                        menuButtons[1].setVisibility(View.GONE);
                         menuButtons[3].setVisibility(View.VISIBLE);
                         menuButtons[4].setVisibility(View.VISIBLE);
                         menuButtons[5].setVisibility(View.VISIBLE);
-                        menuButtons[6].setVisibility(View.INVISIBLE);
+                        menuButtons[6].setVisibility(View.GONE);
                         isSwitchMenuOpen = true;
                     } else {
                         menuButtons[1].setVisibility(View.VISIBLE);
-                        menuButtons[3].setVisibility(View.INVISIBLE);
-                        menuButtons[4].setVisibility(View.INVISIBLE);
-                        menuButtons[5].setVisibility(View.INVISIBLE);
+                        menuButtons[3].setVisibility(View.GONE);
+                        menuButtons[4].setVisibility(View.GONE);
+                        menuButtons[5].setVisibility(View.GONE);
                         menuButtons[6].setVisibility(View.VISIBLE);
                         isSwitchMenuOpen = false;
                     }
@@ -183,7 +179,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     //Menu Schließen
                     for (int i = 1; i < menuButtonIdArray.length; i++) {
-                        menuButtons[i].setVisibility(View.INVISIBLE);
+                        menuButtons[i].setVisibility(View.GONE);
                     }
                     menuButtons[0].setVisibility(View.VISIBLE);
                     boardManager.switchPreset_3r();
@@ -197,7 +193,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     //Menu Schließen
                     for (int i = 1; i < menuButtonIdArray.length; i++) {
-                        menuButtons[i].setVisibility(View.INVISIBLE);
+                        menuButtons[i].setVisibility(View.GONE);
                     }
                     menuButtons[0].setVisibility(View.VISIBLE);
                     boardManager.switchSetToCenter();
@@ -211,7 +207,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     //Menu Schließen
                     for (int i = 1; i < menuButtonIdArray.length; i++) {
-                        menuButtons[i].setVisibility(View.INVISIBLE);
+                        menuButtons[i].setVisibility(View.GONE);
                     }
                     menuButtons[0].setVisibility(View.VISIBLE);
                     boardManager.switchCalibrate();
@@ -224,16 +220,16 @@ public class FullscreenActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (!isSectionMenuOpen) {
-                        menuButtons[1].setVisibility(View.INVISIBLE);
-                        menuButtons[2].setVisibility(View.INVISIBLE);
+                        menuButtons[1].setVisibility(View.GONE);
+                        menuButtons[2].setVisibility(View.GONE);
                         menuButtons[7].setVisibility(View.VISIBLE);
                         menuButtons[8].setVisibility(View.VISIBLE);
                         isSectionMenuOpen = true;
                     } else {
                         menuButtons[1].setVisibility(View.VISIBLE);
                         menuButtons[2].setVisibility(View.VISIBLE);
-                        menuButtons[7].setVisibility(View.INVISIBLE);
-                        menuButtons[8].setVisibility(View.INVISIBLE);
+                        menuButtons[7].setVisibility(View.GONE);
+                        menuButtons[8].setVisibility(View.GONE);
                         isSectionMenuOpen = false;
                     }
 
@@ -246,7 +242,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     //Menu Schließen
                     for (int i = 1; i < menuButtonIdArray.length; i++) {
-                        menuButtons[i].setVisibility(View.INVISIBLE);
+                        menuButtons[i].setVisibility(View.GONE);
                     }
                     menuButtons[0].setVisibility(View.VISIBLE);
                     boardManager.sectionPreset_3r();
@@ -260,7 +256,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     //Menu Schließen
                     for (int i = 1; i < menuButtonIdArray.length; i++) {
-                        menuButtons[i].setVisibility(View.INVISIBLE);
+                        menuButtons[i].setVisibility(View.GONE);
                     }
                     menuButtons[0].setVisibility(View.VISIBLE);
                     boardManager.sectionsAllOff();
@@ -274,7 +270,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     //Menu Schließen
                     for (int i = 1; i < menuButtonIdArray.length; i++) {
-                        menuButtons[i].setVisibility(View.INVISIBLE);
+                        menuButtons[i].setVisibility(View.GONE);
                     }
                     try {
                         boardManager.disconnect();
@@ -292,7 +288,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     //Menu Schließen
                     for (int i = 1; i < menuButtonIdArray.length; i++) {
-                        menuButtons[i].setVisibility(View.INVISIBLE);
+                        menuButtons[i].setVisibility(View.GONE);
                     }
                     boardManager.setLight();
                     isMenuOpen = false;
@@ -300,31 +296,6 @@ public class FullscreenActivity extends AppCompatActivity {
             });
         }
     });
-
-    private void setMenuButtonSize(Button menuButton, String screenRatio) {
-        if ("16:9".equals(screenRatio)) {
-            menuButton.getLayoutParams().height = 70;
-        } else {
-            menuButton.getLayoutParams().height = 90;
-        }
-        menuButton.getLayoutParams().width = 153;
-
-    }
-
-    @NonNull
-    private String getScreenRatio() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
-        int width = displayMetrics.widthPixels;
-        for (int i = 1000; i > 0; i--) {
-            if (width % i == 0 && height % i == 0) {
-                width = width / i;
-                height = height / i;
-            }
-        }
-        return width +":"+height;
-    }
 
     protected void onDestroy() {
         super.onDestroy();

@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void saveLastConnectedBoard(String host, int port){
+    private void saveLastConnectedBoard(String host, int port) {
         SharedPreferences sharedPreferences = this.getSharedPreferences("lastConnectedBoard", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("lastConnectedHost", host);
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private void loadLastConectedBoard(TextInputEditText ipEntry, TextInputEditText portEntry){
+    private void loadLastConectedBoard(TextInputEditText ipEntry, TextInputEditText portEntry) {
         SharedPreferences sharedPreferences = this.getSharedPreferences("lastConnectedBoard", MODE_PRIVATE);
         ipEntry.setText(sharedPreferences.getString("lastConnectedHost", null));
         portEntry.setText(sharedPreferences.getString("lastUsedPort", null));

@@ -62,9 +62,9 @@ public class BoardManager {
     public void setSwitch(int targetSwitch, boolean targetState) {
         switchStates[targetSwitch]=targetState;
         if(targetState){
-            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_ASON, "00", "11", "23","0"+Integer.toHexString(targetSwitch).toUpperCase()));
+            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASON, "00", "11", "23","0"+Integer.toHexString(targetSwitch).toUpperCase()));
         } else {
-            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_ASOF, "00", "11", "23","0"+Integer.toHexString(targetSwitch).toUpperCase()));
+            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASOF, "00", "11", "23","0"+Integer.toHexString(targetSwitch).toUpperCase()));
         }
         Log.d(TAG, "setSwitch: Weiche: "+ (targetSwitch + 1) +" auf Status: "+ targetState);
     }
@@ -73,11 +73,10 @@ public class BoardManager {
     public void setSection(int targetSection, boolean targetState){
         sectionStates[targetSection]=targetState;
         if(targetState){
-            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_ASON, "00", "11", "24", "0"+Integer.toHexString(targetSection).toUpperCase()));
+            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASON, "00", "11", "24", "0"+Integer.toHexString(targetSection).toUpperCase()));
         } else {
-            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_ASOF, "00", "11", "24", "0"+Integer.toHexString(targetSection).toUpperCase()));
+            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASOF, "00", "11", "24", "0"+Integer.toHexString(targetSection).toUpperCase()));
         }
-        //send(":S0166N"+(99 - targetState)+"0011240"+Integer.toHexString(targetSection).toUpperCase()+";");
         Log.d(TAG, "setSection: Gleisabschnitt: "+ (targetSection + 1) +" auf Status: "+ targetState);
     }
 
@@ -86,12 +85,12 @@ public class BoardManager {
         if(!lightState){
             lightState=true;
             Log.d(TAG, "setLight: Licht angeschaltet");
-            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_ASON, "00", "11", "24", "0D"));
+            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASON, "00", "11", "24", "0D"));
         }
         else{
             lightState=false;
             Log.d(TAG, "setLight: Licht ausgeschaltet");
-            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_ASOF, "00", "11", "24", "0D"));
+            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASOF, "00", "11", "24", "0D"));
         }
     }
 
@@ -100,16 +99,14 @@ public class BoardManager {
     protected void requestSwitchStates() throws InterruptedException, IOException {
         //Abfragen
         //send(":S0166N71006503;");
-        send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_NVRD, "00", "65", "03"));
+        send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_3_NVRD, "00", "65", "03"));
         String receivedSwitchStates_0 = receive(18);
-        //send(":S0166N71006504;");
-        send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_NVRD, "00", "65", "04"));
+        send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_3_NVRD, "00", "65", "04"));
         String receivedSwitchStates_1 = receive(18);
         //Datenpuffer
         try {
             receive(socketInputStream.available());
-        } catch (NullPointerException e){
-            e.printStackTrace();
+        } catch (NullPointerException ignore){
         }
         //Werte übertragen
         receivedSwitchStates_0 = receivedSwitchStates_0.substring(15,17);
@@ -136,8 +133,7 @@ public class BoardManager {
             for(int i=0; i<receivedSwitchStatesBinary_1.length(); i++){
                 switchStates[i+receivedSwitchStatesBinary_0.length()]=String.valueOf(receivedSwitchStatesBinary_1.charAt(i)).equals("1");
             }
-        } catch (NumberFormatException e){
-            e.printStackTrace();
+        } catch (NumberFormatException ignore){
         }
     }
 
@@ -167,12 +163,12 @@ public class BoardManager {
 
     //Weichen auf mitte
     protected void switchSetToCenter(){
-        send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_ASON, "00", "11", "23", "10"));
+        send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASON, "00", "11", "23", "10"));
     }
 
     //Weichen nachjustieren
     protected void switchCalibrate(){
-        send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_ASON, "00", "11", "23", "11"));
+        send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASON, "00", "11", "23", "11"));
     }
 
     //Gleise 3 runden
@@ -200,7 +196,7 @@ public class BoardManager {
 
     //Alle Gleise ausschalten
     protected void sectionsAllOff(){
-        send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_ASON, "00", "11", "24", "10"));
+        send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASON, "00", "11", "24", "10"));
         Arrays.fill(sectionStates, false);
         lightState=false;
     }
@@ -213,8 +209,7 @@ public class BoardManager {
                 try {
                     byte[] bMessage = message.getBytes(StandardCharsets.UTF_8);
                     socketOutputStream.write(bMessage);
-                } catch (IOException | NullPointerException e) {
-                    e.printStackTrace();
+                } catch (IOException | NullPointerException ignored) {
                 }
 
             }
@@ -233,8 +228,7 @@ public class BoardManager {
                 for(int i=0; i<rawMessage.length; i++){
                     try {
                         rawMessage[i]=socketInputStream.readByte();
-                    } catch (IOException | NullPointerException e) {
-                        e.printStackTrace();
+                    } catch (IOException | NullPointerException ignored) {
                     }
                     message[0] += (char)rawMessage[i];
                 }

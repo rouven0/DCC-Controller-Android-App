@@ -35,6 +35,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/menu_main"
+            android:backgroundTint="@color/colorMenu_1"
             android:textSize="16sp" />
 
         <!--Menü für Presets-->
@@ -45,6 +46,7 @@
             app:layout_constraintStart_toEndOf="@id/mainMenuButton"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/menu_presets"
+            android:backgroundTint="@color/colorMenu_2"
             android:textSize="14sp" />
 
         <!--Weichen-->
@@ -55,6 +57,7 @@
             app:layout_constraintStart_toEndOf="@id/presetsMenuButton"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/menu_switch"
+            android:backgroundTint="@color/colorMenu_3"
             android:textSize="12sp" />
 
         <Button
@@ -64,8 +67,7 @@
             app:layout_constraintStart_toEndOf="@id/switchMenuButton"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/action_setstandard_sw"
-            android:textSize="10sp"
-            tools:ignore="SmallSp" />
+            android:textSize="12sp"/>
 
         <Button
             android:id="@+id/switchSetToCenterActionButton"
@@ -74,8 +76,7 @@
             app:layout_constraintStart_toEndOf="@id/switchSetStandardActionbutton"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/action_settocenter"
-            android:textSize="10sp"
-            tools:ignore="SmallSp" />
+            android:textSize="12sp"/>
 
         <Button
             android:id="@+id/switchCalibrateActionButton"
@@ -84,8 +85,7 @@
             app:layout_constraintStart_toEndOf="@id/switchSetToCenterActionButton"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/action_calibrate"
-            android:textSize="8sp"
-            tools:ignore="SmallSp" />
+            android:textSize="12sp"/>
 
         <!--Gleisabschnitte-->
         <Button
@@ -95,6 +95,7 @@
             app:layout_constraintStart_toEndOf="@id/switchMenuButton"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/menu_sections"
+            android:backgroundTint="@color/colorMenu_3"
             android:textSize="12sp" />
 
         <Button
@@ -104,8 +105,7 @@
             app:layout_constraintStart_toEndOf="@id/sectionMenuButton"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/action_setstandard_se"
-            android:textSize="10sp"
-            tools:ignore="SmallSp" />
+            android:textSize="12sp"/>
 
         <Button
             android:id="@+id/sectionsAllOffActionbutton"
@@ -114,8 +114,7 @@
             app:layout_constraintStart_toEndOf="@id/sectionSetStandardActionbutton"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/action_allsectionsoff"
-            android:textSize="10sp"
-            tools:ignore="SmallSp" />
+            android:textSize="12sp"/>
 
         <!--Neu verbinden-->
         <Button
@@ -125,6 +124,7 @@
             app:layout_constraintStart_toEndOf="@id/presetsMenuButton"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/action_reconnect"
+            android:backgroundTint="@color/colorMenu_2"
             android:textSize="12sp" />
 
         <!--Licht-->
@@ -135,6 +135,7 @@
             app:layout_constraintStart_toEndOf="@id/reconnectActionButton"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/action_light"
+            android:backgroundTint="@color/colorMenu_2"
             android:textSize="14sp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

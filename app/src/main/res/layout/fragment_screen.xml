@@ -2,21 +2,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/frameLayout_imageView"
+    android:id="@+id/constraintLayout_imageView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ScreenFragment">
 
         <ImageView
+            android:id="@+id/image_gp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/gleisplan_numbered_alt"
-            android:foregroundGravity="bottom"
             android:contentDescription="@string/contentDescription_gp"
+            android:src="@drawable/gleisplan_numbered_alt"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:adjustViewBounds="true"/>
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_1"
@@ -25,7 +26,8 @@
             app:thumbTint="@color/colorSwitchThumb"
             app:trackTint="@color/colorSwitchTrack"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:rotation="90"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_2"
             android:layout_width="wrap_content"
@@ -33,7 +35,8 @@
             app:thumbTint="@color/colorSwitchThumb"
             app:trackTint="@color/colorSwitchTrack"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:rotation="255"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_3"
             android:layout_width="wrap_content"
@@ -41,7 +44,8 @@
             app:thumbTint="@color/colorSwitchThumb"
             app:trackTint="@color/colorSwitchTrack"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:rotation="255"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_4"
             android:layout_width="wrap_content"
@@ -49,7 +53,8 @@
             app:thumbTint="@color/colorSwitchThumb"
             app:trackTint="@color/colorSwitchTrack"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:rotation="270"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_5"
             android:layout_width="wrap_content"
@@ -57,7 +62,8 @@
             app:thumbTint="@color/colorSwitchThumb"
             app:trackTint="@color/colorSwitchTrack"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:rotation="240"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_6"
             android:layout_width="wrap_content"
@@ -65,7 +71,8 @@
             app:thumbTint="@color/colorSwitchThumb"
             app:trackTint="@color/colorSwitchTrack"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:rotation="270"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_7"
             android:layout_width="wrap_content"
@@ -73,7 +80,8 @@
             app:thumbTint="@color/colorSwitchThumb"
             app:trackTint="@color/colorSwitchTrack"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:rotation="90"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_8"
             android:layout_width="wrap_content"
@@ -81,7 +89,8 @@
             app:thumbTint="@color/colorSwitchThumb"
             app:trackTint="@color/colorSwitchTrack"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:rotation="75"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_9"
             android:layout_width="wrap_content"
@@ -89,7 +98,8 @@
             app:thumbTint="@color/colorSwitchThumb"
             app:trackTint="@color/colorSwitchTrack"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:rotation="255"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_10"
             android:layout_width="wrap_content"
@@ -97,7 +107,8 @@
             app:thumbTint="@color/colorSwitchThumb"
             app:trackTint="@color/colorSwitchTrack"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:rotation="270"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_11"
             android:layout_width="wrap_content"
@@ -105,7 +116,8 @@
             app:thumbTint="@color/colorSwitchThumb"
             app:trackTint="@color/colorSwitchTrack"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:rotation="255"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_12"
             android:layout_width="wrap_content"
@@ -113,7 +125,8 @@
             app:thumbTint="@color/colorSwitchThumb"
             app:trackTint="@color/colorSwitchTrack"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:rotation="255"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_13"
             android:layout_width="wrap_content"
@@ -121,7 +134,8 @@
             app:thumbTint="@color/colorSwitchThumb"
             app:trackTint="@color/colorSwitchTrack"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:rotation="45"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_14"
             android:layout_width="wrap_content"
@@ -129,7 +143,8 @@
             app:thumbTint="@color/colorSwitchThumb"
             app:trackTint="@color/colorSwitchTrack"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:rotation="105"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_15"
             android:layout_width="wrap_content"
@@ -137,7 +152,8 @@
             app:thumbTint="@color/colorSwitchThumb"
             app:trackTint="@color/colorSwitchTrack"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:rotation="90"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_16"
             android:layout_width="wrap_content"
@@ -145,7 +161,8 @@
             app:thumbTint="@color/colorSwitchThumb"
             app:trackTint="@color/colorSwitchTrack"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:rotation="90"/>
 
         <ToggleButton
             android:id="@+id/section_1"

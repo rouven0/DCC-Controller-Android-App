@@ -31,14 +31,15 @@
             android:min="0"
             android:progress="50" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <Button
             android:id="@+id/button_reset_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="@dimen/fab_margin"
             android:clickable="true"
-            android:src="@drawable/reset" />
+            android:text="@string/quickMenu_actions"
+            android:backgroundTint="@color/colorSwitchThumb"/>
     </FrameLayout>
 
     <FrameLayout
@@ -65,14 +66,15 @@
             android:min="0"
             android:progress="50"/>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <Button
             android:id="@+id/button_reset_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="@dimen/fab_margin"
-            android:src="@drawable/reset"/>
+            android:text="@string/quickMenu_actions"
+            android:backgroundTint="@color/colorSwitchThumb"/>
     </FrameLayout>
 
     <FrameLayout
@@ -99,13 +101,14 @@
             android:min="0"
             android:progress="50"/>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <Button
             android:id="@+id/button_reset_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="@dimen/fab_margin"
-            android:src="@drawable/reset"/>
+            android:text="@string/quickMenu_actions"
+            android:backgroundTint="@color/colorSwitchThumb"/>
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

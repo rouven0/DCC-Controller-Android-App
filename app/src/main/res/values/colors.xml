@@ -9,6 +9,9 @@
     <color name="colorSectionText">#000</color>
     <color name="colorSwitchTrack">#f77</color>
     <color name="colorSwitchThumb">#c00</color>
+    <color name="colorMenu_1">#999</color>
+    <color name="colorMenu_2">#aaa</color>
+    <color name="colorMenu_3">#bbb</color>
 
 
 </resources>

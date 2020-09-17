@@ -9,9 +9,9 @@
         android:icon="@mipmap/train_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/train_icon_round"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
+        android:resizeableActivity="false"
         android:theme="@style/AppTheme"
-        android:appCategory="game"
         android:fullBackupContent="@xml/backup_descriptor">
         <activity
             android:name=".MainActivity"
@@ -25,7 +25,7 @@
         <activity
             android:name=".FullscreenActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="sensorLandscape"/>
     </application>
 
 </manifest>

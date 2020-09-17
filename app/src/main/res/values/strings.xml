@@ -11,20 +11,19 @@
     <string name="menu_presets">Presets</string>
     <string name="menu_switch">Weichen</string>
     <string name="menu_sections">Gleise</string>
-
     <string name="action_setstandard_sw">3 Runden</string>
     <string name="action_settocenter">Zentrieren</string>
     <string name="action_calibrate">Nachjustieren</string>
-
     <string name="action_allsectionsoff">Alle ausschalten</string>
     <string name="action_setstandard_se">3 Runden</string>
-
     <string name="action_reconnect">Neu verbinden</string>
     <string name="action_light">Licht</string>
 
-    <string name="contentDescription_gp">Gleisplan</string>
-
     <string name="default_seekBarTextView">0</string>
+
+    <string name="quickMenu_actions">Aktionen</string>
+
+    <string name="contentDescription_gp">Gleisplan</string>
 
 
 </resources>
