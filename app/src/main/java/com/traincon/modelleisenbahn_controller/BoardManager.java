@@ -100,9 +100,9 @@ public class BoardManager {
         //Abfragen
         //send(":S0166N71006503;");
         send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_3_NVRD, "00", "65", "03"));
-        String receivedSwitchStates_0 = receive(18);
+        String receivedSwitchStates_0 = receive(CBusAsciiMessageBuilder.EML_3);
         send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_3_NVRD, "00", "65", "04"));
-        String receivedSwitchStates_1 = receive(18);
+        String receivedSwitchStates_1 = receive(CBusAsciiMessageBuilder.EML_3);
         //Datenpuffer
         try {
             receive(socketInputStream.available());
