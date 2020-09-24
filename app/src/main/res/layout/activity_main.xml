@@ -57,6 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="60dp"
+            android:layout_marginEnd="147dp"
             android:hint="@string/input_portEntry"
             android:inputType="textNoSuggestions"
             android:singleLine="true"/>

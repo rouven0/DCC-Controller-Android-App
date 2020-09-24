@@ -17,20 +17,20 @@ import static android.content.ContentValues.TAG;
 public class BoardManager {
     public final boolean[] switchStates = new boolean[16];
     public final boolean[] sectionStates = new boolean[13];
-    public boolean lightState = false;
     public final String devId;
     public final String host;
     public final int port;
-    public Socket mainSocket;
     private final CBusAsciiMessageBuilder cBusAsciiMessageBuilder;
+    public boolean lightState = false;
+    public Socket mainSocket;
     private DataInputStream socketInputStream;
     private DataOutputStream socketOutputStream;
 
 
-    public BoardManager(String devid, String hst, int prt){
+    public BoardManager(String devid, String hst, int prt) {
         devId = devid;
-        host=hst;
-        port=prt;
+        host = hst;
+        port = prt;
         Arrays.fill(switchStates, false);
         Arrays.fill(sectionStates, false);
         cBusAsciiMessageBuilder = new CBusAsciiMessageBuilder(getCanId()); //Gerätenummer wird zur CANID
@@ -60,35 +60,34 @@ public class BoardManager {
 
     //Weiche auf dem Brett stellen
     public void setSwitch(int targetSwitch, boolean targetState) {
-        switchStates[targetSwitch]=targetState;
-        if(targetState){
-            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASON, "00", "11", "23","0"+Integer.toHexString(targetSwitch).toUpperCase()));
+        switchStates[targetSwitch] = targetState;
+        if (targetState) {
+            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASON, "00", "11", "23", "0" + Integer.toHexString(targetSwitch).toUpperCase()));
         } else {
-            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASOF, "00", "11", "23","0"+Integer.toHexString(targetSwitch).toUpperCase()));
+            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASOF, "00", "11", "23", "0" + Integer.toHexString(targetSwitch).toUpperCase()));
         }
-        Log.d(TAG, "setSwitch: Weiche: "+ (targetSwitch + 1) +" auf Status: "+ targetState);
+        Log.d(TAG, "setSwitch: Weiche: " + (targetSwitch + 1) + " auf Status: " + targetState);
     }
 
     //Gleisaschnitt auf dem Brett umschalten
-    public void setSection(int targetSection, boolean targetState){
-        sectionStates[targetSection]=targetState;
-        if(targetState){
-            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASON, "00", "11", "24", "0"+Integer.toHexString(targetSection).toUpperCase()));
+    public void setSection(int targetSection, boolean targetState) {
+        sectionStates[targetSection] = targetState;
+        if (targetState) {
+            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASON, "00", "11", "24", "0" + Integer.toHexString(targetSection).toUpperCase()));
         } else {
-            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASOF, "00", "11", "24", "0"+Integer.toHexString(targetSection).toUpperCase()));
+            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASOF, "00", "11", "24", "0" + Integer.toHexString(targetSection).toUpperCase()));
         }
-        Log.d(TAG, "setSection: Gleisabschnitt: "+ (targetSection + 1) +" auf Status: "+ targetState);
+        Log.d(TAG, "setSection: Gleisabschnitt: " + (targetSection + 1) + " auf Status: " + targetState);
     }
 
     //Licht umschalten
-    public void setLight(){
-        if(!lightState){
-            lightState=true;
+    public void setLight() {
+        if (!lightState) {
+            lightState = true;
             Log.d(TAG, "setLight: Licht angeschaltet");
             send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASON, "00", "11", "24", "0D"));
-        }
-        else{
-            lightState=false;
+        } else {
+            lightState = false;
             Log.d(TAG, "setLight: Licht ausgeschaltet");
             send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASOF, "00", "11", "24", "0D"));
         }
@@ -106,48 +105,47 @@ public class BoardManager {
         //Datenpuffer
         try {
             receive(socketInputStream.available());
-        } catch (NullPointerException ignore){
+        } catch (NullPointerException ignore) {
         }
         //Werte übertragen
-        receivedSwitchStates_0 = receivedSwitchStates_0.substring(15,17);
-        receivedSwitchStates_1 = receivedSwitchStates_1.substring(15,17);
+        receivedSwitchStates_0 = receivedSwitchStates_0.substring(15, 17);
+        receivedSwitchStates_1 = receivedSwitchStates_1.substring(15, 17);
         StringBuilder receivedSwitchStatesBinary_0;
         StringBuilder receivedSwitchStatesBinary_1;
         try {
             //Zur Binärzahl
             receivedSwitchStatesBinary_0 = new StringBuilder(Integer.toBinaryString(Integer.parseInt(receivedSwitchStates_0, 16)));
             receivedSwitchStatesBinary_1 = new StringBuilder(Integer.toBinaryString(Integer.parseInt(receivedSwitchStates_1, 16)));
-            while (receivedSwitchStatesBinary_0.length()<8){
+            while (receivedSwitchStatesBinary_0.length() < 8) {
                 receivedSwitchStatesBinary_0.insert(0, "0");
             }
-            while (receivedSwitchStatesBinary_1.length()<8){
+            while (receivedSwitchStatesBinary_1.length() < 8) {
                 receivedSwitchStatesBinary_1.insert(0, "0");
             }
             //Invertieren
             receivedSwitchStatesBinary_0.reverse();
             receivedSwitchStatesBinary_1.reverse();
             //Übertragen
-            for(int i=0; i<receivedSwitchStatesBinary_0.length(); i++){
-                switchStates[i]=String.valueOf(receivedSwitchStatesBinary_0.charAt(i)).equals("1");
+            for (int i = 0; i < receivedSwitchStatesBinary_0.length(); i++) {
+                switchStates[i] = String.valueOf(receivedSwitchStatesBinary_0.charAt(i)).equals("1");
             }
-            for(int i=0; i<receivedSwitchStatesBinary_1.length(); i++){
-                switchStates[i+receivedSwitchStatesBinary_0.length()]=String.valueOf(receivedSwitchStatesBinary_1.charAt(i)).equals("1");
+            for (int i = 0; i < receivedSwitchStatesBinary_1.length(); i++) {
+                switchStates[i + receivedSwitchStatesBinary_0.length()] = String.valueOf(receivedSwitchStatesBinary_1.charAt(i)).equals("1");
             }
-        } catch (NumberFormatException ignore){
+        } catch (NumberFormatException ignore) {
         }
     }
 
     //Funktionen aus dem Menü
     //Weichen 3 Runden
-    protected void switchPreset_3r(){
+    protected void switchPreset_3r() {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                for(int i=0; i<switchStates.length; i++){
-                    if(i==0 || (2<i && i<10)){
+                for (int i = 0; i < switchStates.length; i++) {
+                    if (i == 0 || (2 < i && i < 10)) {
                         setSwitch(i, true);
-                    }
-                    else{
+                    } else {
                         setSwitch(i, false);
                     }
                     try {
@@ -162,25 +160,24 @@ public class BoardManager {
     }
 
     //Weichen auf mitte
-    protected void switchSetToCenter(){
+    protected void switchSetToCenter() {
         send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASON, "00", "11", "23", "10"));
     }
 
     //Weichen nachjustieren
-    protected void switchCalibrate(){
+    protected void switchCalibrate() {
         send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASON, "00", "11", "23", "11"));
     }
 
     //Gleise 3 runden
-    protected void sectionPreset_3r(){
+    protected void sectionPreset_3r() {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                for(int i=0; i<sectionStates.length; i++){
-                    if((1<i && i<4) || (5<i && i<8) || (9<i && i<12)){
+                for (int i = 0; i < sectionStates.length; i++) {
+                    if ((1 < i && i < 4) || (5 < i && i < 8) || (9 < i && i < 12)) {
                         setSection(i, true);
-                    }
-                    else{
+                    } else {
                         setSection(i, false);
                     }
                     try {
@@ -195,14 +192,14 @@ public class BoardManager {
     }
 
     //Alle Gleise ausschalten
-    protected void sectionsAllOff(){
+    protected void sectionsAllOff() {
         send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASON, "00", "11", "24", "10"));
         Arrays.fill(sectionStates, false);
-        lightState=false;
+        lightState = false;
     }
 
     //String an das Brett senden
-    private void send(final String message){
+    private void send(final String message) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -225,12 +222,12 @@ public class BoardManager {
         final Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                for(int i=0; i<rawMessage.length; i++){
+                for (int i = 0; i < rawMessage.length; i++) {
                     try {
-                        rawMessage[i]=socketInputStream.readByte();
+                        rawMessage[i] = socketInputStream.readByte();
                     } catch (IOException | NullPointerException ignored) {
                     }
-                    message[0] += (char)rawMessage[i];
+                    message[0] += (char) rawMessage[i];
                 }
             }
         });
@@ -239,9 +236,9 @@ public class BoardManager {
         return message[0];
     }
 
-    private String getCanId(){
+    private String getCanId() {
         String canId = "";
-        switch (devId){
+        switch (devId) {
             case "1":
                 canId = "0165";
                 break;

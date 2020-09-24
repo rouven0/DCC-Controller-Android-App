@@ -1,22 +1,23 @@
 package com.traincon.modelleisenbahn_controller;
 
 import android.annotation.SuppressLint;
-import androidx.annotation.Nullable;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
 import java.util.Objects;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 public class FullscreenActivity extends AppCompatActivity {
     final private int[] menuButtonIdArray = new int[]{R.id.mainMenuButton, R.id.presetsMenuButton, R.id.switchMenuButton, R.id.switchSetStandardActionbutton, R.id.switchSetToCenterActionButton, R.id.switchCalibrateActionButton, R.id.sectionMenuButton, R.id.sectionSetStandardActionbutton, R.id.sectionsAllOffActionbutton, R.id.reconnectActionButton, R.id.lightActionButton};
@@ -27,26 +28,6 @@ public class FullscreenActivity extends AppCompatActivity {
     private boolean isSwitchMenuOpen = false;
     private boolean isSectionMenuOpen = false;
     private BoardManager boardManager;
-
-    @SuppressLint("SetTextI18n")
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.content_main);
-
-        Intent intent = getIntent();
-        String devId = intent.getStringExtra("deviceId");
-        String host = intent.getStringExtra("host");
-        int port = intent.getIntExtra("port", 0);
-        createTabLayout.start();
-        createMenuButtons.start();
-
-        boardManager = new BoardManager(devId, host, port);
-        boardManager.connect();
-    }
-
     private final Thread createTabLayout = new Thread(new Runnable() {
         @Override
         public void run() {
@@ -97,7 +78,6 @@ public class FullscreenActivity extends AppCompatActivity {
             });
         }
     });
-
     private final Thread createMenuButtons = new Thread(new Runnable() {
         @Override
         public void run() {
@@ -296,6 +276,25 @@ public class FullscreenActivity extends AppCompatActivity {
             });
         }
     });
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.content_main);
+
+        Intent intent = getIntent();
+        String devId = intent.getStringExtra("deviceId");
+        String host = intent.getStringExtra("host");
+        int port = intent.getIntExtra("port", 0);
+        createTabLayout.start();
+        createMenuButtons.start();
+
+        boardManager = new BoardManager(devId, host, port);
+        boardManager.connect();
+    }
 
     protected void onDestroy() {
         super.onDestroy();
