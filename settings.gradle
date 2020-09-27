@@ -1,2 +1,2 @@
-include ':CBusAsciiMessage'
+include ':CBusMessage'
 include ':app'

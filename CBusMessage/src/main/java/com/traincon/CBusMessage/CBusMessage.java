@@ -1,27 +1,11 @@
-package com.traincon.CBusAsciiMessage;
-
-/*
- * Build ascii CBus messages that are sent to the board
- * For more information about the events read the CBUS specification
- */
+package com.traincon.CBusMessage;
 
 @SuppressWarnings("unused")
-public class CBusAsciiMessageBuilder {
+public class CBusMessage {
     /*
-     * All events and other values are declared here
-     * The Reader will also use these
+     * All events are declared here
+     * For more information read the CBUS specification
      */
-
-    //Expected Message Length
-    public final static int EML_0 = 12;
-    public final static int EML_1 = 14;
-    public final static int EML_2 = 16;
-    public final static int EML_3 = 18;
-    public final static int EML_4 = 20;
-    public final static int EML_5 = 22;
-    public final static int EML_6 = 24;
-    public final static int EML_7 = 26;
-
     //0 data bytes Packages
     public final static String EVENT_0_ACK = "00";
     public final static String EVENT_0_NAK = "01";
@@ -96,43 +80,31 @@ public class CBusAsciiMessageBuilder {
 
     //7 data bytes Packages
 
-    private final String canId;
+    public String event;
+    public String[] data;
 
-    public CBusAsciiMessageBuilder(String canid) {
-        canId = canid;
+    public CBusMessage(String event, String[] data) {
+        this.event = event;
+        this.data = data;
     }
 
-    public String build(String eventAddress) {
-        return ":S" + canId + "N" + eventAddress + ";";
+    public String getEvent() {
+        return event;
     }
 
-    public String build(String eventAddress, String dat1) {
-        return ":S" + canId + "N" + eventAddress + dat1 + ";";
+    public void setEvent(String event) {
+        this.event = event;
     }
 
-    public String build(String eventAddress, String dat1, String dat2) {
-        return ":S" + canId + "N" + eventAddress + dat1 + dat2 + ";";
+    public int getLenght() {
+        return data.length;
     }
 
-    public String build(String eventAddress, String dat1, String dat2, String dat3) {
-        return ":S" + canId + "N" + eventAddress + dat1 + dat2 + dat3 + ";";
+    public String[] getData() {
+        return data;
     }
 
-    public String build(String eventAddress, String dat1, String dat2, String dat3, String dat4) {
-        return ":S" + canId + "N" + eventAddress + dat1 + dat2 + dat3 + dat4 + ";";
+    public void setData(String[] data) {
+        this.data = data;
     }
-
-    public String build(String eventAddress, String dat1, String dat2, String dat3, String dat4, String dat5) {
-        return ":S" + canId + "N" + eventAddress + dat1 + dat2 + dat3 + dat4 + dat5 + ";";
-    }
-
-    public String build(String eventAddress, String dat1, String dat2, String dat3, String dat4, String dat5, String dat6) {
-        return ":S" + canId + "N" + eventAddress + dat1 + dat2 + dat3 + dat4 + dat5 + dat6 + ";";
-    }
-
-    public String build(String eventAddress, String dat1, String dat2, String dat3, String dat4, String dat5, String dat6, String dat7) {
-        return ":S" + canId + "N" + eventAddress + dat1 + dat2 + dat3 + dat4 + dat5 + dat6 + dat7 + ";";
-    }
-
-
 }

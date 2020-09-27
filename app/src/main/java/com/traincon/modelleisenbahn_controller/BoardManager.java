@@ -2,7 +2,8 @@ package com.traincon.modelleisenbahn_controller;
 
 import android.util.Log;
 
-import com.traincon.CBusAsciiMessage.CBusAsciiMessageBuilder;
+import com.traincon.CBusMessage.CBusMessage;
+import com.traincon.CBusMessage.CBusAsciiMessageBuilder;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -62,9 +63,9 @@ public class BoardManager {
     public void setSwitch(int targetSwitch, boolean targetState) {
         switchStates[targetSwitch] = targetState;
         if (targetState) {
-            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASON, "00", "11", "23", "0" + Integer.toHexString(targetSwitch).toUpperCase()));
+            send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASON, new String[]{"00", "11", "23", "0" + Integer.toHexString(targetSwitch).toUpperCase()})));
         } else {
-            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASOF, "00", "11", "23", "0" + Integer.toHexString(targetSwitch).toUpperCase()));
+            send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASOF, new String[]{"00", "11", "23", "0" + Integer.toHexString(targetSwitch).toUpperCase()})));
         }
         Log.d(TAG, "setSwitch: Weiche: " + (targetSwitch + 1) + " auf Status: " + targetState);
     }
@@ -73,9 +74,11 @@ public class BoardManager {
     public void setSection(int targetSection, boolean targetState) {
         sectionStates[targetSection] = targetState;
         if (targetState) {
-            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASON, "00", "11", "24", "0" + Integer.toHexString(targetSection).toUpperCase()));
+            send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASON, new String[]{"00", "11", "24", "0" + Integer.toHexString(targetSection).toUpperCase()})));
+
         } else {
-            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASOF, "00", "11", "24", "0" + Integer.toHexString(targetSection).toUpperCase()));
+            send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASOF, new String[]{"00", "11", "24", "0" + Integer.toHexString(targetSection).toUpperCase()})));
+
         }
         Log.d(TAG, "setSection: Gleisabschnitt: " + (targetSection + 1) + " auf Status: " + targetState);
     }
@@ -85,11 +88,12 @@ public class BoardManager {
         if (!lightState) {
             lightState = true;
             Log.d(TAG, "setLight: Licht angeschaltet");
-            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASON, "00", "11", "24", "0D"));
+            send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASON, new String[]{"00", "11", "24", "0D"})));
         } else {
             lightState = false;
             Log.d(TAG, "setLight: Licht ausgeschaltet");
-            send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASOF, "00", "11", "24", "0D"));
+            send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASOF, new String[]{"00", "11", "24", "0D"})));
+
         }
     }
 
@@ -97,10 +101,9 @@ public class BoardManager {
     //Wird in ScreenFragment.update aufgerufen
     protected void requestSwitchStates() throws InterruptedException, IOException {
         //Abfragen
-        //send(":S0166N71006503;");
-        send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_3_NVRD, "00", "65", "03"));
+        send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_3_NVRD, new String[]{"00", "65", "03"})));
         String receivedSwitchStates_0 = receive(CBusAsciiMessageBuilder.EML_3);
-        send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_3_NVRD, "00", "65", "04"));
+        send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_3_NVRD, new String[]{"00", "65", "04"})));
         String receivedSwitchStates_1 = receive(CBusAsciiMessageBuilder.EML_3);
         //Datenpuffer
         try {
@@ -161,12 +164,12 @@ public class BoardManager {
 
     //Weichen auf mitte
     protected void switchSetToCenter() {
-        send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASON, "00", "11", "23", "10"));
+        send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASON, new String[]{"00", "11", "23", "10"})));
     }
 
     //Weichen nachjustieren
     protected void switchCalibrate() {
-        send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASON, "00", "11", "23", "11"));
+        send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASON, new String[]{"00", "11", "23", "11"})));
     }
 
     //Gleise 3 runden
@@ -193,7 +196,7 @@ public class BoardManager {
 
     //Alle Gleise ausschalten
     protected void sectionsAllOff() {
-        send(cBusAsciiMessageBuilder.build(CBusAsciiMessageBuilder.EVENT_4_ASON, "00", "11", "24", "10"));
+        send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASON, new String[]{"00", "11", "24", "10"})));
         Arrays.fill(sectionStates, false);
         lightState = false;
     }
