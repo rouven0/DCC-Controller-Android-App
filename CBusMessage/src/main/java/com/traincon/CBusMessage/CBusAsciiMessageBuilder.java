@@ -1,4 +1,7 @@
 package com.traincon.CBusMessage;
+
+import androidx.annotation.NonNull;
+
 /*
  * Build Ascii-CBus messages that are sent to the board
  */
@@ -20,7 +23,7 @@ public class CBusAsciiMessageBuilder {
         canId = canid;
     }
 
-    public String build(CBusMessage cBusMessage){
+    public String build(@NonNull CBusMessage cBusMessage){
         StringBuilder data = new StringBuilder();
         for (int i=0; i<cBusMessage.getData().length; i++){
             data.append(cBusMessage.getData()[i]);

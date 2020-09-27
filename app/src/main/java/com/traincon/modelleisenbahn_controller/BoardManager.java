@@ -1,5 +1,7 @@
 package com.traincon.modelleisenbahn_controller;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.traincon.CBusMessage.CBusMessage;
@@ -12,6 +14,8 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+
+import androidx.preference.PreferenceManager;
 
 import static android.content.ContentValues.TAG;
 
@@ -27,11 +31,12 @@ public class BoardManager {
     private DataInputStream socketInputStream;
     private DataOutputStream socketOutputStream;
 
-
-    public BoardManager(String devid, String hst, int prt) {
+    private final Context context;
+    public BoardManager(Context context,String devid, String hst, int prt) {
         devId = devid;
         host = hst;
         port = prt;
+        this.context = context;
         Arrays.fill(switchStates, false);
         Arrays.fill(sectionStates, false);
         cBusAsciiMessageBuilder = new CBusAsciiMessageBuilder(getCanId()); //Gerätenummer wird zur CANID
@@ -241,18 +246,19 @@ public class BoardManager {
 
     private String getCanId() {
         String canId = "";
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         switch (devId) {
             case "1":
-                canId = "0165";
+                canId = sharedPreferences.getString("canid_1", null);
                 break;
             case "2":
-                canId = "0166";
+                canId = sharedPreferences.getString("canid_2", null);
                 break;
             case "3":
-                canId = "0167";
+                canId = sharedPreferences.getString("canid_3", null);
                 break;
             case "4":
-                canId = "0168";
+                canId = sharedPreferences.getString("canid_4", null);
                 break;
         }
         return canId;

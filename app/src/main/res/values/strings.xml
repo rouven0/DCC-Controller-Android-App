@@ -1,29 +1,48 @@
-<resources>
-    <string name="app_name">Modelleisenbahn-Controller</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" tools:ignore="MissingTranslation">DCC-Controller</string>
 
-    <string name="action_loadLast">Zuletzt verwendet</string>
-    <string name="input_ipEntry">Hostname</string>
-    <string name="input_portEntry">Port</string>
-    <string name="input_devIdEntry">Gerätenummer (Leer≙2)</string>
+    <!-- Einstellungen-->
+    <string name="title_activity_settings" tools:ignore="MissingTranslation">Preferences</string>
+
+    <!-- Preference Titles -->
+    <string name="can_header" translatable="false">Can-Bus</string>
+    <!-- Canid Preferences -->
+    <string name="preference_canid_1" translatable="false">Can ID 1</string>
+    <string name="preference_canid_2" translatable="false">Can ID 2</string>
+    <string name="preference_canid_3" translatable="false">Can ID 3</string>
+    <string name="preference_canid_4" translatable="false">Can ID 4</string>
+
+    <string name="summary_canid_1" tools:ignore="MissingTranslation">CAN-ID for Device ID 1</string>
+    <string name="summary_canid_2" tools:ignore="MissingTranslation">CAN-ID for Device ID 2</string>
+    <string name="summary_canid_3" tools:ignore="MissingTranslation">CAN-ID for Device ID 3</string>
+    <string name="summary_canid_4" tools:ignore="MissingTranslation">CAN-ID for Device ID 4</string>
+
+    <string name="action_loadLast" tools:ignore="MissingTranslation">Last used</string>
+    <string name="input_ipEntry" tools:ignore="MissingTranslation">Hostname</string>
+    <string name="input_portEntry" tools:ignore="MissingTranslation">Port</string>
+    <string name="input_devIdEntry" tools:ignore="MissingTranslation">Device ID (Empty≙2)</string>
+
+    <string name="item_settings" tools:ignore="MissingTranslation">Preferences</string>
 
     <!-- Strings für das Menü-->
-    <string name="menu_main">Menu</string>
-    <string name="menu_presets">Presets</string>
-    <string name="menu_switch">Weichen</string>
-    <string name="menu_sections">Gleise</string>
-    <string name="action_setstandard_sw">3 Runden</string>
-    <string name="action_settocenter">Zentrieren</string>
-    <string name="action_calibrate">Nachjustieren</string>
-    <string name="action_allsectionsoff">Alle ausschalten</string>
-    <string name="action_setstandard_se">3 Runden</string>
-    <string name="action_reconnect">Neu verbinden</string>
-    <string name="action_light">Licht</string>
+    <string name="menu_main" tools:ignore="MissingTranslation">Menu</string>
+    <string name="menu_presets" tools:ignore="MissingTranslation">Presets</string>
+    <string name="menu_switch" tools:ignore="MissingTranslation">Switches</string>
+    <string name="menu_sections" tools:ignore="MissingTranslation">Sections</string>
+    <string name="action_setstandard_sw" tools:ignore="MissingTranslation">3 Laps</string>
+    <string name="action_settocenter" tools:ignore="MissingTranslation">Center</string>
+    <string name="action_calibrate" tools:ignore="MissingTranslation">Calibrate</string>
+    <string name="action_allsectionsoff" tools:ignore="MissingTranslation">All off</string>
+    <string name="action_setstandard_se" tools:ignore="MissingTranslation">3 Laps</string>
+    <string name="action_reconnect" tools:ignore="MissingTranslation">Reconnect</string>
+    <string name="action_light" tools:ignore="MissingTranslation">Light</string>
 
-    <string name="default_seekBarTextView">0</string>
+    <!--Controller-->
+    <string name="default_seekBarTextView" tools:ignore="MissingTranslation">0</string>
+    <string name="quickMenu_actions" tools:ignore="MissingTranslation">Actions</string>
 
-    <string name="quickMenu_actions">Aktionen</string>
-
-    <string name="contentDescription_gp">Gleisplan</string>
+    <!--Gleisplan-->
+    <string name="contentDescription_gp" tools:ignore="MissingTranslation">Layout</string>
 
 
 </resources>

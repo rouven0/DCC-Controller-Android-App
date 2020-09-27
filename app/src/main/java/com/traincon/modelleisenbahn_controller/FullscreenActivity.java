@@ -292,7 +292,7 @@ public class FullscreenActivity extends AppCompatActivity {
         createTabLayout.start();
         createMenuButtons.start();
 
-        boardManager = new BoardManager(devId, host, port);
+        boardManager = new BoardManager(getBaseContext(), devId, host, port);
         boardManager.connect();
     }
 

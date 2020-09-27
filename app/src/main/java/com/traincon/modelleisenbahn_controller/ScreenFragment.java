@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.ToggleButton;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
@@ -59,13 +58,13 @@ public class ScreenFragment extends Fragment {
             ImageView imageView = rootView.findViewById(R.id.image_gp);
             ConstraintSet constraintSet = new ConstraintSet();
             for (int i = 0; i < imageOverlayFrames_x.length; i++) {
-                imageOverlayFrames_x[i] = new FrameLayout(Objects.requireNonNull(getActivity()));
+                imageOverlayFrames_x[i] = new FrameLayout(requireActivity());
                 imageOverlayFrames_x[i].setId(View.generateViewId());
                 imageOverlayFrames_x[i].setLayoutParams(new FrameLayout.LayoutParams(imageView.getWidth() / imageOverlayFrames_x.length, imageView.getHeight() / imageOverlayFrames_y.length));
                 constraintLayout.addView(imageOverlayFrames_x[i]);
             }
             for (int i = 0; i < imageOverlayFrames_y.length; i++) {
-                imageOverlayFrames_y[i] = new FrameLayout(Objects.requireNonNull(getActivity()));
+                imageOverlayFrames_y[i] = new FrameLayout(requireActivity());
                 imageOverlayFrames_y[i].setId(View.generateViewId());
                 imageOverlayFrames_y[i].setLayoutParams(new FrameLayout.LayoutParams(imageView.getWidth() / imageOverlayFrames_x.length, imageView.getHeight() / imageOverlayFrames_y.length));
                 constraintLayout.addView(imageOverlayFrames_y[i]);
@@ -112,7 +111,7 @@ public class ScreenFragment extends Fragment {
         //Gleisplan einrichten
         rootView = inflater.inflate(R.layout.fragment_screen, container, false);
         constraintLayout = rootView.findViewById(R.id.constraintLayout_imageView);
-        handler = new Handler(Objects.requireNonNull(getContext()).getMainLooper());
+        handler = new Handler(requireContext().getMainLooper());
         handler.post(initRunnable); // als runnable, damit es schneller dargestellt wird
         return rootView;
     }

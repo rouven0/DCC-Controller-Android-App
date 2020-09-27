@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -27,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
+        android:foregroundTint="@color/colorTitle"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <FrameLayout
@@ -37,7 +39,7 @@
         <Button
             android:id="@+id/loadLast"
             android:layout_width="147dp"
-            android:layout_height="111dp"
+            android:layout_height="120dp"
             android:layout_gravity="end"
             android:text="@string/action_loadLast"
             android:backgroundTint="@color/colorMenu_2"
@@ -50,7 +52,7 @@
             android:layout_marginEnd="147dp"
             android:hint="@string/input_ipEntry"
             android:inputType="textNoSuggestions"
-            android:singleLine="true"/>
+            android:singleLine="true" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/portEntry"
@@ -59,7 +61,7 @@
             android:layout_marginTop="60dp"
             android:layout_marginEnd="147dp"
             android:hint="@string/input_portEntry"
-            android:inputType="textNoSuggestions"
+            android:inputType="number"
             android:singleLine="true"/>
 
         <com.google.android.material.textfield.TextInputEditText
@@ -68,7 +70,7 @@
             android:layout_height="60dp"
             android:layout_marginTop="120dp"
             android:hint="@string/input_devIdEntry"
-            android:inputType="textNoSuggestions"
+            android:inputType="number"
             android:singleLine="true"/>
     </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
