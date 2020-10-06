@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Modelleisenbahn-Controller</string>
-    <!-- Einstellungen-->
-    <string name="title_activity_settings">Einstellungen</string>
 
-    <!-- Preference Titles -->
+    <!-- Einstellungen-->
+    <string name="item_settings">Einstellungen</string>
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="item_console" >CBUS-Konsole</string>
+    <string name="title_activity_console">Konsole</string>
+
     <!-- Canid Preferences -->
     <string name="summary_canid_1">CAN-ID für Gerätenummer 1</string>
     <string name="summary_canid_2">CAN-ID für Gerätenummer 2</string>
@@ -16,7 +19,9 @@
     <string name="input_portEntry">Port</string>
     <string name="input_devIdEntry">Gerätenummer (Leer≙2)</string>
 
-    <string name="item_settings">Einstellungen</string>
+    <!--Console Strings-->
+    <string name="input_rawmessage">Nachricht</string>
+    <string name="contentdescription_arrow">Pfeil nach rechts</string>
 
     <!-- Strings für das Menü-->
     <string name="menu_main">Menu</string>
@@ -32,9 +37,8 @@
     <string name="action_light">Licht</string>
 
     <!--Controller-->
-    <string name="default_seekBarTextView">0</string>
     <string name="quickMenu_actions">Aktionen</string>
 
     <!--Gleisplan-->
-    <string name="contentDescription_gp">Gleisplan</string>
+    <string name="contentdescription_gp">Gleisplan</string>
 </resources>

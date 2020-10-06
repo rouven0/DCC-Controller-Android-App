@@ -2,6 +2,5 @@
 <lint>
     <issue id="IconLocation">
         <ignore path="src/main/res/drawable/gleisplan_numbered_alt.png" />
-        <ignore path="src/main/res/drawable/train_icon.png" />
     </issue>
 </lint>

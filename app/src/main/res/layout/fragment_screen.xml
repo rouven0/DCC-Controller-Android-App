@@ -11,7 +11,7 @@
             android:id="@+id/image_gp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/contentDescription_gp"
+            android:contentDescription="@string/contentdescription_gp"
             android:src="@drawable/gleisplan_numbered_alt"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"

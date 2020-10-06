@@ -7,10 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Objects;
 
@@ -29,9 +29,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //Eingabefelder einrichten
-        final TextInputEditText ipEntry = findViewById(R.id.ipEntry);
-        final TextInputEditText portEntry = findViewById(R.id.portEntry);
-        final TextInputEditText devIdEntry = findViewById(R.id.devIdEntry);
+        final EditText ipEntry = findViewById(R.id.ipEntry);
+        final EditText portEntry = findViewById(R.id.portEntry);
+        final EditText devIdEntry = findViewById(R.id.devIdEntry);
         //Letzten stand laden
         Button loadLast = findViewById(R.id.loadLast);
         loadLast.setOnClickListener(new View.OnClickListener() {
@@ -86,8 +86,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_settings:
                 startActivity(new Intent(getBaseContext(), SettingsActivity.class));
                 break;
-            case R.id.home:
-                super.onBackPressed();
+            case R.id.action_console:
+                startActivity(new Intent(getBaseContext(), ConsoleActivity.class));
+                break;
 
         }
         return super.onOptionsItemSelected(item);
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private void loadLastConectedBoard(TextInputEditText ipEntry, TextInputEditText portEntry) {
+    private void loadLastConectedBoard(EditText ipEntry, EditText portEntry) {
         SharedPreferences sharedPreferences = this.getSharedPreferences("lastConnectedBoard", MODE_PRIVATE);
         ipEntry.setText(sharedPreferences.getString("lastConnectedHost", null));
         portEntry.setText(sharedPreferences.getString("lastUsedPort", null));

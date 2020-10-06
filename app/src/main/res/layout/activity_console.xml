@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ConsoleActivity"
+    android:orientation="horizontal">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:layout_constraintGuide_percent="0.5"
+            android:orientation="vertical" />
+
+        <EditText
+            android:id="@+id/input_canid"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fab_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/input_addr"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:hint="@string/input_canid"
+            android:inputType="textShortMessage"
+            android:autofillHints="no" />
+
+        <EditText
+            android:id="@+id/input_addr"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fab_margin"
+            app:layout_constraintStart_toEndOf="@id/input_canid"
+            app:layout_constraintEnd_toStartOf="@id/input_dat1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:hint="@string/input_addr"
+            android:inputType="textShortMessage"
+            android:autofillHints="no" />
+
+        <EditText
+            android:id="@+id/input_dat1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fab_margin"
+            app:layout_constraintStart_toEndOf="@id/input_addr"
+            app:layout_constraintEnd_toStartOf="@id/input_dat2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:hint="@string/input_dat1"
+            android:inputType="textShortMessage"
+            android:autofillHints="no" />
+
+        <EditText
+            android:id="@+id/input_dat2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fab_margin"
+            app:layout_constraintStart_toEndOf="@id/input_dat1"
+            app:layout_constraintEnd_toStartOf="@id/input_dat3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:hint="@string/input_dat2"
+            android:inputType="textShortMessage"
+            android:autofillHints="no" />
+
+        <EditText
+            android:id="@+id/input_dat3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fab_margin"
+            app:layout_constraintStart_toEndOf="@id/input_dat2"
+            app:layout_constraintEnd_toStartOf="@id/input_dat4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:hint="@string/input_dat3"
+            android:inputType="textShortMessage"
+            android:autofillHints="no" />
+
+        <EditText
+            android:id="@+id/input_dat4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fab_margin"
+            app:layout_constraintStart_toEndOf="@id/input_dat3"
+            app:layout_constraintEnd_toStartOf="@id/input_dat5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:hint="@string/input_dat4"
+            android:inputType="textShortMessage"
+            android:autofillHints="no" />
+
+        <EditText
+            android:id="@+id/input_dat5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fab_margin"
+            app:layout_constraintStart_toEndOf="@id/input_dat4"
+            app:layout_constraintEnd_toStartOf="@id/input_dat6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:hint="@string/input_dat5"
+            android:inputType="textShortMessage"
+            android:autofillHints="no" />
+
+        <EditText
+            android:id="@+id/input_dat6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fab_margin"
+            app:layout_constraintStart_toEndOf="@id/input_dat5"
+            app:layout_constraintEnd_toStartOf="@id/input_dat7"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:hint="@string/input_dat6"
+            android:inputType="textShortMessage"
+            android:autofillHints="no" />
+
+        <EditText
+            android:id="@+id/input_dat7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fab_margin"
+            app:layout_constraintStart_toEndOf="@id/input_dat6"
+            app:layout_constraintEnd_toStartOf="@id/guideline1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:hint="@string/input_dat7"
+            android:inputType="textShortMessage"
+            android:autofillHints="no" />
+
+        <!-- Build up message -->
+        <ImageView
+            android:id="@+id/image_arrow"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fab_margin"
+            app:layout_constraintStart_toEndOf="@id/guideline1"
+            app:layout_constraintEnd_toStartOf="@id/input_rawmessage"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/ic_baseline_arrow_right_24"
+            android:contentDescription="@string/contentdescription_arrow" />
+
+        <EditText
+            android:id="@+id/input_rawmessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/fab_margin"
+            app:layout_constraintStart_toEndOf="@id/image_arrow"
+            app:layout_constraintEnd_toStartOf="@id/fab_send"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:hint="@string/input_rawmessage"
+            android:inputType="textShortMessage"
+            android:autofillHints="no" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/ic_baseline_send_24"
+            android:clickable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>
