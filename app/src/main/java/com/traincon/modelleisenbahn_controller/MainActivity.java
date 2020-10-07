@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -20,6 +21,9 @@ import androidx.appcompat.widget.Toolbar;
 
 
 public class MainActivity extends AppCompatActivity {
+    private EditText ipEntry;
+    private EditText portEntry;
+    private EditText devIdEntry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //Eingabefelder einrichten
-        final EditText ipEntry = findViewById(R.id.ipEntry);
-        final EditText portEntry = findViewById(R.id.portEntry);
-        final EditText devIdEntry = findViewById(R.id.devIdEntry);
+        ipEntry = findViewById(R.id.ipEntry);
+        portEntry = findViewById(R.id.portEntry);
+        devIdEntry = findViewById(R.id.devIdEntry);
         //Letzten stand laden
         Button loadLast = findViewById(R.id.loadLast);
         loadLast.setOnClickListener(new View.OnClickListener() {
@@ -62,13 +66,13 @@ public class MainActivity extends AppCompatActivity {
                         saveLastConnectedBoard(host, port);
                         startActivity(intent);
                     } else {
+                        devIdEntry.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.animation_shake));
                         Snackbar.make(view, "Gerätenummer muss eine ganze Zahl zwischen 1 und 4 sein!", Snackbar.LENGTH_INDEFINITE)
                                 .show();
                     }
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
-                    Snackbar.make(view, "Fehler bei der Eingabe", Snackbar.LENGTH_LONG)
-                            .show();
+                    portEntry.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.animation_shake));
                 }
             }
         });
@@ -82,14 +86,23 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_settings:
                 startActivity(new Intent(getBaseContext(), SettingsActivity.class));
                 break;
             case R.id.action_console:
-                startActivity(new Intent(getBaseContext(), ConsoleActivity.class));
+                try {
+                    String host = Objects.requireNonNull(ipEntry.getText()).toString();
+                    int port = Integer.parseInt(Objects.requireNonNull(portEntry.getText()).toString());
+                    Intent intent = new Intent(getBaseContext(), ConsoleActivity.class);
+                    intent.putExtra("host", host);
+                    intent.putExtra("port", port);
+                    startActivity(intent);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    portEntry.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.animation_shake));
+                }
                 break;
-
         }
         return super.onOptionsItemSelected(item);
     }

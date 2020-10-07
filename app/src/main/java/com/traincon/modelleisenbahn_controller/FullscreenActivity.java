@@ -1,6 +1,5 @@
 package com.traincon.modelleisenbahn_controller;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +27,8 @@ public class FullscreenActivity extends AppCompatActivity {
     private boolean isSwitchMenuOpen = false;
     private boolean isSectionMenuOpen = false;
     private BoardManager boardManager;
+
+    //<editor-fold desc="private final Thread createTabLayout...">
     private final Thread createTabLayout = new Thread(new Runnable() {
         @Override
         public void run() {
@@ -78,6 +79,9 @@ public class FullscreenActivity extends AppCompatActivity {
             });
         }
     });
+    //</editor-fold>
+
+    //<editor-fold desc="private final Thread createMeuButtons...">
     private final Thread createMenuButtons = new Thread(new Runnable() {
         @Override
         public void run() {
@@ -277,7 +281,8 @@ public class FullscreenActivity extends AppCompatActivity {
         }
     });
 
-    @SuppressLint("SetTextI18n")
+    //</editor-fold>
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

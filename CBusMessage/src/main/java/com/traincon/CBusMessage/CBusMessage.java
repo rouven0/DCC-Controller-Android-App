@@ -6,6 +6,8 @@ public class CBusMessage {
      * All events are declared here
      * For more information read the CBUS specification
      */
+
+    //<editor-fold desc="Event Strings">
     //0 data bytes Packages
     public final static String EVENT_0_ACK = "00";
     public final static String EVENT_0_NAK = "01";
@@ -79,6 +81,7 @@ public class CBusMessage {
     //6 data bytes Packages
 
     //7 data bytes Packages
+    //</editor-fold>
 
     public String event;
     public String[] data;

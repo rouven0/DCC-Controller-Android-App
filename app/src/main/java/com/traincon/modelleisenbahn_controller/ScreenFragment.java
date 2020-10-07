@@ -51,6 +51,8 @@ public class ScreenFragment extends Fragment {
             }
         }
     };
+
+    //<editor-fold desc="private final Runnable initRunnable...">
     private final Runnable initRunnable = new Runnable() {
         @Override
         public void run() {
@@ -96,6 +98,7 @@ public class ScreenFragment extends Fragment {
             handler.post(updateRunnable);
         }
     };
+    //</editor-fold>
 
     public ScreenFragment() {
         // Required empty public constructor
