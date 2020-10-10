@@ -119,7 +119,6 @@ public class ScreenFragment extends Fragment {
         return rootView;
     }
 
-    //Alle Weichenschalter an die richtigen Positionen verschieben
     private void placeSwitches(View view, int[][] positionArray, int[] idArray, final SwitchCompat[] switchCompatArray) {
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(constraintLayout);
@@ -143,7 +142,6 @@ public class ScreenFragment extends Fragment {
         constraintSet.applyTo(constraintLayout);
     }
 
-    //Alle Gleisabschnittsschalter an die richtigen Positionen verschieben
     private void placeSections(View view, int[][] positionArray, @NonNull int[] idArray, final ToggleButton[] toggleButtonArray) {
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(constraintLayout);
@@ -155,8 +153,8 @@ public class ScreenFragment extends Fragment {
             } else {
                 Log.d(TAG, "placeSections: " + i + " Fehler beim Positionieren");
             }
-            toggleButtonArray[i].setTextOn((i + 1) + getResources().getString(R.string.on));
-            toggleButtonArray[i].setTextOff((i + 1) + getResources().getString(R.string.off));
+            toggleButtonArray[i].setTextOn((i + 1) +" "+getResources().getString(R.string.on));
+            toggleButtonArray[i].setTextOff((i + 1) +" "+ getResources().getString(R.string.off));
             toggleButtonArray[i].setChecked(false);
             final int finalI = i;
             toggleButtonArray[i].setOnClickListener(new View.OnClickListener() {

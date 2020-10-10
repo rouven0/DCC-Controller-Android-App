@@ -32,7 +32,7 @@ public class FullscreenActivity extends AppCompatActivity {
     private final Thread createTabLayout = new Thread(new Runnable() {
         @Override
         public void run() {
-            //Tablayout einrichten
+            //Init TabLayout
             TabLayout tabLayout = findViewById(R.id.tabLayout);
             TabLayout.Tab firsttab = tabLayout.newTab();
             firsttab.setText(getResources().getString(R.string.tab_controller));
@@ -42,7 +42,7 @@ public class FullscreenActivity extends AppCompatActivity {
             tabLayout.addTab(secondtab);
             final Fragment[] fragment = {null};
 
-            //Am Anfang das fragment_controller anzeigen
+            //Show Controllerfragment at the beginning
             fragment[0] = new ControllerFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -92,7 +92,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 }
             }
 
-            //Hauptmenu
+            //Main menu
             menuButtons[0].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -134,7 +134,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 }
             });
 
-            //Weichen
+            //Switches
             menuButtons[2].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -157,7 +157,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 }
             });
 
-            //Weichen 3 Runden
+            //Switches 3 Laps
             menuButtons[3].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -171,7 +171,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 }
             });
 
-            //Weichen Alle auf Mitte
+            //Switches all to center
             menuButtons[4].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -185,7 +185,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 }
             });
 
-            //Weichen Nachstellen
+            //Calibrate Switches
             menuButtons[5].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -199,7 +199,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 }
             });
 
-            //Gleisabschnitte
+            //Sections
             menuButtons[6].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -220,7 +220,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 }
             });
 
-            // Gleisabschnitte 3 Runden
+            //Sections 3 laps
             menuButtons[7].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -234,7 +234,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 }
             });
 
-            //Gleisabschnitte Alle ausschalten
+            //All sections off
             menuButtons[8].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -248,7 +248,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 }
             });
 
-            // Neu verbinden
+            //reconnect
             menuButtons[9].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -266,7 +266,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 }
             });
 
-            //Licht
+            //Light
             menuButtons[10].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -27,7 +27,7 @@
         app:layout_constraintTop_toBottomOf="@id/tabLayout"
         app:layout_constraintStart_toStartOf="parent">
 
-        <!--Hauptmenü-->
+        <!--Main menu-->
         <Button
             android:id="@+id/mainMenuButton"
             android:layout_width="0dp"
@@ -38,7 +38,7 @@
             android:backgroundTint="@color/colorMenu_1"
             android:textSize="16sp" />
 
-        <!--Menü für Presets-->
+        <!--Menu for Presets-->
         <Button
             android:id="@+id/presetsMenuButton"
             android:layout_width="0dp"
@@ -49,7 +49,7 @@
             android:backgroundTint="@color/colorMenu_2"
             android:textSize="14sp" />
 
-        <!--Weichen-->
+        <!--Switches-->
         <Button
             android:id="@+id/switchMenuButton"
             android:layout_width="0dp"
@@ -87,7 +87,7 @@
             android:text="@string/action_calibrate"
             android:textSize="12sp"/>
 
-        <!--Gleisabschnitte-->
+        <!--Sections-->
         <Button
             android:id="@+id/sectionMenuButton"
             android:layout_width="0dp"
@@ -116,7 +116,7 @@
             android:text="@string/action_allsectionsoff"
             android:textSize="12sp"/>
 
-        <!--Neu verbinden-->
+        <!--Reconnect-->
         <Button
             android:id="@+id/reconnectActionButton"
             android:layout_width="0dp"
@@ -127,7 +127,7 @@
             android:backgroundTint="@color/colorMenu_2"
             android:textSize="12sp" />
 
-        <!--Licht-->
+        <!--Light-->
         <Button
             android:id="@+id/lightActionButton"
             android:layout_width="0dp"

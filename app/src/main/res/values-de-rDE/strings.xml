@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Modelleisenbahn-Controller</string>
 
-    <!-- Einstellungen-->
+    <!-- Settings-->
     <string name="item_settings">Einstellungen</string>
     <string name="title_activity_settings">Einstellungen</string>
     <string name="item_console" >CBUS-Konsole</string>
@@ -23,7 +23,7 @@
     <string name="input_rawmessage">Nachricht</string>
     <string name="contentdescription_arrow">Pfeil nach rechts</string>
 
-    <!-- Strings für das Menü-->
+    <!-- Strings ffor the menu-->
     <string name="menu_main">Menu</string>
     <string name="menu_presets">Presets</string>
     <string name="menu_switch">Weichen</string>
@@ -43,7 +43,7 @@
     <!--Controller-->
     <string name="quickMenu_actions">Aktionen</string>
 
-    <!--Gleisplan-->
+    <!--Layout-->
     <string name="contentdescription_gp">Gleisplan</string>
     <string name="on">AN</string>
     <string name="off">AUS</string>

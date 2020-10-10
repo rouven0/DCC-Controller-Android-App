@@ -32,11 +32,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Eingabefelder einrichten
+        //Init Entries
         ipEntry = findViewById(R.id.ipEntry);
         portEntry = findViewById(R.id.portEntry);
         devIdEntry = findViewById(R.id.devIdEntry);
-        //Letzten stand laden
+        //Load last values
         Button loadLast = findViewById(R.id.loadLast);
         loadLast.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     if (devId.equals("")) {
                         devId = "2";
                     }
-                    //Bei richtiger eingabe das Hauptprogramm starten
+                    //Start main when entries are correct
                     if (devId.equals("1") || devId.equals("2") || devId.equals("3") || devId.equals("4")) {
                         Intent intent = new Intent(getBaseContext(), FullscreenActivity.class);
                         intent.putExtra("host", host);
@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getBaseContext(), ConsoleActivity.class);
                     intent.putExtra("host", host);
                     intent.putExtra("port", port);
+                    saveLastConnectedBoard(host, port);
                     startActivity(intent);
                 } catch (NumberFormatException e) {
                     e.printStackTrace();

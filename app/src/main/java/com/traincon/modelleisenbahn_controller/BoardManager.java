@@ -64,7 +64,6 @@ public class BoardManager {
         mainSocket.close();
     }
 
-    //Weiche auf dem Brett stellen
     public void setSwitch(int targetSwitch, boolean targetState) {
         switchStates[targetSwitch] = targetState;
         if (targetState) {
@@ -75,7 +74,6 @@ public class BoardManager {
         Log.d(TAG, "setSwitch: Weiche: " + (targetSwitch + 1) + " auf Status: " + targetState);
     }
 
-    //Gleisaschnitt auf dem Brett umschalten
     public void setSection(int targetSection, boolean targetState) {
         sectionStates[targetSection] = targetState;
         if (targetState) {
@@ -88,7 +86,7 @@ public class BoardManager {
         Log.d(TAG, "setSection: Gleisabschnitt: " + (targetSection + 1) + " auf Status: " + targetState);
     }
 
-    //Licht umschalten
+    //HARCODED!
     public void setLight() {
         if (!lightState) {
             lightState = true;
@@ -102,8 +100,7 @@ public class BoardManager {
         }
     }
 
-    //Weichenpositionen abfragen
-    //Wird in ScreenFragment.update aufgerufen
+    //Called in ScreenFragment.update()
     protected void requestSwitchStates() throws InterruptedException, IOException {
         //Abfragen
         send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_3_NVRD, new String[]{"00", "65", "03"})));
@@ -144,8 +141,7 @@ public class BoardManager {
         }
     }
 
-    //Funktionen aus dem Menü
-    //Weichen 3 Runden
+    //Menu features(Hardcoded)
     protected void switchPreset_3r() {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -167,17 +163,14 @@ public class BoardManager {
         thread.start();
     }
 
-    //Weichen auf mitte
     protected void switchSetToCenter() {
         send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASON, new String[]{"00", "11", "23", "10"})));
     }
 
-    //Weichen nachjustieren
     protected void switchCalibrate() {
         send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASON, new String[]{"00", "11", "23", "11"})));
     }
 
-    //Gleise 3 runden
     protected void sectionPreset_3r() {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -199,14 +192,12 @@ public class BoardManager {
         thread.start();
     }
 
-    //Alle Gleise ausschalten
     protected void sectionsAllOff() {
         send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASON, new String[]{"00", "11", "24", "10"})));
         Arrays.fill(sectionStates, false);
         lightState = false;
     }
 
-    //String an das Brett senden
     private void send(final String message) {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -222,7 +213,6 @@ public class BoardManager {
         thread.start();
     }
 
-    //String vom Brett empfangen
     private String receive(int lenght) throws InterruptedException {
         final String[] message = new String[]{""};
         final byte[] rawMessage = new byte[lenght];
