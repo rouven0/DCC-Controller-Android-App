@@ -36,9 +36,15 @@
     <string name="action_reconnect">Neu verbinden</string>
     <string name="action_light">Licht</string>
 
+    <!--Fullscreenactivity-->
+    <string name="tab_controller">Fahrsteuerung</string>
+    <string name="tab_layout">Interaktiver Gleisplan</string>
+
     <!--Controller-->
     <string name="quickMenu_actions">Aktionen</string>
 
     <!--Gleisplan-->
     <string name="contentdescription_gp">Gleisplan</string>
+    <string name="on">AN</string>
+    <string name="off">AUS</string>
 </resources>

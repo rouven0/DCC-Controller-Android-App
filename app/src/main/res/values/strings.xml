@@ -37,7 +37,7 @@
     <string name="contentdescription_arrow">Arrow right</string>
     <string name="input_rawmessage">Message</string>
 
-    <!-- Strings für das Menü-->
+    <!-- Strings for the Menu-->
     <string name="menu_main" >Menu</string>
     <string name="menu_presets" >Presets</string>
     <string name="menu_switch" >Switches</string>
@@ -50,12 +50,18 @@
     <string name="action_reconnect" >Reconnect</string>
     <string name="action_light" >Light</string>
 
+    <!--Fullscreenactivity-->
+    <string name="tab_controller">Controller</string>
+    <string name="tab_layout">Layout</string>
+
     <!--Controller-->
     <string name="default_seekBarTextView"  translatable="false">0</string>
     <string name="quickMenu_actions" >Actions</string>
 
-    <!--Gleisplan-->
+    <!--Layout-->
     <string name="contentdescription_gp" >Layout</string>
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
 
 
 </resources>

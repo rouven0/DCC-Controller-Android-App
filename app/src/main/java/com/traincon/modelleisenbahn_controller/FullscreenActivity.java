@@ -35,10 +35,10 @@ public class FullscreenActivity extends AppCompatActivity {
             //Tablayout einrichten
             TabLayout tabLayout = findViewById(R.id.tabLayout);
             TabLayout.Tab firsttab = tabLayout.newTab();
-            firsttab.setText("Fahrtsteuerung");
+            firsttab.setText(getResources().getString(R.string.tab_controller));
             tabLayout.addTab(firsttab);
             TabLayout.Tab secondtab = tabLayout.newTab();
-            secondtab.setText("Interaktiver gleisplan");
+            secondtab.setText(getResources().getString(R.string.tab_layout));
             tabLayout.addTab(secondtab);
             final Fragment[] fragment = {null};
 

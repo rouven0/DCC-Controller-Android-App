@@ -155,8 +155,8 @@ public class ScreenFragment extends Fragment {
             } else {
                 Log.d(TAG, "placeSections: " + i + " Fehler beim Positionieren");
             }
-            toggleButtonArray[i].setTextOn((i + 1) + "-An");
-            toggleButtonArray[i].setTextOff((i + 1) + "-Aus");
+            toggleButtonArray[i].setTextOn((i + 1) + getResources().getString(R.string.on));
+            toggleButtonArray[i].setTextOff((i + 1) + getResources().getString(R.string.off));
             toggleButtonArray[i].setChecked(false);
             final int finalI = i;
             toggleButtonArray[i].setOnClickListener(new View.OnClickListener() {
