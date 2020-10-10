@@ -30,6 +30,7 @@ public class ConsoleActivity extends AppCompatActivity {
     public String host;
     public int port;
     public Socket consoleSocket;
+    private String[] lastPartialMessage = new String[editTextIdAray.length];
     private EditText currentMessage;
     private DataInputStream socketInputStream;
     private DataOutputStream socketOutputStream;
@@ -84,11 +85,20 @@ public class ConsoleActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (currentCBusMessage.getData() != null && currentCBusMessage.getEvent() != null) {
-                    String canId = currentPartialMessage[0].getText().toString();
-                    send((new CBusAsciiMessageBuilder(canId).build(currentCBusMessage)));
-                    clearInput();
+                String canId = currentPartialMessage[0].getText().toString();
+                send((new CBusAsciiMessageBuilder(canId).build(currentCBusMessage)));
+                //Save the message
+                for (int i = 0; i < lastPartialMessage.length; i++) {
+                    lastPartialMessage[i] = currentPartialMessage[i].getText().toString();
                 }
+                clearInput();
+            }
+        });
+        FloatingActionButton cachedButton = findViewById(R.id.fab_cached);
+        cachedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getLastMessage();
             }
         });
     }
@@ -109,6 +119,13 @@ public class ConsoleActivity extends AppCompatActivity {
             editText.setText("");
         }
         currentMessage.setText("");
+    }
+
+    private void getLastMessage() {
+        for (int i = 0; i < lastPartialMessage.length; i++) {
+            currentPartialMessage[i].setText(lastPartialMessage[i]);
+        }
+        updateMessage();
     }
 
     //Networking functions

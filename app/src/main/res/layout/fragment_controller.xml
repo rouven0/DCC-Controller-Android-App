@@ -39,8 +39,8 @@
             android:layout_marginBottom="@dimen/fab_margin"
             android:clickable="true"
             android:text="@string/quickMenu_actions"
-            android:backgroundTint="@color/colorSwitchThumb"
-            android:foregroundTint="@android:color/white"/>
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/colorSwitchThumb"/>
     </FrameLayout>
 
     <FrameLayout
@@ -75,8 +75,8 @@
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="@dimen/fab_margin"
             android:text="@string/quickMenu_actions"
-            android:backgroundTint="@color/colorSwitchThumb"
-            android:foregroundTint="@android:color/white"/>
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/colorSwitchThumb"/>
     </FrameLayout>
 
     <FrameLayout
@@ -111,7 +111,7 @@
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="@dimen/fab_margin"
             android:text="@string/quickMenu_actions"
-            android:backgroundTint="@color/colorSwitchThumb"
-            android:foregroundTint="@android:color/white"/>
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/colorSwitchThumb" />
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,9 +5,11 @@ import androidx.annotation.NonNull;
 /*
  * Build Ascii-CBus messages that are sent to the board
  */
+
 @SuppressWarnings("unused")
 public class CBusAsciiMessageBuilder {
-    //Expected Message Length
+
+    //<editor-fold desc="Expected message lenght">
     public final static int EML_0 = 12;
     public final static int EML_1 = 14;
     public final static int EML_2 = 16;
@@ -16,6 +18,7 @@ public class CBusAsciiMessageBuilder {
     public final static int EML_5 = 22;
     public final static int EML_6 = 24;
     public final static int EML_7 = 26;
+    //</editor-fold>
 
     private final String canId;
 
