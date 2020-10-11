@@ -1,6 +1,5 @@
 package com.traincon.CBusMessage;
 
-@SuppressWarnings("unused")
 public class CBusMessage {
     /*
      * All events are declared here
