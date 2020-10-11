@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
     <item
-        android:id="@+id/action_settings"
-        android:title="@string/item_settings"
-        android:icon="@drawable/ic_baseline_settings_24"
-        app:showAsAction="ifRoom"/>
-    <item
         android:id="@+id/action_console"
+        android:icon="@drawable/ic_baseline_settings_remote_24"
         android:title="@string/item_console"
-        app:showAsAction="never"/>
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/item_settings"
+        app:showAsAction="ifRoom" />
 </menu>
