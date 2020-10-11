@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
  * Build Ascii-CBus messages that are sent to the board
  */
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "RedundantSuppression"})
 public class CBusAsciiMessageBuilder {
 
     //<editor-fold desc="Expected message lenght">
