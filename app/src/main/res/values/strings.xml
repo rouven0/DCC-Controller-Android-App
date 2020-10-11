@@ -25,6 +25,8 @@
     <string name="input_devIdEntry" >Device ID (Empty≙2)</string>
 
     <!-- Console Strings-->
+    <string name="title_raw">All incoming</string>
+    <string name="title_processed">Interpreted</string>
     <string name="input_canid" translatable="false">CanId</string>
     <string name="input_addr" translatable="false">Event</string>
     <string name="input_dat1" translatable="false">Dat1</string>

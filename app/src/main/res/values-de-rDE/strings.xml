@@ -20,6 +20,8 @@
     <string name="input_devIdEntry">Gerätenummer (Leer≙2)</string>
 
     <!--Console Strings-->
+    <string name="title_raw">Eingehend</string>
+    <string name="title_processed">Interpretiert</string>
     <string name="input_rawmessage">Nachricht</string>
     <string name="contentdescription_arrow">Pfeil nach rechts</string>
 

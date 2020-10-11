@@ -2,7 +2,6 @@ package com.traincon.modelleisenbahn_controller;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +16,6 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
-
-import static android.content.ContentValues.TAG;
 
 
 public class ScreenFragment extends Fragment {
@@ -56,7 +53,7 @@ public class ScreenFragment extends Fragment {
     private final Runnable initRunnable = new Runnable() {
         @Override
         public void run() {
-            //Frames Erstellen
+            //Create Frames
             ImageView imageView = rootView.findViewById(R.id.image_gp);
             ConstraintSet constraintSet = new ConstraintSet();
             for (int i = 0; i < imageOverlayFrames_x.length; i++) {
@@ -71,7 +68,7 @@ public class ScreenFragment extends Fragment {
                 imageOverlayFrames_y[i].setLayoutParams(new FrameLayout.LayoutParams(imageView.getWidth() / imageOverlayFrames_x.length, imageView.getHeight() / imageOverlayFrames_y.length));
                 constraintLayout.addView(imageOverlayFrames_y[i]);
             }
-            //Frames Ausrichten
+            //Align Frames
             constraintSet.clone(constraintLayout);
             for (int i = 0; i < imageOverlayFrames_x.length; i++) {
                 if (i == 0) {
@@ -90,7 +87,6 @@ public class ScreenFragment extends Fragment {
                 constraintSet.connect(imageOverlayFrames_y[i].getId(), ConstraintSet.START, imageView.getId(), ConstraintSet.START, 0);
             }
             constraintSet.applyTo(constraintLayout);
-            //Schalter platzieren
             final int[][] switchPositionArray = new int[][]{{26, 19}, {12, 25}, {30, 19}, {9, 26}, {32, 18}, {13, 26}, {11, 27}, {31, 20}, {29, 21}, {9, 28}, {21, 26}, {23, 26}, {4, 12}, {9, 10}, {8, 0}, {23, 0}};
             final int[][] sectionPositionArray = new int[][]{{19, 20}, {18, 22}, {18, 23}, {15, 8}, {19, 12}, {19, 13}, {19, 24}, {15, 7}, {13, 28}, {30, 28}, {13, 2}, {13, 0}, {15, 1}};
             placeSwitches(rootView, switchPositionArray, switchIdArray, switchSwitchCompatArray);
@@ -111,11 +107,10 @@ public class ScreenFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        //Gleisplan einrichten
         rootView = inflater.inflate(R.layout.fragment_screen, container, false);
         constraintLayout = rootView.findViewById(R.id.constraintLayout_imageView);
         handler = new Handler(requireContext().getMainLooper());
-        handler.post(initRunnable); // als runnable, damit es schneller dargestellt wird
+        handler.post(initRunnable);
         return rootView;
     }
 
@@ -128,8 +123,6 @@ public class ScreenFragment extends Fragment {
             if (positionArray[i][0] < imageOverlayFrames_x.length && positionArray[i][1] < imageOverlayFrames_y.length) {
                 constraintSet.connect(switchCompatArray[i].getId(), ConstraintSet.START, imageOverlayFrames_x[positionArray[i][0]].getId(), ConstraintSet.START);
                 constraintSet.connect(switchCompatArray[i].getId(), ConstraintSet.TOP, imageOverlayFrames_y[positionArray[i][1]].getId(), ConstraintSet.TOP);
-            } else {
-                Log.d(TAG, "placeSwitches: " + i + " Fehler beim Positionieren");
             }
             final int finalI = i;
             switchCompatArray[i].setOnClickListener(new View.OnClickListener() {
@@ -150,8 +143,6 @@ public class ScreenFragment extends Fragment {
             if (positionArray[i][0] < imageOverlayFrames_x.length && positionArray[i][1] < imageOverlayFrames_y.length) {
                 constraintSet.connect(toggleButtonArray[i].getId(), ConstraintSet.START, imageOverlayFrames_x[positionArray[i][0]].getId(), ConstraintSet.START);
                 constraintSet.connect(toggleButtonArray[i].getId(), ConstraintSet.TOP, imageOverlayFrames_y[positionArray[i][1]].getId(), ConstraintSet.TOP);
-            } else {
-                Log.d(TAG, "placeSections: " + i + " Fehler beim Positionieren");
             }
             toggleButtonArray[i].setTextOn((i + 1) +" "+getResources().getString(R.string.on));
             toggleButtonArray[i].setTextOff((i + 1) +" "+ getResources().getString(R.string.off));

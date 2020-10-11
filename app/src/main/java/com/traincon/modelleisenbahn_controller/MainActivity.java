@@ -41,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
         loadLast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadLastConectedBoard(ipEntry, portEntry);
+                loadLastConnectedBoard(ipEntry, portEntry);
             }
         });
-        //Startbutton
+        //Fab to start the FullscreenActivity
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private void loadLastConectedBoard(EditText ipEntry, EditText portEntry) {
+    private void loadLastConnectedBoard(EditText ipEntry, EditText portEntry) {
         SharedPreferences sharedPreferences = this.getSharedPreferences("lastConnectedBoard", MODE_PRIVATE);
         ipEntry.setText(sharedPreferences.getString("lastConnectedHost", null));
         portEntry.setText(sharedPreferences.getString("lastUsedPort", null));
