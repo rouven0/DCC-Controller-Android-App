@@ -4,11 +4,11 @@ For more information, read the [*Developers Guide for CBUS*](https://www.merg.or
 
 ## Important notes
 For now, only the *CBUS-Console* is working beacuse:
-- Controller Tab doesn't work for now (will be added later)
-- Interactive Layout and menu buttons are still hardcoded
+- The controller Tab doesn't work for now. Only the Layout is already made (will be updated and extended later)
+- The interactive Layout and menu buttons are still hardcoded.
 
 ## How it works
 *Your train-controlling unit and the android device must be connected with the same Network*
 
-Via a local network, the app is sending and receiving CBUS frames that will be processed later
-The console automatically builds frames using the *CBUS computer interface protocol*
+Via a local network, the app is sending and receiving CBUS frames that will be processed later.
+The console automatically builds frames using the *CBUS computer interface protocol.*
