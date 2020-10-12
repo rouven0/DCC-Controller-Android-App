@@ -28,6 +28,7 @@
             android:layout_gravity="center"
             android:indeterminate="false"
             android:max="100"
+            android:min="0"
             android:progress="50" />
 
         <Button
@@ -64,6 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:max="100"
+            android:min="0"
             android:progress="50"/>
 
         <Button
@@ -100,6 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:max="100"
+            android:min="0"
             android:progress="50"/>
 
         <Button

@@ -30,7 +30,6 @@
         </activity>
         <activity
             android:name=".FullscreenActivity"
-            android:resizeableActivity="false"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>

@@ -3,7 +3,7 @@ DCC Controller for Model-train boards controlled with C-Bus
 For more information, read the [*Developers Guide for CBUS*](https://www.merg.org.uk/merg_wiki/lib/exe/fetch.php?media=public:cbuspublic:developer_6b.pdf)
 
 ## Important notes
-For now, only the *CBUS-Console* is working beacuse:
+For now, only the *CBUS-Console* is working because:
 - The controller Tab doesn't work for now. Only the Layout is already made (will be updated and extended later)
 - The interactive Layout and menu buttons are still hardcoded.
 

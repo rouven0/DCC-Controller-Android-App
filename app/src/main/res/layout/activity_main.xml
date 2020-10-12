@@ -21,7 +21,8 @@
         android:clickable="true"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_baseline_directions_railway_24"/>
+        android:src="@drawable/ic_baseline_directions_railway_24"
+        android:focusable="true" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
