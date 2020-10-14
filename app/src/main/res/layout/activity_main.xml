@@ -22,7 +22,8 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_baseline_directions_railway_24"
-        android:focusable="true" />
+        android:focusable="true"
+        android:contentDescription="@string/cp_Start" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

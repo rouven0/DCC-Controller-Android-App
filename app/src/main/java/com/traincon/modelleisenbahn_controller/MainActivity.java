@@ -86,24 +86,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                startActivity(new Intent(getBaseContext(), SettingsActivity.class));
-                break;
-            case R.id.action_console:
-                try {
-                    String host = Objects.requireNonNull(ipEntry.getText()).toString();
-                    int port = Integer.parseInt(Objects.requireNonNull(portEntry.getText()).toString());
-                    Intent intent = new Intent(getBaseContext(), ConsoleActivity.class);
-                    intent.putExtra("host", host);
-                    intent.putExtra("port", port);
-                    saveLastConnectedBoard(host, port);
-                    startActivity(intent);
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    portEntry.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.animation_shake));
-                }
-                break;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_settings) {
+            startActivity(new Intent(getBaseContext(), SettingsActivity.class));
+        } else if (itemId == R.id.action_console) {
+            try {
+                String host = Objects.requireNonNull(ipEntry.getText()).toString();
+                int port = Integer.parseInt(Objects.requireNonNull(portEntry.getText()).toString());
+                Intent intent = new Intent(getBaseContext(), ConsoleActivity.class);
+                intent.putExtra("host", host);
+                intent.putExtra("port", port);
+                saveLastConnectedBoard(host, port);
+                startActivity(intent);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                portEntry.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.animation_shake));
+            }
         }
         return super.onOptionsItemSelected(item);
     }

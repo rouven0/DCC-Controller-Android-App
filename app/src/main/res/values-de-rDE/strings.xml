@@ -24,6 +24,7 @@
     <string name="title_processed">Interpretiert</string>
     <string name="input_rawmessage">Nachricht</string>
     <string name="contentdescription_arrow">Pfeil nach rechts</string>
+    <string name="cp_send">Frame senden</string>
 
     <!-- Strings ffor the menu-->
     <string name="menu_main">Menu</string>

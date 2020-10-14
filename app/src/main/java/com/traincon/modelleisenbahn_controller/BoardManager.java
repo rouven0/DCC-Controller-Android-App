@@ -147,11 +147,7 @@ public class BoardManager {
             @Override
             public void run() {
                 for (int i = 0; i < switchStates.length; i++) {
-                    if (i == 0 || (2 < i && i < 10)) {
-                        setSwitch(i, true);
-                    } else {
-                        setSwitch(i, false);
-                    }
+                    setSwitch(i, i == 0 || (2 < i && i < 10));
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
@@ -176,11 +172,7 @@ public class BoardManager {
             @Override
             public void run() {
                 for (int i = 0; i < sectionStates.length; i++) {
-                    if ((1 < i && i < 4) || (5 < i && i < 8) || (9 < i && i < 12)) {
-                        setSection(i, true);
-                    } else {
-                        setSection(i, false);
-                    }
+                    setSection(i, (1 < i && i < 4) || (5 < i && i < 8) || (9 < i && i < 12));
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {

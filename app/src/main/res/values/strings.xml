@@ -23,6 +23,7 @@
     <string name="input_ipEntry" >Hostname</string>
     <string name="input_portEntry" >Port</string>
     <string name="input_devIdEntry" >Device ID (Empty≙2)</string>
+    <string name="cp_Start" translatable="false">Start</string>
 
     <!-- Console Strings-->
     <string name="title_raw">All incoming</string>
@@ -38,6 +39,7 @@
     <string name="input_dat7" translatable="false">Dat7</string>
     <string name="contentdescription_arrow">Arrow right</string>
     <string name="input_rawmessage">Message</string>
+    <string name="cp_send">Send frame</string>
 
     <!-- Strings for the Menu-->
     <string name="menu_main" >Menu</string>
