@@ -17,6 +17,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_raw" />
+
         <ScrollView
             android:id="@+id/scrollView_raw"
             android:layout_width="match_parent"
@@ -27,11 +32,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </ScrollView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title_raw" />
     </LinearLayout>
 
     <LinearLayout
@@ -44,6 +44,11 @@
         app:layout_constraintStart_toEndOf="@id/logFrame_raw"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_processed" />
+
         <ScrollView
             android:id="@+id/scrollView_processed"
             android:layout_width="match_parent"
@@ -54,11 +59,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </ScrollView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title_processed" />
     </LinearLayout>
 
     <!--Message send row-->
@@ -218,12 +218,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
             android:clickable="true"
+            android:contentDescription="@string/action_loadLast"
             android:focusable="true"
             android:src="@drawable/ic_baseline_cached_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/input_canid"
-            app:layout_constraintStart_toStartOf="parent"
-            android:contentDescription="@string/action_loadLast" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_send"
@@ -231,12 +231,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
             android:clickable="true"
+            android:contentDescription="@string/cp_send"
             android:focusable="true"
             android:src="@drawable/ic_baseline_send_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/input_rawmessage"
-            android:contentDescription="@string/cp_send" />
+            app:layout_constraintStart_toEndOf="@id/input_rawmessage" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
