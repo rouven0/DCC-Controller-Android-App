@@ -5,9 +5,9 @@
     <application
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
-        android:icon="@mipmap/train_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/train_icon_round"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
         <activity

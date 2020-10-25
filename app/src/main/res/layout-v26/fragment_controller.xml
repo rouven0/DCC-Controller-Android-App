@@ -32,7 +32,6 @@
             android:progress="50" />
 
         <Button
-            android:id="@+id/button_reset_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
@@ -69,7 +68,6 @@
             android:progress="50"/>
 
         <Button
-            android:id="@+id/button_reset_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -106,7 +104,6 @@
             android:progress="50"/>
 
         <Button
-            android:id="@+id/button_reset_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"

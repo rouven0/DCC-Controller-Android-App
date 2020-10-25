@@ -50,12 +50,10 @@
             android:text="@string/title_processed" />
 
         <ScrollView
-            android:id="@+id/scrollView_processed"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/log_processed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </ScrollView>
