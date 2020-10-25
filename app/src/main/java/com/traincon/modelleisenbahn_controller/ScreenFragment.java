@@ -144,8 +144,6 @@ public class ScreenFragment extends Fragment {
                 constraintSet.connect(toggleButtonArray[i].getId(), ConstraintSet.START, imageOverlayFrames_x[positionArray[i][0]].getId(), ConstraintSet.START);
                 constraintSet.connect(toggleButtonArray[i].getId(), ConstraintSet.TOP, imageOverlayFrames_y[positionArray[i][1]].getId(), ConstraintSet.TOP);
             }
-            toggleButtonArray[i].setTextOn((i + 1) +" "+getResources().getString(R.string.on));
-            toggleButtonArray[i].setTextOff((i + 1) +" "+ getResources().getString(R.string.off));
             toggleButtonArray[i].setChecked(false);
             final int finalI = i;
             toggleButtonArray[i].setOnClickListener(new View.OnClickListener() {

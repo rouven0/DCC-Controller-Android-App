@@ -2,11 +2,19 @@
   <dictionary name="rouven">
     <words>
       <w>abfragen</w>
+      <w>acdat</w>
+      <w>acof</w>
+      <w>acon</w>
       <w>addr</w>
       <w>angeschaltet</w>
+      <w>ardat</w>
+      <w>arec</w>
+      <w>arof</w>
+      <w>arsof</w>
       <w>arst</w>
       <w>asof</w>
       <w>ason</w>
+      <w>asrq</w>
       <w>ausgeschaltet</w>
       <w>binärzahl</w>
       <w>bootm</w>
@@ -16,6 +24,8 @@
       <w>contentdescription</w>
       <w>controllerfragment</w>
       <w>datenpuffer</w>
+      <w>ddes</w>
+      <w>ddrs</w>
       <w>devid</w>
       <w>dflg</w>
       <w>dfnof</w>
@@ -23,9 +33,13 @@
       <w>dfun</w>
       <w>dkeep</w>
       <w>dspd</w>
+      <w>enrsp</w>
       <w>estop</w>
+      <w>evlrn</w>
       <w>evnlf</w>
+      <w>evuln</w>
       <w>extc</w>
+      <w>fclk</w>
       <w>fullscreenactivity</w>
       <w>gleisabschnitt</w>
       <w>gloc</w>
@@ -35,6 +49,7 @@
       <w>kloc</w>
       <w>lenght</w>
       <w>nenrd</w>
+      <w>neval</w>
       <w>nnack</w>
       <w>nnclr</w>
       <w>nnevn</w>
@@ -42,14 +57,24 @@
       <w>nnrel</w>
       <w>nnuln</w>
       <w>numev</w>
+      <w>nvans</w>
       <w>nvrd</w>
+      <w>nvset</w>
+      <w>paran</w>
       <w>pcom</w>
+      <w>pcvs</w>
+      <w>ploc</w>
+      <w>qcvs</w>
       <w>qloc</w>
       <w>rawmessage</w>
+      <w>rdcc</w>
+      <w>reqev</w>
       <w>restp</w>
+      <w>reval</w>
       <w>rloc</w>
       <w>rqdat</w>
       <w>rqdds</w>
+      <w>rqenv</w>
       <w>rqevn</w>
       <w>rqmn</w>
       <w>rqnn</w>
@@ -63,6 +88,10 @@
       <w>stmod</w>
       <w>tablayout</w>
       <w>traincon</w>
+      <w>wcvb</w>
+      <w>wcvo</w>
+      <w>wcvoa</w>
+      <w>wcvs</w>
       <w>weiche</w>
       <w>werte</w>
       <w>änderungen</w>

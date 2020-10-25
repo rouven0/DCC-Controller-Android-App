@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
+
+    <item
+        android:id="@+id/action_console"
+        android:title="@string/item_console"
+        android:icon="@drawable/ic_baseline_settings_remote_24"
+        app:showAsAction="always"/>
+
     <item
         android:id="@+id/action_settings"
         android:title="@string/item_settings"
         android:icon="@drawable/ic_baseline_settings_24"
         app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/action_console"
-        android:title="@string/item_console"
-        app:showAsAction="never"/>
 </menu>

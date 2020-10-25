@@ -67,9 +67,9 @@ public class BoardManager {
     public void setSwitch(int targetSwitch, boolean targetState) {
         switchStates[targetSwitch] = targetState;
         if (targetState) {
-            send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASON, new String[]{"00", "11", "23", "0" + Integer.toHexString(targetSwitch).toUpperCase()})));
+            send(cBusAsciiMessageBuilder.build(new CBusMessage("ASON", new String[]{"00", "11", "23", "0" + Integer.toHexString(targetSwitch).toUpperCase()})));
         } else {
-            send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASOF, new String[]{"00", "11", "23", "0" + Integer.toHexString(targetSwitch).toUpperCase()})));
+            send(cBusAsciiMessageBuilder.build(new CBusMessage("ASOF", new String[]{"00", "11", "23", "0" + Integer.toHexString(targetSwitch).toUpperCase()})));
         }
         Log.d(TAG, "setSwitch: Weiche: " + (targetSwitch + 1) + " auf Status: " + targetState);
     }
@@ -77,10 +77,10 @@ public class BoardManager {
     public void setSection(int targetSection, boolean targetState) {
         sectionStates[targetSection] = targetState;
         if (targetState) {
-            send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASON, new String[]{"00", "11", "24", "0" + Integer.toHexString(targetSection).toUpperCase()})));
+            send(cBusAsciiMessageBuilder.build(new CBusMessage("ASON", new String[]{"00", "11", "24", "0" + Integer.toHexString(targetSection).toUpperCase()})));
 
         } else {
-            send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASOF, new String[]{"00", "11", "24", "0" + Integer.toHexString(targetSection).toUpperCase()})));
+            send(cBusAsciiMessageBuilder.build(new CBusMessage("ASOF", new String[]{"00", "11", "24", "0" + Integer.toHexString(targetSection).toUpperCase()})));
 
         }
         Log.d(TAG, "setSection: Gleisabschnitt: " + (targetSection + 1) + " auf Status: " + targetState);
@@ -91,11 +91,11 @@ public class BoardManager {
         if (!lightState) {
             lightState = true;
             Log.d(TAG, "setLight: Licht angeschaltet");
-            send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASON, new String[]{"00", "11", "24", "0D"})));
+            send(cBusAsciiMessageBuilder.build(new CBusMessage("ASON", new String[]{"00", "11", "24", "0D"})));
         } else {
             lightState = false;
             Log.d(TAG, "setLight: Licht ausgeschaltet");
-            send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASOF, new String[]{"00", "11", "24", "0D"})));
+            send(cBusAsciiMessageBuilder.build(new CBusMessage("ASOF", new String[]{"00", "11", "24", "0D"})));
 
         }
     }
@@ -103,9 +103,9 @@ public class BoardManager {
     //Called in ScreenFragment.update()
     protected void requestSwitchStates() throws InterruptedException, IOException {
         //Abfragen
-        send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_3_NVRD, new String[]{"00", "65", "03"})));
+        send(cBusAsciiMessageBuilder.build(new CBusMessage("NVRD", new String[]{"00", "65", "03"})));
         String receivedSwitchStates_0 = receive(CBusAsciiMessageBuilder.EML_3);
-        send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_3_NVRD, new String[]{"00", "65", "04"})));
+        send(cBusAsciiMessageBuilder.build(new CBusMessage("NVRD", new String[]{"00", "65", "04"})));
         String receivedSwitchStates_1 = receive(CBusAsciiMessageBuilder.EML_3);
         //Datenpuffer
         try {
@@ -160,11 +160,11 @@ public class BoardManager {
     }
 
     protected void switchSetToCenter() {
-        send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASON, new String[]{"00", "11", "23", "10"})));
+        send(cBusAsciiMessageBuilder.build(new CBusMessage("ASON", new String[]{"00", "11", "23", "10"})));
     }
 
     protected void switchCalibrate() {
-        send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASON, new String[]{"00", "11", "23", "11"})));
+        send(cBusAsciiMessageBuilder.build(new CBusMessage("ASON", new String[]{"00", "11", "23", "11"})));
     }
 
     protected void sectionPreset_3r() {
@@ -185,7 +185,7 @@ public class BoardManager {
     }
 
     protected void sectionsAllOff() {
-        send(cBusAsciiMessageBuilder.build(new CBusMessage(CBusMessage.EVENT_4_ASON, new String[]{"00", "11", "24", "10"})));
+        send(cBusAsciiMessageBuilder.build(new CBusMessage("ASON", new String[]{"00", "11", "24", "10"})));
         Arrays.fill(sectionStates, false);
         lightState = false;
     }

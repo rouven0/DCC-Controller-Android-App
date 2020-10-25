@@ -48,6 +48,4 @@
 
     <!--Layout-->
     <string name="contentdescription_gp">Gleisplan</string>
-    <string name="on">AN</string>
-    <string name="off">AUS</string>
 </resources>

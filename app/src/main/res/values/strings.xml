@@ -64,8 +64,6 @@
 
     <!--Layout-->
     <string name="contentdescription_gp" >Layout</string>
-    <string name="on">ON</string>
-    <string name="off">OFF</string>
 
 
 </resources>

@@ -1,105 +1,219 @@
 package com.traincon.CBusMessage;
 
 public class CBusMessage {
-    /*
-     * All events are declared here
-     * For more information read the CBUS specification
-     */
 
-    //<editor-fold desc="Event Strings">
-    //0 data bytes Packages
-    public final static String EVENT_0_ACK = "00";
-    public final static String EVENT_0_NAK = "01";
-    public final static String EVENT_0_HLT = "02";
-    public final static String EVENT_0_BON = "03";
-    public final static String EVENT_0_TOF = "04";
-    public final static String EVENT_0_TON = "05";
-    public final static String EVENT_0_ESTOP = "06";
-    public final static String EVENT_0_ARST = "07";
-    public final static String EVENT_0_RTOF = "08";
-    public final static String EVENT_0_RTON = "09";
-    public final static String EVENT_0_RESTP = "0A";
-    public final static String EVENT_0_RSTAT = "0C";
-    public final static String EVENT_0_QNN = "0D";
-    public final static String EVENT_0_RQNP = "10";
-    public final static String EVENT_0_RQMN = "11";
-
-    //1 data bytes Packages
-    public final static String EVENT_1_KLOC = "21";
-    public final static String EVENT_1_QLOC = "22";
-    public final static String EVENT_1_DKEEP = "23";
-    public final static String EVENT_1_DBG1 = "30";
-    public final static String EVENT_1_EXTC = "3F";
-
-    //2 data bytes Packages
-    public final static String EVENT_2_RLOC = "40";
-    public final static String EVENT_2_SNN = "42";
-    public final static String EVENT_2_STMOD = "44";
-    public final static String EVENT_2_PCOM = "45";
-    public final static String EVENT_2_KCON = "46";
-    public final static String EVENT_2_DSPD = "47";
-    public final static String EVENT_2_DFLG = "48";
-    public final static String EVENT_2_DFNON = "49";
-    public final static String EVENT_2_DFNOF = "4A";
-    public final static String EVENT_2_SSTAT = "4C";
-    public final static String EVENT_2_RQNN = "50";
-    public final static String EVENT_2_NNREL = "51";
-    public final static String EVENT_2_NNACK = "52";
-    public final static String EVENT_2_NNLRN = "53";
-    public final static String EVENT_2_NNULN = "54";
-    public final static String EVENT_2_NNCLR = "55";
-    public final static String EVENT_2_NNEVN = "56";
-    public final static String EVENT_2_NERD = "57";
-    public final static String EVENT_2_RQEVN = "58";
-    public final static String EVENT_2_WRACK = "59";
-    public final static String EVENT_2_RQDAT = "5A";
-    public final static String EVENT_2_RQDDS = "5B";
-    public final static String EVENT_2_BOOTM = "5C";
-    public final static String EVENT_2_ENUM = "5D";
-    public final static String EVENT_2_EXTC1 = "5F";
-
-    //3 data bytes Packages
-    public final static String EVENT_3_DFUN = "60";
-    public final static String EVENT_3_GLOC = "61";
-    public final static String EVENT_3_ERR = "63";
-    public final static String EVENT_3_CMDERR = "6F";
-    public final static String EVENT_3_EVNLF = "70";
-    public final static String EVENT_3_NVRD = "71";
-    public final static String EVENT_3_NENRD = "72";
-    public final static String EVENT_3_RQNPN = "73";
-    public final static String EVENT_3_NUMEV = "74";
-    public final static String EVENT_3_CANID = "75";
-    public final static String EVENT_3_EXTC2 = "7F";
-
-    //4 data bytes Packages
-    public final static String EVENT_4_ASON = "98";
-    public final static String EVENT_4_ASOF = "99";
-
-    //5 data bytes Packages
-
-    //6 data bytes Packages
-
-    //7 data bytes Packages
-    //</editor-fold>
-
-    public String event;
+    public String eventAddress;
     public String[] data;
 
     public CBusMessage(String event, String[] data) {
-        this.event = event;
+        if(event.length()==2){
+            this.eventAddress = event;
+        }
+        else{
+            this.eventAddress = getAddressByEvent(event);
+        }
         this.data = data;
     }
+    
+    public static String getAddressByEvent(String event){
+        return getEventStringArray()[indexOfEvent(event)][1];
+    }
+    
+// --Commented out by Inspection START (25.10.20 17:04):
+//    public static String getEventByAddress(String address){
+//        return getEventStringArray()[indexOfAddress(address)][0];
+//    }
+// --Commented out by Inspection STOP (25.10.20 17:04)
 
-    public String getEvent() {
-        return event;
+    private static String[][] getEventStringArray() {
+        return new String[][]
+                {
+                        //0 data bytes
+                        {"ACK", "00"},
+                        {"NAK", "01"},
+                        {"HLT", "02"},
+                        {"BON", "03"},
+                        {"TOF", "04"},
+                        {"TON", "05"},
+                        {"ESTOP", "06"},
+                        {"ARST", "07"},
+                        {"RTOF", "08"},
+                        {"RTON", "09"},
+                        {"RESTP", "0A"},
+                        {"RSTAT", "0C"},
+                        {"QNN", "0D"},
+                        {"RQNP", "10"},
+                        {"RQMN", "11"},
+
+                        //1 data byte
+                        {"KLOC", "21"},
+                        {"QLOC", "022"},
+                        {"DKEEP", "023"},
+                        {"DBG1", "30"},
+                        {"EXTC", "3F"},
+
+                        //2 data bytes
+                        {"RLOC", "40"},
+                        {"SNN", "42"},
+                        {"STMOD", "44"},
+                        {"PCOM", "45"},
+                        {"KCON", "46"},
+                        {"DSPD", "47"},
+                        {"DFLG", "48"},
+                        {"DFNON", "49"},
+                        {"DFNOF", "4A"},
+                        {"SSTAT", "4C"},
+                        {"RQNN", "50"},
+                        {"NNREL", "51"},
+                        {"NNACK", "52"},
+                        {"NNLRN", "53"},
+                        {"NNULN", "54"},
+                        {"NNCLR", "55"},
+                        {"NNEVN", "56"},
+                        {"NERD", "57"},
+                        {"RQENV", "58"},
+                        {"WRACK", "59"},
+                        {"RQDAT", "5A"},
+                        {"RQDDS", "5B"},
+                        {"BOOTM", "5C"},
+                        {"ENUM", "5D"},
+                        {"EXTC1", "5F"},
+
+                        //3 data bytes
+                        {"DFUN", "60"},
+                        {"GLOC", "61"},
+                        {"ERR", "63"},
+                        {"CMDERR", "6F"},
+                        {"EVNLF", "70"},
+                        {"NVRD", "71"},
+                        {"NENRD", "72"},
+                        {"RQNPN", "73"},
+                        {"NUMEV", "74"},
+                        {"CANID", "75"},
+                        {"EXTC2", "7F"},
+
+                        //4 data bytes
+                        {"RDCC3", "80"},
+                        {"WCVO", "82"},
+                        {"WCVB", "83"},
+                        {"QCVS", "84"},
+                        {"PCVS", "85"},
+                        {"ACON", "90"},
+                        {"ACOF", "91"},
+                        {"AREC", "92"},
+                        {"ARON", "93"},
+                        {"AROF", "94"},
+                        {"EVULN", "95"},
+                        {"NVSET", "96"},
+                        {"NVANS", "97"},
+                        {"ASON", "98"},
+                        {"ASOF", "99"},
+                        {"ASRQ", "9A"},
+                        {"PARAN", "9B"},
+                        {"REVAL", "9C"},
+                        {"ARSON", "9D"},
+                        {"ARSOF", "9E"},
+                        {"EXTC3", "9F"},
+
+                        //5 data bytes
+                        {"RDCC4", "A0"},
+                        {"WCVS", "A2"},
+                        {"ACON1", "B0"},
+                        {"ACOF1", "B1"},
+                        {"REQEV", "B2"},
+                        {"ARON1", "B3"},
+                        {"AROF1", "B4"},
+                        {"NEVAL", "B5"},
+                        {"PNN", "B6"},
+                        {"ASON1", "B8"},
+                        {"ASOF1", "B9"},
+                        {"ARSON1", "BD"},
+                        {"ARSOF1", "BE"},
+                        {"EXTC4", "BF"},
+
+                        //6 data bytes
+                        {"RDCC5", "C0"},
+                        {"WCVOA", "C1"},
+                        {"FCLK", "CF"},
+                        {"ACOF2", "D0"},
+                        {"ACOF2", "D1"},
+                        {"EVLRN", "D2"},
+                        {"EVANS", "D3"},
+                        {"ARON1", "D4"},
+                        {"AROF2", "D5"},
+                        {"ASON2", "D8"},
+                        {"ASOF2", "D9"},
+                        {"ARSON2", "DD"},
+                        {"ARSOF2", "DE"},
+                        {"EXTC5", "DF"},
+
+                        //7 data bytes
+                        {"RDCC6", "E0"},
+                        {"PLOC", "E1"},
+                        {"NAME", "E2"},
+                        {"STAT", "E3"},
+                        {"PARAMS", "EF"},
+                        {"ACON3", "F0"},
+                        {"ACOF3", "F1"},
+                        {"ENRSP", "F2"},
+                        {"ARON3", "F3"},
+                        {"AROF3", "F4"},
+                        {"EVLRN", "F5"},
+                        {"ACDAT", "F6"},
+                        {"ARDAT", "F7"},
+                        {"ASON3", "F8"},
+                        {"ASOF3", "F9"},
+                        {"DDES", "FA"},
+                        {"DDRS", "FB"},
+                        {"ARSON3", "FD"},
+                        {"ARSOF3", "FE"},
+                        {"EXTC6", "FF"}
+                };
+    }
+
+    private static int indexOfEvent(String targetEvent){
+        boolean found = false;
+        int count = 0;
+        while(!found){
+            if(count == getEventStringArray().length){
+                break;
+            }
+            if(getEventStringArray()[count][0].equals(targetEvent)){
+                found = true;
+            }
+            count=count+1;
+        }
+        return count;
+    }
+
+// --Commented out by Inspection START (25.10.20 17:05):
+//    private static int indexOfAddress(String targetAddress){
+//        boolean found = false;
+//        int count = 0;
+//        while(!found){
+//            if(count == getEventStringArray().length){
+//                break;
+//            }
+//            if(getEventStringArray()[count][1].equals(targetAddress)){
+//                found = true;
+//            }
+//            count = count+1;
+//        }
+//        return count;
+//    }
+// --Commented out by Inspection STOP (25.10.20 17:05)
+
+    public String getEventAddress() {
+        return eventAddress;
     }
 
     public void setEvent(String event) {
-        this.event = event;
-    }
-
-    public int getLenght() {
-        return data.length;
+        if(event.length()==2){
+            this.eventAddress = event;
+        }
+        else{
+            this.eventAddress = getAddressByEvent(event);
+        }
     }
 
     public String[] getData() {

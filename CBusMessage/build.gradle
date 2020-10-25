@@ -4,6 +4,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'org.jetbrains:annotations-java5:15.0'
     implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'org.jetbrains:annotations-java5:15.0'
 }
 
 sourceCompatibility = "1.7"
