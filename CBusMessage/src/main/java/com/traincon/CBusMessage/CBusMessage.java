@@ -6,24 +6,21 @@ public class CBusMessage {
     public String[] data;
 
     public CBusMessage(String event, String[] data) {
-        if(event.length()==2){
+        if (event.length() == 2) {
             this.eventAddress = event;
-        }
-        else{
+        } else {
             this.eventAddress = getAddressByEvent(event);
         }
         this.data = data;
     }
-    
-    public static String getAddressByEvent(String event){
+
+    public static String getAddressByEvent(String event) {
         return getEventStringArray()[indexOfEvent(event)][1];
     }
-    
-// --Commented out by Inspection START (25.10.20 17:04):
-//    public static String getEventByAddress(String address){
-//        return getEventStringArray()[indexOfAddress(address)][0];
-//    }
-// --Commented out by Inspection STOP (25.10.20 17:04)
+
+    public static String getEventByAddress(String address) {
+        return getEventStringArray()[indexOfAddress(address)][0];
+    }
 
     private static String[][] getEventStringArray() {
         return new String[][]
@@ -171,47 +168,47 @@ public class CBusMessage {
                 };
     }
 
-    private static int indexOfEvent(String targetEvent){
+    private static int indexOfEvent(String targetEvent) {
         boolean found = false;
         int count = 0;
-        while(!found){
-            if(count == getEventStringArray().length){
+        while (!found) {
+            if (count == getEventStringArray().length) {
+                count = 0;
                 break;
             }
-            if(getEventStringArray()[count][0].equals(targetEvent)){
+            if (getEventStringArray()[count][0].equals(targetEvent)) {
                 found = true;
             }
-            count=count+1;
+            count = count + 1;
         }
         return count;
     }
 
-// --Commented out by Inspection START (25.10.20 17:05):
-//    private static int indexOfAddress(String targetAddress){
-//        boolean found = false;
-//        int count = 0;
-//        while(!found){
-//            if(count == getEventStringArray().length){
-//                break;
-//            }
-//            if(getEventStringArray()[count][1].equals(targetAddress)){
-//                found = true;
-//            }
-//            count = count+1;
-//        }
-//        return count;
-//    }
-// --Commented out by Inspection STOP (25.10.20 17:05)
+
+    private static int indexOfAddress(String targetAddress) {
+        boolean found = false;
+        int count = 0;
+        while (!found) {
+            if (count == getEventStringArray().length-1) {
+                count = 0;
+                break;
+            }
+            if (getEventStringArray()[count][1].equals(targetAddress)) {
+                found = true;
+            }
+            count = count + 1;
+        }
+        return count;
+    }
 
     public String getEventAddress() {
         return eventAddress;
     }
 
     public void setEvent(String event) {
-        if(event.length()==2){
+        if (event.length() == 2) {
             this.eventAddress = event;
-        }
-        else{
+        } else {
             this.eventAddress = getAddressByEvent(event);
         }
     }

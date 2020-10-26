@@ -91,7 +91,7 @@ public class ScreenFragment extends Fragment {
             final int[][] sectionPositionArray = new int[][]{{19, 20}, {18, 22}, {18, 23}, {15, 8}, {19, 12}, {19, 13}, {19, 24}, {15, 7}, {13, 28}, {30, 28}, {13, 2}, {13, 0}, {15, 1}};
             placeSwitches(rootView, switchPositionArray, switchIdArray, switchSwitchCompatArray);
             placeSections(rootView, sectionPositionArray, sectionIdArray, sectionToggleButtonArray);
-            handler.post(updateRunnable);
+            //handler.post(updateRunnable);
         }
     };
     //</editor-fold>

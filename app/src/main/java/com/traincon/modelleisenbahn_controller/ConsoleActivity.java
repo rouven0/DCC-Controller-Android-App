@@ -29,7 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class ConsoleActivity extends AppCompatActivity {
     private final int[] editTextIdArray = new int[]{R.id.input_canid, R.id.input_addr, R.id.input_dat1, R.id.input_dat2, R.id.input_dat3, R.id.input_dat4, R.id.input_dat5, R.id.input_dat6, R.id.input_dat7};
     private final EditText[] currentPartialMessage = new EditText[editTextIdArray.length];
-    private final CBusMessage currentCBusMessage = new CBusMessage(null, null); //message that is sent to the board
+    private final CBusMessage currentCBusMessage = new CBusMessage("", null); //message that is sent to the board
     private final String[] lastPartialMessage = new String[editTextIdArray.length];
     public String host;
     public int port;
@@ -65,24 +65,32 @@ public class ConsoleActivity extends AppCompatActivity {
     //Log functions
     private void initLog() {
         final ScrollView rawLogScrollView = findViewById(R.id.scrollView_raw);
-        //final ScrollView processedLogScrollView = findViewById(R.id.scrollView_processed);
+        final ScrollView processedLogScrollView = findViewById(R.id.scrollView_processed);
         final TextView rawLogTextView = findViewById(R.id.log_raw);
-        //final TextView processedLogTextView = findViewById(R.id.log_processed);
+        final TextView processedLogTextView = findViewById(R.id.log_processed);
         final Handler handler = new Handler(getBaseContext().getMainLooper());
         Runnable logUpdateRunnable = new Runnable() {
             @Override
             public void run() {
                 try {
+                    //Initialize
                     String oldLog = rawLogTextView.getText().toString();
+                    String oldLog_processed = processedLogTextView.getText().toString();
+                    //Get string
                     String receivedString = receive(socketInputStream.available());
+                    //update the log
                     if (!receivedString.equals("")) {
+                        //raw string
                         String combinedLog = oldLog + "\n" + receivedString;
                         rawLogTextView.setText(combinedLog);
                         rawLogScrollView.fullScroll(View.FOCUS_DOWN);
+                        //processed string
+                        String receivedEvent = CBusMessage.getEventByAddress(receivedString.substring(7, 9));
+                        String combinedLog_processed = oldLog_processed + "\n" + getResources().getString(R.string.info_event)+ " " +receivedEvent;
+                        processedLogTextView.setText(combinedLog_processed);
+                        processedLogScrollView.fullScroll(View.FOCUS_DOWN);
                     }
-                    //Interpreter will be added when CBusMessage is ready
-                    //processedLogTextView.setText(receivedString);
-                    //processedLogScrollView.fullScroll(View.FOCUS_DOWN);
+
                 } catch (InterruptedException | IOException e) {
                     e.printStackTrace();
                 }

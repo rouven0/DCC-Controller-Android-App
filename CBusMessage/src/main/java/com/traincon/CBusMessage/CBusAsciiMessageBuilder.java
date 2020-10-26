@@ -8,16 +8,9 @@ import androidx.annotation.NonNull;
 
 public class CBusAsciiMessageBuilder {
 
-    //<editor-fold desc="Expected message lenght">
-    //public final static int EML_0 = 12;
-    //public final static int EML_1 = 14;
-    //public final static int EML_2 = 16;
-    public final static int EML_3 = 18;
-    //public final static int EML_4 = 20;
-    //public final static int EML_5 = 22;
-    //public final static int EML_6 = 24;
-    //public final static int EML_7 = 26;
-    //</editor-fold>
+    public static int getExpectedMessageLenght(int dataBytes){
+        return 12+(2*dataBytes);
+    }
 
     private final String canId;
 

@@ -104,9 +104,9 @@ public class BoardManager {
     protected void requestSwitchStates() throws InterruptedException, IOException {
         //Abfragen
         send(cBusAsciiMessageBuilder.build(new CBusMessage("NVRD", new String[]{"00", "65", "03"})));
-        String receivedSwitchStates_0 = receive(CBusAsciiMessageBuilder.EML_3);
+        String receivedSwitchStates_0 = receive(CBusAsciiMessageBuilder.getExpectedMessageLenght(3));
         send(cBusAsciiMessageBuilder.build(new CBusMessage("NVRD", new String[]{"00", "65", "04"})));
-        String receivedSwitchStates_1 = receive(CBusAsciiMessageBuilder.EML_3);
+        String receivedSwitchStates_1 = receive(CBusAsciiMessageBuilder.getExpectedMessageLenght(3));
         //Datenpuffer
         try {
             receive(socketInputStream.available());
