@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -85,8 +86,8 @@ public class ConsoleActivity extends AppCompatActivity {
                         rawLogTextView.setText(combinedLog);
                         rawLogScrollView.fullScroll(View.FOCUS_DOWN);
                         //processed string
-                        String receivedEvent = CBusMessage.getEventByAddress(receivedString.substring(7, 9));
-                        String combinedLog_processed = oldLog_processed + "\n" + getResources().getString(R.string.info_event)+ " " +receivedEvent;
+                        //String receivedEvent = CBusMessage.getEventByAddress(receivedString.substring(7, 9));
+                        String combinedLog_processed = oldLog_processed + "\n" + getResources().getString(R.string.info_event)+ " " +getReceivedCBusMessage(receivedString).getEvent() + ", " + getResources().getString(R.string.info_data) + " " + Arrays.toString(getReceivedCBusMessage(receivedString).getData());
                         processedLogTextView.setText(combinedLog_processed);
                         processedLogScrollView.fullScroll(View.FOCUS_DOWN);
                     }
@@ -100,60 +101,15 @@ public class ConsoleActivity extends AppCompatActivity {
         handler.post(logUpdateRunnable);
     }
 
-    //Networking functions
-    private void connect() {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    consoleSocket = new Socket();
-                    consoleSocket.connect(new InetSocketAddress(host, port));
-                    socketInputStream = new DataInputStream(consoleSocket.getInputStream());
-                    socketOutputStream = new DataOutputStream(consoleSocket.getOutputStream());
-                    initLog();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
+    private CBusMessage getReceivedCBusMessage(String receivedFrame){
+        String event = receivedFrame.substring(7,9);
+        String[] data = new String[receivedFrame.substring(9).length()/2];
+        for(int i=0; i<data.length; i++){
+            data[i] = receivedFrame.substring(9+(2*i), 11+(2*i));
+        }
+        return new CBusMessage(event, data);
     }
 
-    private void send(final String message) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    byte[] bMessage = message.getBytes(StandardCharsets.UTF_8);
-                    socketOutputStream.write(bMessage);
-                } catch (IOException | NullPointerException ignored) {
-                }
-
-            }
-        });
-        thread.start();
-    }
-
-    private String receive(int lenght) throws InterruptedException {
-        final String[] message = new String[]{""};
-        final byte[] rawMessage = new byte[lenght];
-
-        final Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < rawMessage.length; i++) {
-                    try {
-                        rawMessage[i] = socketInputStream.readByte();
-                    } catch (IOException | NullPointerException ignored) {
-                    }
-                    message[0] += (char) rawMessage[i];
-                }
-            }
-        });
-        thread.start();
-        thread.join();
-        return message[0];
-    }
 
     //Functions to send messages
     private void initSendRow() {
@@ -222,5 +178,59 @@ public class ConsoleActivity extends AppCompatActivity {
             currentPartialMessage[i].setText(lastPartialMessage[i]);
         }
         updateMessage();
+    }
+    //Networking functions
+    private void connect() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    consoleSocket = new Socket();
+                    consoleSocket.connect(new InetSocketAddress(host, port));
+                    socketInputStream = new DataInputStream(consoleSocket.getInputStream());
+                    socketOutputStream = new DataOutputStream(consoleSocket.getOutputStream());
+                    initLog();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+
+    private void send(final String message) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    byte[] bMessage = message.getBytes(StandardCharsets.UTF_8);
+                    socketOutputStream.write(bMessage);
+                } catch (IOException | NullPointerException ignored) {
+                }
+
+            }
+        });
+        thread.start();
+    }
+
+    private String receive(int lenght) throws InterruptedException {
+        final String[] message = new String[]{""};
+        final byte[] rawMessage = new byte[lenght];
+
+        final Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < rawMessage.length; i++) {
+                    try {
+                        rawMessage[i] = socketInputStream.readByte();
+                    } catch (IOException | NullPointerException ignored) {
+                    }
+                    message[0] += (char) rawMessage[i];
+                }
+            }
+        });
+        thread.start();
+        thread.join();
+        return message[0];
     }
 }

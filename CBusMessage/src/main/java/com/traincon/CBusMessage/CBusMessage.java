@@ -205,6 +205,10 @@ public class CBusMessage {
         return eventAddress;
     }
 
+    public String getEvent(){
+        return getEventByAddress(eventAddress);
+    }
+
     public void setEvent(String event) {
         if (event.length() == 2) {
             this.eventAddress = event;
