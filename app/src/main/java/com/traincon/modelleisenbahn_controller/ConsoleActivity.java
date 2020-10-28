@@ -110,7 +110,6 @@ public class ConsoleActivity extends AppCompatActivity {
         return new CBusMessage(event, data);
     }
 
-
     //Functions to send messages
     private void initSendRow() {
         for (int i = 0; i < currentPartialMessage.length; i++) {
@@ -137,6 +136,7 @@ public class ConsoleActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                updateMessage();
                 String canId = currentPartialMessage[0].getText().toString();
                 send((new CBusAsciiMessageBuilder(canId).build(currentCBusMessage)));
                 //Save the message
