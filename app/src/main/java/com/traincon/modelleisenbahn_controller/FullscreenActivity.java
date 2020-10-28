@@ -19,13 +19,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 public class FullscreenActivity extends AppCompatActivity {
-    final private int[] menuButtonIdArray = new int[]{R.id.mainMenuButton, R.id.presetsMenuButton, R.id.switchMenuButton, R.id.switchSetStandardActionbutton, R.id.switchSetToCenterActionButton, R.id.switchCalibrateActionButton, R.id.sectionMenuButton, R.id.sectionSetStandardActionbutton, R.id.sectionsAllOffActionbutton, R.id.reconnectActionButton, R.id.lightActionButton};
+    final private int[] menuButtonIdArray = new int[]{R.id.mainMenuButton, R.id.reconnectActionButton, R.id.lightActionButton};
     final private Button[] menuButtons = new Button[menuButtonIdArray.length];
 
     private boolean isMenuOpen = false;
-    private boolean isPresetMenuOpen = false;
-    private boolean isSwitchMenuOpen = false;
-    private boolean isSectionMenuOpen = false;
     private BoardManager boardManager;
 
     //<editor-fold desc="private final Thread createTabLayout...">
@@ -98,8 +95,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     if (!isMenuOpen) {
                         menuButtons[1].setVisibility(View.VISIBLE);
-                        menuButtons[9].setVisibility(View.VISIBLE);
-                        menuButtons[10].setVisibility(View.VISIBLE);
+                        menuButtons[2].setVisibility(View.VISIBLE);
                         isMenuOpen = true;
                     } else {
                         //Menu Schließen
@@ -112,144 +108,8 @@ public class FullscreenActivity extends AppCompatActivity {
                 }
             });
 
-            //Presets
+            //Reconnect
             menuButtons[1].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isPresetMenuOpen) {
-                        menuButtons[0].setVisibility(View.GONE);
-                        menuButtons[2].setVisibility(View.VISIBLE);
-                        menuButtons[6].setVisibility(View.VISIBLE);
-                        menuButtons[9].setVisibility(View.GONE);
-                        menuButtons[10].setVisibility(View.GONE);
-                        isPresetMenuOpen = true;
-                    } else {
-                        menuButtons[0].setVisibility(View.VISIBLE);
-                        menuButtons[2].setVisibility(View.GONE);
-                        menuButtons[6].setVisibility(View.GONE);
-                        menuButtons[9].setVisibility(View.VISIBLE);
-                        menuButtons[10].setVisibility(View.VISIBLE);
-                        isPresetMenuOpen = false;
-                    }
-                }
-            });
-
-            //Switches
-            menuButtons[2].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isSwitchMenuOpen) {
-                        menuButtons[1].setVisibility(View.GONE);
-                        menuButtons[3].setVisibility(View.VISIBLE);
-                        menuButtons[4].setVisibility(View.VISIBLE);
-                        menuButtons[5].setVisibility(View.VISIBLE);
-                        menuButtons[6].setVisibility(View.GONE);
-                        isSwitchMenuOpen = true;
-                    } else {
-                        menuButtons[1].setVisibility(View.VISIBLE);
-                        menuButtons[3].setVisibility(View.GONE);
-                        menuButtons[4].setVisibility(View.GONE);
-                        menuButtons[5].setVisibility(View.GONE);
-                        menuButtons[6].setVisibility(View.VISIBLE);
-                        isSwitchMenuOpen = false;
-                    }
-
-                }
-            });
-
-            //Switches 3 Laps
-            menuButtons[3].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Menu Schließen
-                    for (int i = 1; i < menuButtonIdArray.length; i++) {
-                        menuButtons[i].setVisibility(View.GONE);
-                    }
-                    menuButtons[0].setVisibility(View.VISIBLE);
-                    boardManager.switchPreset_3r();
-                    isMenuOpen = false;
-                }
-            });
-
-            //Switches all to center
-            menuButtons[4].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Menu Schließen
-                    for (int i = 1; i < menuButtonIdArray.length; i++) {
-                        menuButtons[i].setVisibility(View.GONE);
-                    }
-                    menuButtons[0].setVisibility(View.VISIBLE);
-                    boardManager.switchSetToCenter();
-                    isMenuOpen = false;
-                }
-            });
-
-            //Calibrate Switches
-            menuButtons[5].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Menu Schließen
-                    for (int i = 1; i < menuButtonIdArray.length; i++) {
-                        menuButtons[i].setVisibility(View.GONE);
-                    }
-                    menuButtons[0].setVisibility(View.VISIBLE);
-                    boardManager.switchCalibrate();
-                    isMenuOpen = false;
-                }
-            });
-
-            //Sections
-            menuButtons[6].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isSectionMenuOpen) {
-                        menuButtons[1].setVisibility(View.GONE);
-                        menuButtons[2].setVisibility(View.GONE);
-                        menuButtons[7].setVisibility(View.VISIBLE);
-                        menuButtons[8].setVisibility(View.VISIBLE);
-                        isSectionMenuOpen = true;
-                    } else {
-                        menuButtons[1].setVisibility(View.VISIBLE);
-                        menuButtons[2].setVisibility(View.VISIBLE);
-                        menuButtons[7].setVisibility(View.GONE);
-                        menuButtons[8].setVisibility(View.GONE);
-                        isSectionMenuOpen = false;
-                    }
-
-                }
-            });
-
-            //Sections 3 laps
-            menuButtons[7].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Menu Schließen
-                    for (int i = 1; i < menuButtonIdArray.length; i++) {
-                        menuButtons[i].setVisibility(View.GONE);
-                    }
-                    menuButtons[0].setVisibility(View.VISIBLE);
-                    boardManager.sectionPreset_3r();
-                    isMenuOpen = false;
-                }
-            });
-
-            //All sections off
-            menuButtons[8].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Menu Schließen
-                    for (int i = 1; i < menuButtonIdArray.length; i++) {
-                        menuButtons[i].setVisibility(View.GONE);
-                    }
-                    menuButtons[0].setVisibility(View.VISIBLE);
-                    boardManager.sectionsAllOff();
-                    isMenuOpen = false;
-                }
-            });
-
-            //reconnect
-            menuButtons[9].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //Menu Schließen
@@ -267,7 +127,7 @@ public class FullscreenActivity extends AppCompatActivity {
             });
 
             //Light
-            menuButtons[10].setOnClickListener(new View.OnClickListener() {
+            menuButtons[2].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //Menu Schließen
@@ -280,7 +140,6 @@ public class FullscreenActivity extends AppCompatActivity {
             });
         }
     });
-
     //</editor-fold>
 
     @Override

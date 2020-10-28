@@ -19,8 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/action_margin"
-            android:text="@string/default_seekBarTextView"
-            android:textColor="@color/colorBackgroundDark"/>
+            android:text="@string/default_seekBarTextView"/>
         <SeekBar
             android:id="@+id/seekBar_1"
             android:layout_width="match_parent"
@@ -55,8 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/action_margin"
-            android:text="@string/default_seekBarTextView"
-            android:textColor="@color/colorBackgroundDark"/>
+            android:text="@string/default_seekBarTextView"/>
         <SeekBar
             android:id="@+id/seekBar_2"
             android:layout_width="match_parent"
@@ -90,8 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/action_margin"
-            android:text="@string/default_seekBarTextView"
-            android:textColor="@color/colorBackgroundDark"/>
+            android:text="@string/default_seekBarTextView"/>
         <SeekBar
             android:id="@+id/seekBar_3"
             android:layout_width="match_parent"

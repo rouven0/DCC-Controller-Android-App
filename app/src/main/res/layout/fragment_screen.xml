@@ -169,7 +169,6 @@
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
@@ -177,7 +176,6 @@
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
@@ -185,7 +183,6 @@
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
@@ -193,7 +190,6 @@
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
@@ -201,7 +197,6 @@
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
@@ -209,7 +204,6 @@
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
@@ -217,7 +211,6 @@
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
@@ -225,7 +218,6 @@
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
@@ -233,7 +225,6 @@
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
@@ -241,7 +232,6 @@
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
@@ -249,7 +239,6 @@
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
@@ -257,7 +246,6 @@
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
         <ToggleButton
@@ -265,7 +253,6 @@
             android:layout_width="@dimen/section_width"
             android:layout_height="@dimen/section_height"
             android:background="@color/colorSectionPrimary"
-            android:textColor="@color/colorSectionText"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 

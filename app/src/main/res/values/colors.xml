@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Main Colors-->
     <color name="colorPrimary">#555</color>
     <color name="colorPrimaryDark">#444</color>
     <color name="colorAccent">#888</color>
     <color name="colorTitle">#fff</color>
-    <color name="colorBackgroundDark">#000</color>
+    <!--Controller Colors-->
     <color name="colorSectionPrimary">#fcfcac</color>
-    <color name="colorSectionText">#000</color>
     <color name="colorSwitchTrack">#f77</color>
     <color name="colorSwitchThumb">#c00</color>
-    <color name="colorMenu_1">#999</color>
-    <color name="colorMenu_2">#aaa</color>
-    <color name="colorMenu_3">#bbb</color>
 
 
 </resources>

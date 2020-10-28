@@ -18,124 +18,40 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/tabLayout"
-        app:layout_constraintBottom_toBottomOf="parent">
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tabLayout"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        style="?android:attr/buttonBarStyle">
 
         <!--Main menu-->
         <Button
             android:id="@+id/mainMenuButton"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:text="@string/menu_main"
-            android:backgroundTint="@color/colorMenu_1"
-            android:textSize="16sp" />
-
-        <!--Menu for Presets-->
-        <Button
-            android:id="@+id/presetsMenuButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/mainMenuButton"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/menu_presets"
-            android:backgroundTint="@color/colorMenu_2"
-            android:textSize="14sp" />
-
-        <!--Switches-->
-        <Button
-            android:id="@+id/switchMenuButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/presetsMenuButton"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/menu_switch"
-            android:backgroundTint="@color/colorMenu_3"
-            android:textSize="12sp" />
-
-        <Button
-            android:id="@+id/switchSetStandardActionbutton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/switchMenuButton"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/action_setstandard_sw"
-            android:textSize="12sp"/>
-
-        <Button
-            android:id="@+id/switchSetToCenterActionButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/switchSetStandardActionbutton"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/action_settocenter"
-            android:textSize="12sp"/>
-
-        <Button
-            android:id="@+id/switchCalibrateActionButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/switchSetToCenterActionButton"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/action_calibrate"
-            android:textSize="12sp"/>
-
-        <!--Sections-->
-        <Button
-            android:id="@+id/sectionMenuButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/switchMenuButton"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/menu_sections"
-            android:backgroundTint="@color/colorMenu_3"
-            android:textSize="12sp" />
-
-        <Button
-            android:id="@+id/sectionSetStandardActionbutton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/sectionMenuButton"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/action_setstandard_se"
-            android:textSize="12sp"/>
-
-        <Button
-            android:id="@+id/sectionsAllOffActionbutton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/sectionSetStandardActionbutton"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/action_allsectionsoff"
-            android:textSize="12sp"/>
+            android:textSize="16sp"
+            style="?android:attr/buttonBarStyle"/>
 
         <!--Reconnect-->
         <Button
             android:id="@+id/reconnectActionButton"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/presetsMenuButton"
-            app:layout_constraintTop_toTopOf="parent"
             android:text="@string/action_reconnect"
-            android:backgroundTint="@color/colorMenu_2"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            style="?android:attr/buttonBarStyle" />
 
         <!--Light-->
         <Button
             android:id="@+id/lightActionButton"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/reconnectActionButton"
-            app:layout_constraintTop_toTopOf="parent"
             android:text="@string/action_light"
-            android:backgroundTint="@color/colorMenu_2"
-            android:textSize="14sp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:textSize="14sp"
+            style="?android:attr/buttonBarStyle" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

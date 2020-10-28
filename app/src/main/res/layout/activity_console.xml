@@ -171,8 +171,7 @@
                     android:layout_marginBottom="@dimen/fab_margin"
                     android:autofillHints="no"
                     android:hint="@string/input_dat7"
-                    android:inputType="textShortMessage"
-                    android:nextFocusDown="@id/input_rawmessage" />
+                    android:inputType="textShortMessage" />
             </LinearLayout>
         </HorizontalScrollView>
 

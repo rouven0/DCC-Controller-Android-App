@@ -141,55 +141,6 @@ public class BoardManager {
         }
     }
 
-    //Menu features(Hardcoded)
-    protected void switchPreset_3r() {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < switchStates.length; i++) {
-                    setSwitch(i, i == 0 || (2 < i && i < 10));
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        thread.start();
-    }
-
-    protected void switchSetToCenter() {
-        send(cBusAsciiMessageBuilder.build(new CBusMessage("ASON", new String[]{"00", "11", "23", "10"})));
-    }
-
-    protected void switchCalibrate() {
-        send(cBusAsciiMessageBuilder.build(new CBusMessage("ASON", new String[]{"00", "11", "23", "11"})));
-    }
-
-    protected void sectionPreset_3r() {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < sectionStates.length; i++) {
-                    setSection(i, (1 < i && i < 4) || (5 < i && i < 8) || (9 < i && i < 12));
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        thread.start();
-    }
-
-    protected void sectionsAllOff() {
-        send(cBusAsciiMessageBuilder.build(new CBusMessage("ASON", new String[]{"00", "11", "24", "10"})));
-        Arrays.fill(sectionStates, false);
-        lightState = false;
-    }
-
     private void send(final String message) {
         Thread thread = new Thread(new Runnable() {
             @Override
