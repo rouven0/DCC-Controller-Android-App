@@ -19,6 +19,7 @@
     <string name="summary_canid_3" >CAN-ID for Device ID 3</string>
     <string name="summary_canid_4" >CAN-ID for Device ID 4</string>
 
+    <!-- LauncherActivity Strings -->
     <string name="action_loadLast" >Last used</string>
     <string name="input_ipEntry" >Hostname</string>
     <string name="input_portEntry" >Port</string>

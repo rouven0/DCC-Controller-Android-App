@@ -1,120 +1,154 @@
 package com.traincon.modelleisenbahn_controller;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AnimationUtils;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 
+import java.io.IOException;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity {
-    private EditText ipEntry;
-    private EditText portEntry;
-    private EditText devIdEntry;
+    final private int[] menuButtonIdArray = new int[]{R.id.mainMenuButton, R.id.reconnectActionButton, R.id.lightActionButton};
+    final private Button[] menuButtons = new Button[menuButtonIdArray.length];
+    private boolean isMenuOpen = false;
+    private BoardManager boardManager;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-        getSupportActionBar();
 
-        //Init Entries
-        ipEntry = findViewById(R.id.ipEntry);
-        portEntry = findViewById(R.id.portEntry);
-        devIdEntry = findViewById(R.id.devIdEntry);
-        //Load last values
-        Button loadLast = findViewById(R.id.loadLast);
-        loadLast.setOnClickListener(new View.OnClickListener() {
+        Intent intent = getIntent();
+        String devId = intent.getStringExtra("deviceId");
+        String host = intent.getStringExtra("host");
+        int port = intent.getIntExtra("port", 0);
+        createTabLayout();
+        createMenuButtons();
+
+        boardManager = new BoardManager(getBaseContext(), devId, host, port);
+        boardManager.connect();
+    }
+
+    public void createTabLayout() {
+        //Init TabLayout
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        final Fragment[] fragment = {null};
+
+        //Show Controllerfragment at the beginning
+        fragment[0] = new ControllerFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.constraintLayout, Objects.requireNonNull(fragment[0]));
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.commit();
+
+        //Bei änderungen im Tablayout
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View view) {
-                loadLastConnectedBoard(ipEntry, portEntry);
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 0:
+                        fragment[0] = new ControllerFragment();
+                        break;
+                    case 1:
+                        fragment[0] = new ScreenFragment(boardManager);
+                        break;
+                }
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.constraintLayout, Objects.requireNonNull(fragment[0]));
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                fragmentTransaction.commit();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-        //Fab to start the FullscreenActivity
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+    }
+
+    public void createMenuButtons() {
+        for (int i = 0; i < menuButtons.length; i++) {
+            menuButtons[i] = findViewById(menuButtonIdArray[i]);
+            if (i > 0) {
+                menuButtons[i].setVisibility(View.GONE);
+            }
+        }
+
+        //Main menu
+        menuButtons[0].setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                try {
-                    //Daten auslesen
-                    String host = Objects.requireNonNull(ipEntry.getText()).toString();
-                    int port = Integer.parseInt(Objects.requireNonNull(portEntry.getText()).toString());
-                    String devId = Objects.requireNonNull(devIdEntry.getText()).toString();
-                    if (devId.equals("")) {
-                        devId = "2";
+            public void onClick(View v) {
+                if (!isMenuOpen) {
+                    menuButtons[1].setVisibility(View.VISIBLE);
+                    menuButtons[2].setVisibility(View.VISIBLE);
+                    isMenuOpen = true;
+                } else {
+                    //Menu Schließen
+                    for (int i = 1; i < menuButtonIdArray.length; i++) {
+                        menuButtons[i].setVisibility(View.GONE);
                     }
-                    //Start main when entries are correct
-                    if (devId.equals("1") || devId.equals("2") || devId.equals("3") || devId.equals("4")) {
-                        Intent intent = new Intent(getBaseContext(), FullscreenActivity.class);
-                        intent.putExtra("host", host);
-                        intent.putExtra("port", port);
-                        intent.putExtra("deviceId", devId);
-                        saveLastConnectedBoard(host, port);
-                        startActivity(intent);
-                    } else {
-                        devIdEntry.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.animation_shake));
-                        Snackbar.make(view, "Gerätenummer muss eine ganze Zahl zwischen 1 und 4 sein!", Snackbar.LENGTH_INDEFINITE)
-                                .show();
-                    }
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    portEntry.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.animation_shake));
+
+                    isMenuOpen = false;
                 }
             }
         });
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.action_settings) {
-            startActivity(new Intent(getBaseContext(), SettingsActivity.class));
-        } else if (itemId == R.id.action_console) {
-            try {
-                String host = Objects.requireNonNull(ipEntry.getText()).toString();
-                int port = Integer.parseInt(Objects.requireNonNull(portEntry.getText()).toString());
-                Intent intent = new Intent(getBaseContext(), ConsoleActivity.class);
-                intent.putExtra("host", host);
-                intent.putExtra("port", port);
-                saveLastConnectedBoard(host, port);
-                startActivity(intent);
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-                portEntry.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.animation_shake));
+        //Reconnect
+        menuButtons[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Menu Schließen
+                for (int i = 1; i < menuButtonIdArray.length; i++) {
+                    menuButtons[i].setVisibility(View.GONE);
+                }
+                try {
+                    boardManager.disconnect();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                boardManager.connect();
+                isMenuOpen = false;
             }
+        });
+
+        //Light
+        menuButtons[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Menu Schließen
+                for (int i = 1; i < menuButtonIdArray.length; i++) {
+                    menuButtons[i].setVisibility(View.GONE);
+                }
+                boardManager.setLight();
+                isMenuOpen = false;
+            }
+        });
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            boardManager.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void saveLastConnectedBoard(String host, int port) {
-        SharedPreferences sharedPreferences = this.getSharedPreferences("lastConnectedBoard", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("lastConnectedHost", host);
-        editor.putString("lastUsedPort", Integer.toString(port));
-        editor.apply();
-    }
-
-    private void loadLastConnectedBoard(EditText ipEntry, EditText portEntry) {
-        SharedPreferences sharedPreferences = this.getSharedPreferences("lastConnectedBoard", MODE_PRIVATE);
-        ipEntry.setText(sharedPreferences.getString("lastConnectedHost", null));
-        portEntry.setText(sharedPreferences.getString("lastUsedPort", null));
     }
 }

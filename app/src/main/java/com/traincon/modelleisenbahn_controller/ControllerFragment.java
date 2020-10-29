@@ -25,17 +25,6 @@ public class ControllerFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_controller, container, false);
         initSeekBars(rootView);
-
-        /*final Handler handler = new Handler();
-
-        final Runnable updateRunnable = new Runnable() {
-            @Override
-            public void run() {
-                update();
-                handler.post(this);
-            }
-        };
-        handler.post(updateRunnable);*/
         return rootView;
     }
 
@@ -64,8 +53,4 @@ public class ControllerFragment extends Fragment {
 
         }
     }
-
-    /*private void update(){
-
-    }*/
 }
