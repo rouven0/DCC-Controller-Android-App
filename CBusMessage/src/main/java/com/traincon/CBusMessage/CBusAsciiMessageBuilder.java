@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 
 public class CBusAsciiMessageBuilder {
 
-    public static int getExpectedMessageLenght(int dataBytes){
+    public static int getExpectedMessageLength(int dataBytes){
         return 12+(2*dataBytes);
     }
 

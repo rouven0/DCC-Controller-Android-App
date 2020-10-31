@@ -28,7 +28,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ConsoleActivity extends AppCompatActivity {
-    private final int[] editTextIdArray = new int[]{R.id.input_canid, R.id.input_addr, R.id.input_dat1, R.id.input_dat2, R.id.input_dat3, R.id.input_dat4, R.id.input_dat5, R.id.input_dat6, R.id.input_dat7};
+    private final int[] editTextIdArray = new int[]{R.id.input_canId, R.id.input_event, R.id.input_dat1, R.id.input_dat2, R.id.input_dat3, R.id.input_dat4, R.id.input_dat5, R.id.input_dat6, R.id.input_dat7};
     private final EditText[] currentPartialMessage = new EditText[editTextIdArray.length];
     private final CBusMessage currentCBusMessage = new CBusMessage("", null); //message that is sent to the board
     private final String[] lastPartialMessage = new String[editTextIdArray.length];
@@ -131,7 +131,7 @@ public class ConsoleActivity extends AppCompatActivity {
                 }
             });
         }
-        currentMessage = findViewById(R.id.input_rawmessage);
+        currentMessage = findViewById(R.id.input_message);
         FloatingActionButton sendButton = findViewById(R.id.fab_send);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,9 +213,9 @@ public class ConsoleActivity extends AppCompatActivity {
         thread.start();
     }
 
-    private String receive(int lenght) throws InterruptedException {
+    private String receive(int length) throws InterruptedException {
         final String[] message = new String[]{""};
-        final byte[] rawMessage = new byte[lenght];
+        final byte[] rawMessage = new byte[length];
 
         final Thread thread = new Thread(new Runnable() {
             @Override

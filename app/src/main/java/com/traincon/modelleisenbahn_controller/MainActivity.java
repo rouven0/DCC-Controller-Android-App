@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         final Fragment[] fragment = {null};
 
-        //Show Controllerfragment at the beginning
+        //Show ControllerFragment at the beginning
         fragment[0] = new ControllerFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.commit();
 
-        //Bei änderungen im Tablayout
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -101,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
                     menuButtons[2].setVisibility(View.VISIBLE);
                     isMenuOpen = true;
                 } else {
-                    //Menu Schließen
                     for (int i = 1; i < menuButtonIdArray.length; i++) {
                         menuButtons[i].setVisibility(View.GONE);
                     }
@@ -115,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
         menuButtons[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Menu Schließen
                 for (int i = 1; i < menuButtonIdArray.length; i++) {
                     menuButtons[i].setVisibility(View.GONE);
                 }
@@ -133,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
         menuButtons[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Menu Schließen
                 for (int i = 1; i < menuButtonIdArray.length; i++) {
                     menuButtons[i].setVisibility(View.GONE);
                 }

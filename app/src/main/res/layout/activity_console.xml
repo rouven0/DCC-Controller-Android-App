@@ -85,22 +85,22 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/input_canid"
+                    android:id="@+id/input_canId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/fab_margin"
                     android:autofillHints="no"
-                    android:hint="@string/input_canid"
+                    android:hint="@string/input_canId"
                     android:inputType="textShortMessage"
-                    android:nextFocusDown="@id/input_addr" />
+                    android:nextFocusDown="@id/input_event" />
 
                 <EditText
-                    android:id="@+id/input_addr"
+                    android:id="@+id/input_event"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/fab_margin"
                     android:autofillHints="no"
-                    android:hint="@string/input_addr"
+                    android:hint="@string/input_event"
                     android:inputType="textShortMessage"
                     android:nextFocusDown="@id/input_dat1" />
 
@@ -176,12 +176,12 @@
         </HorizontalScrollView>
 
         <EditText
-            android:id="@+id/input_rawmessage"
+            android:id="@+id/input_message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/fab_margin"
             android:autofillHints="no"
-            android:hint="@string/input_rawmessage"
+            android:hint="@string/input_rawMessage"
             android:inputType="textShortMessage"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/fab_send"
@@ -193,10 +193,10 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/fab_margin"
-            android:contentDescription="@string/contentdescription_arrow"
+            android:contentDescription="@string/contentDescription_arrow"
             android:src="@drawable/ic_baseline_arrow_right_24"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/input_rawmessage"
+            app:layout_constraintEnd_toStartOf="@id/input_message"
             app:layout_constraintStart_toEndOf="@id/guideline1" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -232,7 +232,7 @@
             android:src="@drawable/ic_baseline_send_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/input_rawmessage" />
+            app:layout_constraintStart_toEndOf="@id/input_message" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

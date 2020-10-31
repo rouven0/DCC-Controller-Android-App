@@ -2,7 +2,6 @@ package com.traincon.modelleisenbahn_controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.traincon.CBusMessage.CBusMessage;
 import com.traincon.CBusMessage.CBusAsciiMessageBuilder;
@@ -17,8 +16,6 @@ import java.util.Arrays;
 
 import androidx.preference.PreferenceManager;
 
-import static android.content.ContentValues.TAG;
-
 public class BoardManager {
     public final boolean[] switchStates = new boolean[16];
     public final boolean[] sectionStates = new boolean[13];
@@ -32,14 +29,14 @@ public class BoardManager {
     private DataOutputStream socketOutputStream;
 
     private final Context context;
-    public BoardManager(Context context,String devid, String hst, int prt) {
-        devId = devid;
-        host = hst;
-        port = prt;
+    public BoardManager(Context context,String devId, String host, int port) {
+        this.devId = devId;
+        this.host = host;
+        this.port = port;
         this.context = context;
         Arrays.fill(switchStates, false);
         Arrays.fill(sectionStates, false);
-        cBusAsciiMessageBuilder = new CBusAsciiMessageBuilder(getCanId()); //Gerätenummer wird zur CANID
+        cBusAsciiMessageBuilder = new CBusAsciiMessageBuilder(getCanId()); //Gerätenummer wird zur canId
     }
 
     public void connect() {
@@ -71,7 +68,6 @@ public class BoardManager {
         } else {
             send(cBusAsciiMessageBuilder.build(new CBusMessage("ASOF", new String[]{"00", "11", "23", "0" + Integer.toHexString(targetSwitch).toUpperCase()})));
         }
-        Log.d(TAG, "setSwitch: Weiche: " + (targetSwitch + 1) + " auf Status: " + targetState);
     }
 
     public void setSection(int targetSection, boolean targetState) {
@@ -83,18 +79,14 @@ public class BoardManager {
             send(cBusAsciiMessageBuilder.build(new CBusMessage("ASOF", new String[]{"00", "11", "24", "0" + Integer.toHexString(targetSection).toUpperCase()})));
 
         }
-        Log.d(TAG, "setSection: Gleisabschnitt: " + (targetSection + 1) + " auf Status: " + targetState);
     }
 
-    //HARCODED!
     public void setLight() {
         if (!lightState) {
             lightState = true;
-            Log.d(TAG, "setLight: Licht angeschaltet");
             send(cBusAsciiMessageBuilder.build(new CBusMessage("ASON", new String[]{"00", "11", "24", "0D"})));
         } else {
             lightState = false;
-            Log.d(TAG, "setLight: Licht ausgeschaltet");
             send(cBusAsciiMessageBuilder.build(new CBusMessage("ASOF", new String[]{"00", "11", "24", "0D"})));
 
         }
@@ -102,23 +94,23 @@ public class BoardManager {
 
     //Called in ScreenFragment.update()
     protected void requestSwitchStates() throws InterruptedException, IOException {
-        //Abfragen
+        //get the node variable
         send(cBusAsciiMessageBuilder.build(new CBusMessage("NVRD", new String[]{"00", "65", "03"})));
-        String receivedSwitchStates_0 = receive(CBusAsciiMessageBuilder.getExpectedMessageLenght(3));
+        String receivedSwitchStates_0 = receive(CBusAsciiMessageBuilder.getExpectedMessageLength(3));
         send(cBusAsciiMessageBuilder.build(new CBusMessage("NVRD", new String[]{"00", "65", "04"})));
-        String receivedSwitchStates_1 = receive(CBusAsciiMessageBuilder.getExpectedMessageLenght(3));
-        //Datenpuffer
+        String receivedSwitchStates_1 = receive(CBusAsciiMessageBuilder.getExpectedMessageLength(3));
+        //buffer
         try {
             receive(socketInputStream.available());
         } catch (NullPointerException ignore) {
         }
-        //Werte übertragen
+        //get the values
         receivedSwitchStates_0 = receivedSwitchStates_0.substring(15, 17);
         receivedSwitchStates_1 = receivedSwitchStates_1.substring(15, 17);
         StringBuilder receivedSwitchStatesBinary_0;
         StringBuilder receivedSwitchStatesBinary_1;
         try {
-            //Zur Binärzahl
+            //values to binary
             receivedSwitchStatesBinary_0 = new StringBuilder(Integer.toBinaryString(Integer.parseInt(receivedSwitchStates_0, 16)));
             receivedSwitchStatesBinary_1 = new StringBuilder(Integer.toBinaryString(Integer.parseInt(receivedSwitchStates_1, 16)));
             while (receivedSwitchStatesBinary_0.length() < 8) {
@@ -127,10 +119,9 @@ public class BoardManager {
             while (receivedSwitchStatesBinary_1.length() < 8) {
                 receivedSwitchStatesBinary_1.insert(0, "0");
             }
-            //Invertieren
             receivedSwitchStatesBinary_0.reverse();
             receivedSwitchStatesBinary_1.reverse();
-            //Übertragen
+            //apply the switch states
             for (int i = 0; i < receivedSwitchStatesBinary_0.length(); i++) {
                 switchStates[i] = String.valueOf(receivedSwitchStatesBinary_0.charAt(i)).equals("1");
             }
@@ -156,9 +147,9 @@ public class BoardManager {
         thread.start();
     }
 
-    private String receive(int lenght) throws InterruptedException {
+    private String receive(int length) throws InterruptedException {
         final String[] message = new String[]{""};
-        final byte[] rawMessage = new byte[lenght];
+        final byte[] rawMessage = new byte[length];
 
         final Thread thread = new Thread(new Runnable() {
             @Override

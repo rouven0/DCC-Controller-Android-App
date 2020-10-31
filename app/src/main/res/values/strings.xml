@@ -8,16 +8,16 @@
 
     <!-- Preference Titles -->
     <string name="can_header" translatable="false">Can-Bus</string>
-    <!-- Canid Preferences -->
-    <string name="preference_canid_1" translatable="false">Can ID 1</string>
-    <string name="preference_canid_2" translatable="false">Can ID 2</string>
-    <string name="preference_canid_3" translatable="false">Can ID 3</string>
-    <string name="preference_canid_4" translatable="false">Can ID 4</string>
+    <!-- CanId Preferences -->
+    <string name="preference_canId_1" translatable="false">Can ID 1</string>
+    <string name="preference_canId_2" translatable="false">Can ID 2</string>
+    <string name="preference_canId_3" translatable="false">Can ID 3</string>
+    <string name="preference_canId_4" translatable="false">Can ID 4</string>
 
-    <string name="summary_canid_1">CAN-ID for Device ID 1</string>
-    <string name="summary_canid_2" >CAN-ID for Device ID 2</string>
-    <string name="summary_canid_3" >CAN-ID for Device ID 3</string>
-    <string name="summary_canid_4" >CAN-ID for Device ID 4</string>
+    <string name="summary_canId_1">CAN-ID for Device ID 1</string>
+    <string name="summary_canId_2" >CAN-ID for Device ID 2</string>
+    <string name="summary_canId_3" >CAN-ID for Device ID 3</string>
+    <string name="summary_canId_4" >CAN-ID for Device ID 4</string>
 
     <!-- LauncherActivity Strings -->
     <string name="action_loadLast" >Last used</string>
@@ -31,8 +31,8 @@
     <string name="title_processed">Interpreted</string>
     <string name="info_event" translatable="false">Event:</string>
     <string name="info_data" translatable="false">Data:</string>
-    <string name="input_canid" translatable="false">CanId</string>
-    <string name="input_addr" translatable="false">Event</string>
+    <string name="input_canId" translatable="false">CanId</string>
+    <string name="input_event" translatable="false">Event</string>
     <string name="input_dat1" translatable="false">Dat1</string>
     <string name="input_dat2" translatable="false">Dat2</string>
     <string name="input_dat3" translatable="false">Dat3</string>
@@ -40,8 +40,8 @@
     <string name="input_dat5" translatable="false">Dat5</string>
     <string name="input_dat6" translatable="false">Dat6</string>
     <string name="input_dat7" translatable="false">Dat7</string>
-    <string name="contentdescription_arrow">Arrow right</string>
-    <string name="input_rawmessage">Message</string>
+    <string name="contentDescription_arrow">Arrow right</string>
+    <string name="input_rawMessage">Message</string>
     <string name="cp_send">Send frame</string>
 
     <!-- Strings for the Menu-->
@@ -49,7 +49,7 @@
     <string name="action_reconnect" >Reconnect</string>
     <string name="action_light" >Light</string>
 
-    <!--Fullscreenactivity-->
+    <!--FullscreenActivity-->
     <string name="tab_controller">Controller</string>
     <string name="tab_layout">Layout</string>
 
@@ -58,7 +58,7 @@
     <string name="quickMenu_actions" >Actions</string>
 
     <!--Layout-->
-    <string name="contentdescription_gp" >Layout</string>
+    <string name="contentDescription_gp" >Layout</string>
 
 
 </resources>
