@@ -4,9 +4,9 @@
 
     <!-- Settings-->
     <string name="item_settings">Einstellungen</string>
-    <string name="title_activity_settings">Einstellungen</string>
+    <string name="label_activity_settings">Einstellungen</string>
     <string name="item_console" >CBUS-Konsole</string>
-    <string name="title_activity_console">Konsole</string>
+    <string name="label_activity_console">Konsole</string>
 
     <!-- Canid Preferences -->
     <string name="summary_canId_1">CAN-ID für Gerätenummer 1</string>
@@ -32,12 +32,9 @@
     <string name="action_light">Licht</string>
 
     <!--Fullscreenactivity-->
-    <string name="tab_controller">Fahrsteuerung</string>
-    <string name="tab_layout">Interaktiver Gleisplan</string>
 
     <!--Controller-->
     <string name="quickMenu_actions">Aktionen</string>
 
     <!--Layout-->
-    <string name="contentDescription_gp">Gleisplan</string>
 </resources>

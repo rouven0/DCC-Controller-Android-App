@@ -92,7 +92,6 @@ public class BoardManager {
         }
     }
 
-    //Called in ScreenFragment.update()
     protected void requestSwitchStates() throws InterruptedException, IOException {
         //get the node variable
         send(cBusAsciiMessageBuilder.build(new CBusMessage("NVRD", new String[]{"00", "65", "03"})));

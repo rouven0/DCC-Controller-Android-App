@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!--Main Colors-->
     <color name="colorPrimary">#555</color>
     <color name="colorPrimaryDark">#444</color>
     <color name="colorAccent">#888</color>
     <color name="colorTitle">#fff</color>
     <!--Controller Colors-->
-    <color name="colorSectionPrimary">#fcfcac</color>
-    <color name="colorSwitchTrack">#f77</color>
-    <color name="colorSwitchThumb">#c00</color>
+    <color name="colorSectionPrimary" tools:keep="@color/colorSectionPrimary">#fcfcac</color>
+    <color name="colorSwitchTrack" tools:keep="@color/colorSwitchTrack">#f77</color>
+    <color name="colorSwitchThumb" tools:keep="@color/colorSwitchThumb">#c00</color>
 
 
 </resources>

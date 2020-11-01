@@ -2,9 +2,9 @@
     <string name="app_name" >DCC-Controller</string>
 
     <string name="item_settings" >Preferences</string>
-    <string name="title_activity_settings" >Preferences</string>
+    <string name="label_activity_settings" >Preferences</string>
     <string name="item_console" >CBUS-Console</string>
-    <string name="title_activity_console">Console</string>
+    <string name="label_activity_console">Console</string>
 
     <!-- Preference Titles -->
     <string name="can_header" translatable="false">Can-Bus</string>
@@ -50,15 +50,12 @@
     <string name="action_light" >Light</string>
 
     <!--FullscreenActivity-->
-    <string name="tab_controller">Controller</string>
-    <string name="tab_layout">Layout</string>
 
     <!--Controller-->
     <string name="default_seekBarTextView"  translatable="false">0</string>
     <string name="quickMenu_actions" >Actions</string>
 
     <!--Layout-->
-    <string name="contentDescription_gp" >Layout</string>
 
 
 </resources>
