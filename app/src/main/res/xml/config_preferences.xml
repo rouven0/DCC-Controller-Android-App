@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/accessory_header">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="is_accessory_on"
+            android:title="@string/title_is_accessory_on"
+            android:summary="@string/summary_is_accessory_on"/>
+    </PreferenceCategory>
+</PreferenceScreen>

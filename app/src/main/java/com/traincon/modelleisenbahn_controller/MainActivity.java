@@ -1,8 +1,11 @@
 package com.traincon.modelleisenbahn_controller;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -11,10 +14,11 @@ import android.widget.ToggleButton;
 
 import java.io.IOException;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.preference.PreferenceManager;
 
 public class MainActivity extends AppCompatActivity {
     final private int[] menuButtonIdArray = new int[]{R.id.mainMenuButton, R.id.reconnectActionButton, R.id.lightActionButton};
@@ -27,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     final private int[] textViewIdArray = new int[]{R.id.sText_1, R.id.sText_2, R.id.sText_3};
     final private SeekBar[] seekBarArray = new SeekBar[seekBarIdArray.length];
     final private TextView[] textViewArray = new TextView[textViewIdArray.length];
+    private ConstraintLayout accessoryFrame;
     private BoardManager boardManager;
     private Handler handler;
     private Runnable updateRunnable;
@@ -42,19 +47,47 @@ public class MainActivity extends AppCompatActivity {
         String host = intent.getStringExtra("host");
         int port = intent.getIntExtra("port", 0);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         boardManager = new BoardManager(getBaseContext(), devId, host, port);
         boardManager.connect();
 
         handler = new Handler(getMainLooper());
         initLayout();
+        updateLayout();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_config_controller, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_config) {
+            startActivity(new Intent(getBaseContext(), ControllerConfigActivity.class));
+        } else if (item.getItemId() == android.R.id.home) {
+            super.onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void updateLayout(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        if(sharedPreferences.getBoolean("is_accessory_on", false)){
+            accessoryFrame.setVisibility(View.VISIBLE);
+        } else {
+            accessoryFrame.setVisibility(View.GONE);
+        }
     }
 
     private void initLayout() {
         initMenuButtons();
-        initSeekBars();
-        initSwitches(switchIdArray, switchSwitchCompatArray);
-        initSections(sectionIdArray, sectionToggleButtonArray);
+        initControllers();
+        initAccessory();
         initUpdate();
     }
 
@@ -114,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void initSeekBars() {
+    private void initControllers() {
         for (int n = 0; n < seekBarArray.length; n++) {
             seekBarArray[n] = findViewById(seekBarIdArray[n]);
             textViewArray[n] = findViewById(textViewIdArray[n]);
@@ -139,30 +172,36 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void initSwitches(int[] idArray, final SwitchCompat[] switchCompatArray) {
-
-        for (int i = 0; i < idArray.length; i++) {
-            switchCompatArray[i] = findViewById(idArray[i]);
+    private void initAccessory(){
+        accessoryFrame = findViewById(R.id.frame_accessory);
+        initSwitches();
+        initSections();
+    }
+    
+    private void initSwitches() {
+        for (int i = 0; i < switchIdArray.length; i++) {
+            switchSwitchCompatArray[i] = findViewById(switchIdArray[i]);
             final int finalI = i;
-            switchCompatArray[i].setOnClickListener(new View.OnClickListener() {
+            switchSwitchCompatArray[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    boardManager.setSwitch(finalI, switchCompatArray[finalI].isChecked());
+                    boardManager.setSwitch(finalI, switchSwitchCompatArray[finalI].isChecked());
                 }
             });
         }
     }
 
-    private void initSections(@NonNull int[] idArray, final ToggleButton[] toggleButtonArray) {
-
-        for (int i = 0; i < idArray.length; i++) {
-            toggleButtonArray[i] = findViewById(idArray[i]);
-            toggleButtonArray[i].setChecked(false);
+    private void initSections() {
+        for (int i = 0; i < sectionIdArray.length; i++) {
+            sectionToggleButtonArray[i] = findViewById(sectionIdArray[i]);
+            sectionToggleButtonArray[i].setTextOff(String.format("%s", i+1) + " " + sectionToggleButtonArray[i].getTextOff());
+            sectionToggleButtonArray[i].setTextOn(String.format("%s", i+1) + " " + sectionToggleButtonArray[i].getTextOn());
+            sectionToggleButtonArray[i].setChecked(false);
             final int finalI = i;
-            toggleButtonArray[i].setOnClickListener(new View.OnClickListener() {
+            sectionToggleButtonArray[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    boardManager.setSection(finalI, toggleButtonArray[finalI].isChecked());
+                    boardManager.setSection(finalI, sectionToggleButtonArray[finalI].isChecked());
                 }
             });
         }
@@ -188,6 +227,12 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         handler.post(updateRunnable);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateLayout();
     }
 
     protected void onDestroy() {

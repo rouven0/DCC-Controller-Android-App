@@ -1,32 +1,35 @@
 <resources>
-    <string name="app_name" >DCC-Controller</string>
-
-    <string name="item_settings" >Preferences</string>
-    <string name="label_activity_settings" >Preferences</string>
-    <string name="item_console" >CBUS-Console</string>
+    <!-- Activity labels and App Name -->
+    <string name="app_name">DCC-Controller</string>
+    <string name="label_activity_settings">Preferences</string>
     <string name="label_activity_console">Console</string>
+    <string name="label_activity_controller_config">Configure</string>
+
+    <!--LauncherActivity item titles -->
+    <string name="item_settings">Preferences</string>
+    <string name="item_console">CBUS-Console</string>
+
+    <!-- LauncherActivity strings -->
+    <string name="action_loadLast">Last used</string>
+    <string name="input_ipEntry">Hostname</string>
+    <string name="input_portEntry">Port</string>
+    <string name="input_devIdEntry">Device ID (Empty≙2)</string>
+    <string name="cp_Start" translatable="false">Start</string>
 
     <!-- Preference Titles -->
     <string name="can_header" translatable="false">Can-Bus</string>
+
     <!-- CanId Preferences -->
     <string name="preference_canId_1" translatable="false">Can ID 1</string>
     <string name="preference_canId_2" translatable="false">Can ID 2</string>
     <string name="preference_canId_3" translatable="false">Can ID 3</string>
     <string name="preference_canId_4" translatable="false">Can ID 4</string>
-
     <string name="summary_canId_1">CAN-ID for Device ID 1</string>
-    <string name="summary_canId_2" >CAN-ID for Device ID 2</string>
-    <string name="summary_canId_3" >CAN-ID for Device ID 3</string>
-    <string name="summary_canId_4" >CAN-ID for Device ID 4</string>
+    <string name="summary_canId_2">CAN-ID for Device ID 2</string>
+    <string name="summary_canId_3">CAN-ID for Device ID 3</string>
+    <string name="summary_canId_4">CAN-ID for Device ID 4</string>
 
-    <!-- LauncherActivity Strings -->
-    <string name="action_loadLast" >Last used</string>
-    <string name="input_ipEntry" >Hostname</string>
-    <string name="input_portEntry" >Port</string>
-    <string name="input_devIdEntry" >Device ID (Empty≙2)</string>
-    <string name="cp_Start" translatable="false">Start</string>
-
-    <!-- Console Strings-->
+    <!-- Console Strings -->
     <string name="title_raw">All incoming</string>
     <string name="title_processed">Interpreted</string>
     <string name="info_event" translatable="false">Event:</string>
@@ -45,17 +48,19 @@
     <string name="cp_send">Send frame</string>
 
     <!-- Strings for the Menu-->
-    <string name="menu_main" >Menu</string>
-    <string name="action_reconnect" >Reconnect</string>
-    <string name="action_light" >Light</string>
+    <string name="menu_main">Menu</string>
+    <string name="action_reconnect">Reconnect</string>
+    <string name="action_light">Light</string>
 
-    <!--FullscreenActivity-->
+    <!-- MainActivity -->
+    <string name="item_config">Configure</string>
+    <string name="default_seekBarTextView" translatable="false">0</string>
+    <string name="quickMenu_actions">Actions</string>
 
-    <!--Controller-->
-    <string name="default_seekBarTextView"  translatable="false">0</string>
-    <string name="quickMenu_actions" >Actions</string>
+    <!-- Config headers -->
+    <string name="accessory_header">Accessory</string>
 
-    <!--Layout-->
-
-
+    <!-- Config items -->
+    <string name="title_is_accessory_on">Control accessory</string>
+    <string name="summary_is_accessory_on">Control additional elements like Switches and Sections in landscape mode</string>
 </resources>

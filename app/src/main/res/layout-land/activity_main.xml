@@ -8,7 +8,7 @@
 
     <!--Menu-->
     <LinearLayout
-
+        android:id="@+id/frame_menu"
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
         android:id="@+id/frame_Con3"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/frame_accessory"
         app:layout_constraintStart_toEndOf="@id/frame_Con2"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -152,14 +152,15 @@
             android:textColor="@android:color/white" />
     </FrameLayout>
 
-    <!--Do never show in portrait-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frame_accessory"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toEndOf="@id/frame_Con3"
+        app:layout_constraintTop_toBottomOf="@+id/frame_menu"
+        android:visibility="gone">
 
         <ScrollView
             android:id="@+id/scrollView_switch"
@@ -282,7 +283,8 @@
                 <ToggleButton
                     android:id="@+id/section_3"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false" />
 
                 <ToggleButton
                     android:id="@+id/section_4"
