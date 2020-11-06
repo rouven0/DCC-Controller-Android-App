@@ -6,43 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!--Menu-->
-    <LinearLayout
-
-        style="?android:attr/buttonBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <!--Main menu-->
-        <Button
-            android:id="@+id/mainMenuButton"
-            style="?android:attr/buttonBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/menu_main"
-            android:textSize="18sp" />
-
-        <!--Reconnect-->
-        <Button
-            android:id="@+id/reconnectActionButton"
-            style="?android:attr/buttonBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/action_reconnect"
-            android:textSize="14sp" />
-
-        <!--Light-->
-        <Button
-            android:id="@+id/lightActionButton"
-            style="?android:attr/buttonBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/action_light"
-            android:textSize="14sp" />
-    </LinearLayout>
-
     <FrameLayout
         android:id="@+id/frame_Con1"
         android:layout_width="0dp"
@@ -73,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="@dimen/fab_margin"
-            android:backgroundTint="@color/colorSwitchThumb"
+            android:backgroundTint="@color/colorQuickMenu"
             android:clickable="true"
             android:focusable="true"
             android:text="@string/quickMenu_actions"
@@ -109,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="@dimen/fab_margin"
-            android:backgroundTint="@color/colorSwitchThumb"
+            android:backgroundTint="@color/colorQuickMenu"
             android:clickable="true"
             android:focusable="true"
             android:text="@string/quickMenu_actions"
@@ -145,7 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="@dimen/fab_margin"
-            android:backgroundTint="@color/colorSwitchThumb"
+            android:backgroundTint="@color/colorQuickMenu"
             android:clickable="true"
             android:focusable="true"
             android:text="@string/quickMenu_actions"
@@ -161,175 +124,193 @@
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/label_switches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_switches"
+            app:layout_constraintStart_toStartOf="@id/scrollView_switches"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ScrollView
-            android:id="@+id/scrollView_switch"
+            android:id="@+id/scrollView_switches"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:layout_constraintEnd_toStartOf="@id/scrollView_section"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/scrollView_sections"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/label_switches">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <androidx.appcompat.widget.SwitchCompat
+                <ToggleButton
                     android:id="@+id/switch_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <ToggleButton
                     android:id="@+id/switch_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <ToggleButton
                     android:id="@+id/switch_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <ToggleButton
                     android:id="@+id/switch_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <ToggleButton
                     android:id="@+id/switch_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <ToggleButton
                     android:id="@+id/switch_6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <ToggleButton
                     android:id="@+id/switch_7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <ToggleButton
                     android:id="@+id/switch_8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <ToggleButton
                     android:id="@+id/switch_9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <ToggleButton
                     android:id="@+id/switch_10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <ToggleButton
                     android:id="@+id/switch_11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <ToggleButton
                     android:id="@+id/switch_12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <ToggleButton
                     android:id="@+id/switch_13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <ToggleButton
                     android:id="@+id/switch_14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <ToggleButton
                     android:id="@+id/switch_15"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <androidx.appcompat.widget.SwitchCompat
+                <ToggleButton
                     android:id="@+id/switch_16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
         </ScrollView>
 
+        <TextView
+            android:id="@+id/label_sections"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_sections"
+            app:layout_constraintStart_toStartOf="@id/scrollView_sections"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ScrollView
-            android:id="@+id/scrollView_section"
+            android:id="@+id/scrollView_sections"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/scrollView_switch"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toEndOf="@id/scrollView_switches"
+            app:layout_constraintTop_toBottomOf="@id/label_sections">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <ToggleButton
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/section_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <ToggleButton
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/section_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <ToggleButton
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/section_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <ToggleButton
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/section_4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <ToggleButton
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/section_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <ToggleButton
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/section_6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <ToggleButton
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/section_7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <ToggleButton
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/section_8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <ToggleButton
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/section_9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <ToggleButton
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/section_10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <ToggleButton
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/section_11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <ToggleButton
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/section_12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <ToggleButton
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/section_13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />

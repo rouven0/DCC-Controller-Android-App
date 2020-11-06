@@ -42,7 +42,7 @@ public class LauncherActivity extends AppCompatActivity {
                 loadLastConnectedBoard(ipEntry, portEntry);
             }
         });
-        //Fab to start the MainActivity
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -172,6 +172,7 @@ public class CBusMessage {
         boolean found = false;
         int count = 0;
         while (!found) {
+            count = count + 1;
             if (count == getEventStringArray().length) {
                 count = 0;
                 break;
@@ -179,7 +180,6 @@ public class CBusMessage {
             if (getEventStringArray()[count][0].equals(targetEvent)) {
                 found = true;
             }
-            count = count + 1;
         }
         return count;
     }
@@ -189,6 +189,7 @@ public class CBusMessage {
         boolean found = false;
         int count = 0;
         while (!found) {
+            count = count + 1;
             if (count == getEventStringArray().length-1) {
                 count = 0;
                 break;
@@ -196,7 +197,6 @@ public class CBusMessage {
             if (getEventStringArray()[count][1].equals(targetAddress)) {
                 found = true;
             }
-            count = count + 1;
         }
         return count;
     }

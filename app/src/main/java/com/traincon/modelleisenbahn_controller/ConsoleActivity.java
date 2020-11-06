@@ -24,6 +24,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ConsoleActivity extends AppCompatActivity {
@@ -42,7 +43,10 @@ public class ConsoleActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_console);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         Intent intent = getIntent();
         host = intent.getStringExtra("host");
         port = intent.getIntExtra("port", 0);
@@ -82,7 +86,6 @@ public class ConsoleActivity extends AppCompatActivity {
                         rawLogTextView.setText(combinedLog);
                         rawLogScrollView.fullScroll(View.FOCUS_DOWN);
                         //processed string
-                        //String receivedEvent = CBusMessage.getEventByAddress(receivedString.substring(7, 9));
                         String combinedLog_processed = oldLog_processed + "\n" + getResources().getString(R.string.info_event)+ " " +getReceivedCBusMessage(receivedString).getEvent() + ", " + getResources().getString(R.string.info_data) + " " + Arrays.toString(getReceivedCBusMessage(receivedString).getData());
                         processedLogTextView.setText(combinedLog_processed);
                         processedLogScrollView.fullScroll(View.FOCUS_DOWN);

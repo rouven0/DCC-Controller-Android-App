@@ -3,6 +3,7 @@ package com.traincon.modelleisenbahn_controller;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -18,7 +19,10 @@ public class ControllerConfigActivity extends AppCompatActivity {
                     .replace(R.id.config, new SettingsFragment())
                     .commit();
         }
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override

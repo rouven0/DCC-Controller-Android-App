@@ -48,7 +48,6 @@
     <string name="cp_send">Send frame</string>
 
     <!-- Strings for the Menu-->
-    <string name="menu_main">Menu</string>
     <string name="action_reconnect">Reconnect</string>
     <string name="action_light">Light</string>
 
@@ -56,6 +55,8 @@
     <string name="item_config">Configure</string>
     <string name="default_seekBarTextView" translatable="false">0</string>
     <string name="quickMenu_actions">Actions</string>
+    <string name="label_switches">Switches</string>
+    <string name="label_sections">Sections</string>
 
     <!-- Config headers -->
     <string name="accessory_header">Accessory</string>

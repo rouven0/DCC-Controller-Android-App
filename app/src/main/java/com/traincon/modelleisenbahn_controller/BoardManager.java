@@ -2,6 +2,7 @@ package com.traincon.modelleisenbahn_controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.traincon.CBusMessage.CBusMessage;
 import com.traincon.CBusMessage.CBusAsciiMessageBuilder;
@@ -15,6 +16,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import androidx.preference.PreferenceManager;
+
+import static android.content.ContentValues.TAG;
 
 public class BoardManager {
     public final boolean[] switchStates = new boolean[16];
@@ -65,8 +68,10 @@ public class BoardManager {
         switchStates[targetSwitch] = targetState;
         if (targetState) {
             send(cBusAsciiMessageBuilder.build(new CBusMessage("ASON", new String[]{"00", "11", "23", "0" + Integer.toHexString(targetSwitch).toUpperCase()})));
+            Log.d(TAG, "setSwitch: "+cBusAsciiMessageBuilder.build(new CBusMessage("ASON", new String[]{"00", "11", "23", "0" + Integer.toHexString(targetSwitch).toUpperCase()})));
         } else {
             send(cBusAsciiMessageBuilder.build(new CBusMessage("ASOF", new String[]{"00", "11", "23", "0" + Integer.toHexString(targetSwitch).toUpperCase()})));
+            Log.d(TAG, "setSwitch: "+cBusAsciiMessageBuilder.build(new CBusMessage("ASOF", new String[]{"00", "11", "23", "0" + Integer.toHexString(targetSwitch).toUpperCase()})));
         }
     }
 
@@ -81,15 +86,18 @@ public class BoardManager {
         }
     }
 
-    public void setLight() {
-        if (!lightState) {
-            lightState = true;
-            send(cBusAsciiMessageBuilder.build(new CBusMessage("ASON", new String[]{"00", "11", "24", "0D"})));
-        } else {
-            lightState = false;
-            send(cBusAsciiMessageBuilder.build(new CBusMessage("ASOF", new String[]{"00", "11", "24", "0D"})));
+    public void setLightOn() {
+        lightState = true;
+        send(cBusAsciiMessageBuilder.build(new CBusMessage("ASON", new String[]{"00", "11", "24", "0D"})));
+    }
 
-        }
+    public void setLightOff() {
+        lightState = false;
+        send(cBusAsciiMessageBuilder.build(new CBusMessage("ASOF", new String[]{"00", "11", "24", "0D"})));
+    }
+
+    public boolean getLightState(){
+        return lightState;
     }
 
     protected void requestSwitchStates() throws InterruptedException, IOException {

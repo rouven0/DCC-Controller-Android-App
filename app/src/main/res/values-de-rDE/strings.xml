@@ -30,13 +30,14 @@
     <string name="cp_send">Frame senden</string>
 
     <!-- Strings for the menu-->
-    <string name="menu_main">Menu</string>
     <string name="action_reconnect">Neu verbinden</string>
     <string name="action_light">Licht</string>
 
     <!--Mainactivity-->
     <string name="item_config">Konfigurieren</string>
     <string name="quickMenu_actions">Aktionen</string>
+    <string name="label_switches">Weichen</string>
+    <string name="label_sections">Gleise</string>
 
     <!-- Config headers -->
     <string name="accessory_header">Weichen &amp; Gleise</string>
