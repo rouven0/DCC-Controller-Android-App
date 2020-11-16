@@ -1,7 +1,5 @@
 package com.traincon.modelleisenbahn_controller;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.traincon.CBusMessage.CBusMessage;
@@ -14,8 +12,6 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-
-import androidx.preference.PreferenceManager;
 
 import static android.content.ContentValues.TAG;
 
