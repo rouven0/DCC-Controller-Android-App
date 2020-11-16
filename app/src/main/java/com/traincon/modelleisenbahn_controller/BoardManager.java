@@ -22,7 +22,6 @@ import static android.content.ContentValues.TAG;
 public class BoardManager {
     public final boolean[] switchStates = new boolean[16];
     public final boolean[] sectionStates = new boolean[13];
-    public final String devId;
     public final String host;
     public final int port;
     private final CBusAsciiMessageBuilder cBusAsciiMessageBuilder;
@@ -31,15 +30,12 @@ public class BoardManager {
     private DataInputStream socketInputStream;
     private DataOutputStream socketOutputStream;
 
-    private final Context context;
-    public BoardManager(Context context,String devId, String host, int port) {
-        this.devId = devId;
+    public BoardManager(String host, int port) {
         this.host = host;
         this.port = port;
-        this.context = context;
         Arrays.fill(switchStates, false);
         Arrays.fill(sectionStates, false);
-        cBusAsciiMessageBuilder = new CBusAsciiMessageBuilder(getCanId()); //Gerätenummer wird zur canId
+        cBusAsciiMessageBuilder = new CBusAsciiMessageBuilder(); //Gerätenummer wird zur canId
     }
 
     public void connect() {
@@ -173,25 +169,5 @@ public class BoardManager {
         thread.start();
         thread.join();
         return message[0];
-    }
-
-    private String getCanId() {
-        String canId = "";
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        switch (devId) {
-            case "1":
-                canId = sharedPreferences.getString("canid_1", null);
-                break;
-            case "2":
-                canId = sharedPreferences.getString("canid_2", null);
-                break;
-            case "3":
-                canId = sharedPreferences.getString("canid_3", null);
-                break;
-            case "4":
-                canId = sharedPreferences.getString("canid_4", null);
-                break;
-        }
-        return canId;
     }
 }

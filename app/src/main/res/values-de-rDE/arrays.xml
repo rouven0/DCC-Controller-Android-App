@@ -1,0 +1,10 @@
+<resources>
+    <string-array name="mode_entries">
+        <item>
+            Digital
+        </item>
+        <item>
+            Analog DCC (Virtuelle Loks)
+        </item>
+    </string-array>
+</resources>

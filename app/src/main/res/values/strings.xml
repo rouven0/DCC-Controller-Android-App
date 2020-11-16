@@ -13,28 +13,18 @@
     <string name="action_loadLast">Last used</string>
     <string name="input_ipEntry">Hostname</string>
     <string name="input_portEntry">Port</string>
-    <string name="input_devIdEntry">Device ID (Empty≙2)</string>
     <string name="cp_Start" translatable="false">Start</string>
 
     <!-- Preference Titles -->
-    <string name="can_header" translatable="false">Can-Bus</string>
 
-    <!-- CanId Preferences -->
-    <string name="preference_canId_1" translatable="false">Can ID 1</string>
-    <string name="preference_canId_2" translatable="false">Can ID 2</string>
-    <string name="preference_canId_3" translatable="false">Can ID 3</string>
-    <string name="preference_canId_4" translatable="false">Can ID 4</string>
-    <string name="summary_canId_1">CAN-ID for Device ID 1</string>
-    <string name="summary_canId_2">CAN-ID for Device ID 2</string>
-    <string name="summary_canId_3">CAN-ID for Device ID 3</string>
-    <string name="summary_canId_4">CAN-ID for Device ID 4</string>
+    <!-- General preferences -->
+    <string name="preference_mode">Mode</string>
 
     <!-- Console Strings -->
     <string name="title_raw">All incoming</string>
     <string name="title_processed">Interpreted</string>
     <string name="info_event" translatable="false">Event:</string>
     <string name="info_data" translatable="false">Data:</string>
-    <string name="input_canId" translatable="false">CanId</string>
     <string name="input_event" translatable="false">Event</string>
     <string name="input_dat1" translatable="false">Dat1</string>
     <string name="input_dat2" translatable="false">Dat2</string>

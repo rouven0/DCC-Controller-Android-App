@@ -28,7 +28,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ConsoleActivity extends AppCompatActivity {
-    private final int[] editTextIdArray = new int[]{R.id.input_canId, R.id.input_event, R.id.input_dat1, R.id.input_dat2, R.id.input_dat3, R.id.input_dat4, R.id.input_dat5, R.id.input_dat6, R.id.input_dat7};
+    private final int[] editTextIdArray = new int[]{R.id.input_event, R.id.input_dat1, R.id.input_dat2, R.id.input_dat3, R.id.input_dat4, R.id.input_dat5, R.id.input_dat6, R.id.input_dat7};
     private final EditText[] currentPartialMessage = new EditText[editTextIdArray.length];
     private final CBusMessage currentCBusMessage = new CBusMessage("", null); //message that is sent to the board
     private final String[] lastPartialMessage = new String[editTextIdArray.length];
@@ -136,8 +136,7 @@ public class ConsoleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updateMessage();
-                String canId = currentPartialMessage[0].getText().toString();
-                send((new CBusAsciiMessageBuilder(canId).build(currentCBusMessage)));
+                send((new CBusAsciiMessageBuilder().build(currentCBusMessage)));
                 //Save the message
                 for (int i = 0; i < lastPartialMessage.length; i++) {
                     lastPartialMessage[i] = currentPartialMessage[i].getText().toString();
@@ -155,14 +154,13 @@ public class ConsoleActivity extends AppCompatActivity {
     }
 
     private void updateMessage() {
-        String canId = currentPartialMessage[0].getText().toString();
         String[] data = new String[7];
         for (int i = 0; i < data.length; i++) {
-            data[i] = currentPartialMessage[i + 2].getText().toString();
+            data[i] = currentPartialMessage[i + 1].getText().toString();
         }
         currentCBusMessage.setEvent(currentPartialMessage[1].getText().toString());
         currentCBusMessage.setData(data);
-        currentMessage.setText((new CBusAsciiMessageBuilder(canId)).build(currentCBusMessage));
+        currentMessage.setText((new CBusAsciiMessageBuilder()).build(currentCBusMessage));
     }
 
     private void clearInput() {

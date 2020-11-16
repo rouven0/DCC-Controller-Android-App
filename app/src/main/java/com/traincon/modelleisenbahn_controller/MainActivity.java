@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Intent intent = getIntent();
-        String devId = intent.getStringExtra("deviceId");
         String host = intent.getStringExtra("host");
         int port = intent.getIntExtra("port", 0);
 
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        boardManager = new BoardManager(getBaseContext(), devId, host, port);
+        boardManager = new BoardManager(host, port);
         boardManager.connect();
 
         handler = new Handler(getMainLooper());

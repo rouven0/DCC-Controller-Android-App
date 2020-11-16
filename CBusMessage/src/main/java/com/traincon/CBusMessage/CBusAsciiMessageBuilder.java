@@ -12,10 +12,7 @@ public class CBusAsciiMessageBuilder {
         return 12+(2*dataBytes);
     }
 
-    private final String canId;
-
-    public CBusAsciiMessageBuilder(String canid) {
-        canId = canid;
+    public CBusAsciiMessageBuilder() {
     }
 
     public String build(@NonNull CBusMessage cBusMessage){
@@ -23,7 +20,7 @@ public class CBusAsciiMessageBuilder {
         for (int i=0; i<cBusMessage.getData().length; i++){
             data.append(cBusMessage.getData()[i]);
         }
-        return ":S" + canId + "N" + cBusMessage.getEventAddress() + data + ";";
+        return ":S000BN" + cBusMessage.getEventAddress() + data + ";";
     }
 
 }

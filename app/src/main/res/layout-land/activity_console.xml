@@ -69,8 +69,7 @@
         android:layout_gravity="bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"><!--gone in portrait mode-->
+        app:layout_constraintStart_toStartOf="parent">
 
         <HorizontalScrollView
             android:id="@+id/scrollView_sendRow"

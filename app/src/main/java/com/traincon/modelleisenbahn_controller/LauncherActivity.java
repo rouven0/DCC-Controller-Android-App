@@ -22,7 +22,6 @@ import androidx.appcompat.app.AppCompatActivity;
 public class LauncherActivity extends AppCompatActivity {
     private EditText ipEntry;
     private EditText portEntry;
-    private EditText devIdEntry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +32,7 @@ public class LauncherActivity extends AppCompatActivity {
         //Init Entries
         ipEntry = findViewById(R.id.ipEntry);
         portEntry = findViewById(R.id.portEntry);
-        devIdEntry = findViewById(R.id.devIdEntry);
+
         //Load last values
         Button loadLast = findViewById(R.id.loadLast);
         loadLast.setOnClickListener(new View.OnClickListener() {
@@ -51,23 +50,12 @@ public class LauncherActivity extends AppCompatActivity {
                     //Daten auslesen
                     String host = Objects.requireNonNull(ipEntry.getText()).toString();
                     int port = Integer.parseInt(Objects.requireNonNull(portEntry.getText()).toString());
-                    String devId = Objects.requireNonNull(devIdEntry.getText()).toString();
-                    if (devId.equals("")) {
-                        devId = "2";
-                    }
-                    //Start main when entries are correct
-                    if (devId.equals("1") || devId.equals("2") || devId.equals("3") || devId.equals("4")) {
-                        Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                        intent.putExtra("host", host);
-                        intent.putExtra("port", port);
-                        intent.putExtra("deviceId", devId);
-                        saveLastConnectedBoard(host, port);
-                        startActivity(intent);
-                    } else {
-                        devIdEntry.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.animation_shake));
-                        Snackbar.make(view, "Gerätenummer muss eine ganze Zahl zwischen 1 und 4 sein!", Snackbar.LENGTH_INDEFINITE)
-                                .show();
-                    }
+
+                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                    intent.putExtra("host", host);
+                    intent.putExtra("port", port);
+                    saveLastConnectedBoard(host, port);
+                    startActivity(intent);
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                     portEntry.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.animation_shake));

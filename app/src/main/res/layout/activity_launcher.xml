@@ -44,15 +44,4 @@
         android:hint="@string/input_portEntry"
         android:inputType="number"
         android:singleLine="true" />
-
-    <EditText
-        android:id="@+id/devIdEntry"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="120dp"
-        android:autofillHints="@string/input_devIdEntry"
-        android:hint="@string/input_devIdEntry"
-        android:inputType="number"
-        android:singleLine="true" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

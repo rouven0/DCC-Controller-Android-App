@@ -1,25 +1,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <PreferenceCategory app:title="@string/can_header">
-        <EditTextPreference
-            android:defaultValue="1165"
-            android:key="canid_1"
-            android:summary="@string/summary_canId_1"
-            android:title="@string/preference_canId_1" />
-        <EditTextPreference
-            android:defaultValue="1166"
-            android:key="canid_2"
-            android:summary="@string/summary_canId_2"
-            android:title="@string/preference_canId_2" />
-        <EditTextPreference
-            android:defaultValue="1167"
-            android:key="canid_3"
-            android:summary="@string/summary_canId_3"
-            android:title="@string/preference_canId_3" />
-        <EditTextPreference
-            android:defaultValue="1168"
-            android:key="canid_4"
-            android:summary="@string/summary_canId_4"
-            android:title="@string/preference_canId_4" />
-    </PreferenceCategory>
+
+    <ListPreference
+        android:title="@string/preference_mode"
+        android:key="mode"
+        android:entries="@array/mode_entries"
+        android:entryValues="@array/mode_entryValues"
+        app:useSimpleSummaryProvider="true"/>
+
 </PreferenceScreen>

@@ -14,13 +14,9 @@
     <string name="action_loadLast">Zuletzt verwendet</string>
     <string name="input_ipEntry">Hostname</string>
     <string name="input_portEntry">Port</string>
-    <string name="input_devIdEntry">Gerätenummer (Leer≙2)</string>
 
-    <!-- Canid Preferences -->
-    <string name="summary_canId_1">CAN-ID für Gerätenummer 1</string>
-    <string name="summary_canId_2">CAN-ID für Gerätenummer 2</string>
-    <string name="summary_canId_3">CAN-ID für Gerätenummer 3</string>
-    <string name="summary_canId_4">CAN-ID für Gerätenummer 4</string>
+    <!-- General preferences -->
+    <string name="preference_mode">Modus</string>
 
     <!--Console Strings-->
     <string name="title_raw">Eingehend</string>

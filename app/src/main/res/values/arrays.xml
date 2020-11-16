@@ -1,2 +1,19 @@
 <resources>
+    <string-array name="mode_entries">
+        <item>
+            Digital
+        </item>
+        <item>
+            Analog DCC (Virtual trains)
+        </item>
+    </string-array>
+
+    <string-array name="mode_entryValues">
+        <item>
+            D
+        </item>
+        <item>
+            A
+        </item>
+    </string-array>
 </resources>
