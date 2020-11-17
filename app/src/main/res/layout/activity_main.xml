@@ -14,6 +14,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sessionSwitch_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"/>
+        </FrameLayout>
+
         <TextView
             android:id="@+id/sText_1"
             android:layout_width="wrap_content"
@@ -28,15 +39,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:indeterminate="false"
-            android:max="100"
-            android:progress="50" />
+            android:max="256"
+            android:progress="128" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="@dimen/fab_margin"
-            android:backgroundTint="@color/colorQuickMenu"
+            android:backgroundTint="@color/colorImportant"
             android:clickable="true"
             android:focusable="true"
             android:text="@string/quickMenu_actions"
@@ -64,15 +75,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:max="100"
-            android:progress="50" />
+            android:max="256"
+            android:progress="128" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="@dimen/fab_margin"
-            android:backgroundTint="@color/colorQuickMenu"
+            android:backgroundTint="@color/colorImportant"
             android:clickable="true"
             android:focusable="true"
             android:text="@string/quickMenu_actions"
@@ -100,15 +111,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:max="100"
-            android:progress="50" />
+            android:max="256"
+            android:progress="128" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="@dimen/fab_margin"
-            android:backgroundTint="@color/colorQuickMenu"
+            android:backgroundTint="@color/colorImportant"
             android:clickable="true"
             android:focusable="true"
             android:text="@string/quickMenu_actions"

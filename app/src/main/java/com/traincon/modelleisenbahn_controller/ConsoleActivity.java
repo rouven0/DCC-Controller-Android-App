@@ -15,12 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.traincon.CBusMessage.CBusAsciiMessageBuilder;
 import com.traincon.CBusMessage.CBusMessage;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import androidx.annotation.Nullable;
@@ -32,12 +27,8 @@ public class ConsoleActivity extends AppCompatActivity {
     private final EditText[] currentPartialMessage = new EditText[editTextIdArray.length];
     private final CBusMessage currentCBusMessage = new CBusMessage("", null); //message that is sent to the board
     private final String[] lastPartialMessage = new String[editTextIdArray.length];
-    public String host;
-    public int port;
-    public Socket consoleSocket;
+    private BoardManager boardManager;
     private EditText currentMessage;
-    private DataInputStream socketInputStream;
-    private DataOutputStream socketOutputStream;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,9 +39,11 @@ public class ConsoleActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         Intent intent = getIntent();
-        host = intent.getStringExtra("host");
-        port = intent.getIntExtra("port", 0);
-        connect();
+        String host = intent.getStringExtra("host");
+        int port = intent.getIntExtra("port", 0);
+        boardManager = new BoardManager(host, port);
+        boardManager.connect();
+        initLog();
         initSendRow();
     }
 
@@ -78,7 +71,7 @@ public class ConsoleActivity extends AppCompatActivity {
                     String oldLog = rawLogTextView.getText().toString();
                     String oldLog_processed = processedLogTextView.getText().toString();
                     //Get string
-                    String receivedString = receive(socketInputStream.available());
+                    String receivedString = boardManager.receive(boardManager.getSocketInputStream().available());
                     //update the log
                     if (!receivedString.equals("")) {
                         //raw string
@@ -86,7 +79,7 @@ public class ConsoleActivity extends AppCompatActivity {
                         rawLogTextView.setText(combinedLog);
                         rawLogScrollView.fullScroll(View.FOCUS_DOWN);
                         //processed string
-                        String combinedLog_processed = oldLog_processed + "\n" + getResources().getString(R.string.info_event)+ " " +getReceivedCBusMessage(receivedString).getEvent() + ", " + getResources().getString(R.string.info_data) + " " + Arrays.toString(getReceivedCBusMessage(receivedString).getData());
+                        String combinedLog_processed = oldLog_processed + "\n" + getResources().getString(R.string.info_event)+ " " +boardManager.getReceivedCBusMessage(receivedString).getEvent() + ", " + getResources().getString(R.string.info_data) + " " + Arrays.toString(boardManager.getReceivedCBusMessage(receivedString).getData());
                         processedLogTextView.setText(combinedLog_processed);
                         processedLogScrollView.fullScroll(View.FOCUS_DOWN);
                     }
@@ -98,15 +91,6 @@ public class ConsoleActivity extends AppCompatActivity {
             }
         };
         handler.post(logUpdateRunnable);
-    }
-
-    private CBusMessage getReceivedCBusMessage(String receivedFrame){
-        String event = receivedFrame.substring(7,9);
-        String[] data = new String[receivedFrame.substring(9).length()/2];
-        for(int i=0; i<data.length; i++){
-            data[i] = receivedFrame.substring(9+(2*i), 11+(2*i));
-        }
-        return new CBusMessage(event, data);
     }
 
     //Functions to send messages
@@ -136,7 +120,7 @@ public class ConsoleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updateMessage();
-                send((new CBusAsciiMessageBuilder().build(currentCBusMessage)));
+                boardManager.send((new CBusAsciiMessageBuilder().build(currentCBusMessage)));
                 //Save the message
                 for (int i = 0; i < lastPartialMessage.length; i++) {
                     lastPartialMessage[i] = currentPartialMessage[i].getText().toString();
@@ -175,59 +159,5 @@ public class ConsoleActivity extends AppCompatActivity {
             currentPartialMessage[i].setText(lastPartialMessage[i]);
         }
         updateMessage();
-    }
-    //Networking functions
-    private void connect() {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    consoleSocket = new Socket();
-                    consoleSocket.connect(new InetSocketAddress(host, port));
-                    socketInputStream = new DataInputStream(consoleSocket.getInputStream());
-                    socketOutputStream = new DataOutputStream(consoleSocket.getOutputStream());
-                    initLog();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
-    }
-
-    private void send(final String message) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    byte[] bMessage = message.getBytes(StandardCharsets.UTF_8);
-                    socketOutputStream.write(bMessage);
-                } catch (IOException | NullPointerException ignored) {
-                }
-
-            }
-        });
-        thread.start();
-    }
-
-    private String receive(int length) throws InterruptedException {
-        final String[] message = new String[]{""};
-        final byte[] rawMessage = new byte[length];
-
-        final Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < rawMessage.length; i++) {
-                    try {
-                        rawMessage[i] = socketInputStream.readByte();
-                    } catch (IOException | NullPointerException ignored) {
-                    }
-                    message[0] += (char) rawMessage[i];
-                }
-            }
-        });
-        thread.start();
-        thread.join();
-        return message[0];
     }
 }

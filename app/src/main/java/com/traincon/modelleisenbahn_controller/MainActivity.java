@@ -31,9 +31,11 @@ public class MainActivity extends AppCompatActivity {
     final private TextView[] seekBarTextViews = new TextView[textViewIdArray.length];
     private ConstraintLayout accessoryFrame;
     private Menu menu;
-    private BoardManager boardManager;
     private Handler handler;
     private Runnable updateRunnable;
+
+    private BoardManager boardManager;
+    private AccessoryController accessoryController;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         boardManager = new BoardManager(host, port);
         boardManager.connect();
 
+        accessoryController = new AccessoryController(boardManager);
+
         handler = new Handler(getMainLooper());
         initLayout();
         updateLayout();
@@ -69,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         //Light
         if (item.getItemId() == R.id.action_light) {
-            if (!boardManager.getLightState()) {
-                boardManager.setLightOn();
+            if (!accessoryController.getLightState()) {
+                accessoryController.setLightOn();
                 menu.getItem(0).setIcon(R.drawable.ic_light_bulb_on);
             } else {
-                boardManager.setLightOff();
+                accessoryController.setLightOff();
                 menu.getItem(0).setIcon(R.drawable.ic_light_bulb_off);
             }
         }
@@ -115,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             controllerSeekBars[n].setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                    seekBarTextViews[finalN].setText(String.format("%s", i - 50));
+                    seekBarTextViews[finalN].setText(String.format("%s", i - 128));
                 }
 
                 @Override
@@ -148,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
             switches[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    boardManager.setSwitch(finalI, switches[finalI].isChecked());
+                    accessoryController.setSwitch(finalI, switches[finalI].isChecked());
                 }
             });
         }
@@ -162,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
             sections[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    boardManager.setSection(finalI, sections[finalI].isChecked());
+                    accessoryController.setSection(finalI, sections[finalI].isChecked());
                 }
             });
         }
@@ -173,13 +177,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    boardManager.requestSwitchStates();
-                    for (int i = 0; i < boardManager.switchStates.length; i++) {
-                        switches[i].setChecked(boardManager.switchStates[i]);
+                    accessoryController.requestSwitchStates();
+                    for (int i = 0; i < accessoryController.switchStates.length; i++) {
+                        switches[i].setChecked(accessoryController.switchStates[i]);
                     }
 
-                    for (int i = 0; i < boardManager.sectionStates.length; i++) {
-                        sections[i].setChecked(boardManager.sectionStates[i]);
+                    for (int i = 0; i < accessoryController.sectionStates.length; i++) {
+                        sections[i].setChecked(accessoryController.sectionStates[i]);
                     }
                     handler.postDelayed(this, 1000);
                 } catch (InterruptedException | IOException e) {
