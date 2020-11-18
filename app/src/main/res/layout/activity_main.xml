@@ -33,25 +33,29 @@
             android:layout_marginBottom="@dimen/action_margin"
             android:text="@string/default_seekBarTextView" />
 
-        <SeekBar
+        <com.traincon.modelleisenbahn_controller.TwoDirSeekBar
             android:id="@+id/seekBar_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:indeterminate="false"
-            android:max="256"
+            android:max="254"
             android:progress="128" />
 
-        <Button
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="@dimen/fab_margin"
-            android:backgroundTint="@color/colorImportant"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/quickMenu_actions"
-            android:textColor="@android:color/white" />
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/action_margin">
+
+            <Button
+                android:id="@+id/button_idle_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                style="?buttonBarButtonStyle"
+                android:text="@string/action_idle" />
+        </LinearLayout>
     </FrameLayout>
 
     <FrameLayout
@@ -62,6 +66,17 @@
         app:layout_constraintStart_toEndOf="@id/frame_Con1"
         app:layout_constraintTop_toTopOf="parent">
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sessionSwitch_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"/>
+        </FrameLayout>
+
         <TextView
             android:id="@+id/sText_2"
             android:layout_width="wrap_content"
@@ -70,33 +85,56 @@
             android:layout_marginBottom="@dimen/action_margin"
             android:text="@string/default_seekBarTextView" />
 
-        <SeekBar
+        <com.traincon.modelleisenbahn_controller.TwoDirSeekBar
             android:id="@+id/seekBar_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:max="256"
+            android:max="254"
             android:progress="128" />
 
         <Button
+            android:id="@+id/button_estop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
-            android:layout_marginBottom="@dimen/fab_margin"
-            android:backgroundTint="@color/colorImportant"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/quickMenu_actions"
-            android:textColor="@android:color/white" />
+            style="?buttonBarButtonStyle"
+            android:text="@string/action_estop" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/action_margin">
+
+            <Button
+                android:id="@+id/button_idle_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                style="?buttonBarButtonStyle"
+                android:text="@string/action_idle" />
+        </LinearLayout>
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/frame_Con3"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/frame_accessory"
         app:layout_constraintStart_toEndOf="@id/frame_Con2"
         app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sessionSwitch_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"/>
+        </FrameLayout>
 
         <TextView
             android:id="@+id/sText_3"
@@ -106,33 +144,37 @@
             android:layout_marginBottom="@dimen/action_margin"
             android:text="@string/default_seekBarTextView" />
 
-        <SeekBar
+        <com.traincon.modelleisenbahn_controller.TwoDirSeekBar
             android:id="@+id/seekBar_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:max="256"
+            android:max="254"
             android:progress="128" />
-
-        <Button
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="@dimen/fab_margin"
-            android:backgroundTint="@color/colorImportant"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/quickMenu_actions"
-            android:textColor="@android:color/white" />
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/action_margin">
+
+            <Button
+                android:id="@+id/button_idle_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                style="?buttonBarButtonStyle"
+                android:text="@string/action_idle" />
+        </LinearLayout>
     </FrameLayout>
 
-    <!--Do never show in portrait-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frame_accessory"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/frame_Con3"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView

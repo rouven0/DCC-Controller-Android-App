@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -29,6 +30,9 @@ public class ConsoleActivity extends AppCompatActivity {
     private final String[] lastPartialMessage = new String[editTextIdArray.length];
     private BoardManager boardManager;
     private EditText currentMessage;
+    private Handler handler;
+    private Runnable logUpdateRunnable;
+    private boolean isRunning = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,9 +52,27 @@ public class ConsoleActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_console, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             super.onBackPressed();
+            return true;
+        }
+        if(item.getItemId() == R.id.action_playPause && isRunning) {
+            handler.removeCallbacks(logUpdateRunnable);
+            isRunning = false;
+
+            item.setIcon(R.drawable.ic_baseline_play_arrow_24);
+            return true;
+        } else if (item.getItemId() == R.id.action_playPause && !isRunning) {
+            handler.post(logUpdateRunnable);
+            isRunning = true;
+            item.setIcon(R.drawable.ic_baseline_pause_24);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -62,8 +84,8 @@ public class ConsoleActivity extends AppCompatActivity {
         final ScrollView processedLogScrollView = findViewById(R.id.scrollView_processed);
         final TextView rawLogTextView = findViewById(R.id.log_raw);
         final TextView processedLogTextView = findViewById(R.id.log_processed);
-        final Handler handler = new Handler(getBaseContext().getMainLooper());
-        Runnable logUpdateRunnable = new Runnable() {
+        handler = new Handler(getBaseContext().getMainLooper());
+        logUpdateRunnable = new Runnable() {
             @Override
             public void run() {
                 try {
@@ -71,7 +93,10 @@ public class ConsoleActivity extends AppCompatActivity {
                     String oldLog = rawLogTextView.getText().toString();
                     String oldLog_processed = processedLogTextView.getText().toString();
                     //Get string
-                    String receivedString = boardManager.receive(boardManager.getSocketInputStream().available());
+                    String receivedString = "";
+                    if(boardManager.getSocketInputStream()!=null){
+                        receivedString = boardManager.receive(boardManager.getSocketInputStream().available());
+                    }
                     //update the log
                     if (!receivedString.equals("")) {
                         //raw string
@@ -142,7 +167,7 @@ public class ConsoleActivity extends AppCompatActivity {
         for (int i = 0; i < data.length; i++) {
             data[i] = currentPartialMessage[i + 1].getText().toString();
         }
-        currentCBusMessage.setEvent(currentPartialMessage[1].getText().toString());
+        currentCBusMessage.setEvent(currentPartialMessage[0].getText().toString());
         currentCBusMessage.setData(data);
         currentMessage.setText((new CBusAsciiMessageBuilder()).build(currentCBusMessage));
     }
@@ -159,5 +184,11 @@ public class ConsoleActivity extends AppCompatActivity {
             currentPartialMessage[i].setText(lastPartialMessage[i]);
         }
         updateMessage();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacks(logUpdateRunnable);
     }
 }

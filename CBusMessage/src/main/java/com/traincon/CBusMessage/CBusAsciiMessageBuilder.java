@@ -16,11 +16,12 @@ public class CBusAsciiMessageBuilder {
     }
 
     public String build(@NonNull CBusMessage cBusMessage){
+        String eventAddress = cBusMessage.getEventAddress();
         StringBuilder data = new StringBuilder();
         for (int i=0; i<cBusMessage.getData().length; i++){
             data.append(cBusMessage.getData()[i]);
         }
-        return ":S000BN" + cBusMessage.getEventAddress() + data + ";";
+        return ":S0000N" + eventAddress + data + ";";
     }
 
 }

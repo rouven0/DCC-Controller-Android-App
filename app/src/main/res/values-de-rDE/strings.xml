@@ -31,7 +31,6 @@
 
     <!--Mainactivity-->
     <string name="item_config">Konfigurieren</string>
-    <string name="quickMenu_actions">Aktionen</string>
     <string name="label_switches">Weichen</string>
     <string name="label_sections">Gleise</string>
 

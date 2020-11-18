@@ -1,6 +1,7 @@
 package com.traincon.CBusMessage;
 
 public class CBusMessage {
+    public static final String[] NO_DATA = new String[0];
 
     public String eventAddress;
     public String[] data;

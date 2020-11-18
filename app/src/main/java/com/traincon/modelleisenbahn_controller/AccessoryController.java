@@ -56,7 +56,8 @@ public class AccessoryController {
 
     protected void requestSwitchStates() throws InterruptedException, IOException {
         //get the node variable
-        boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("NVRD", new String[]{"00", "65", "03"})));
+        String m1 = cBusAsciiMessageBuilder.build(new CBusMessage("NVRD", new String[]{"00", "65", "03"}));
+        boardManager.send(m1);
         String receivedSwitchStates_0 = boardManager.receive(CBusAsciiMessageBuilder.getExpectedMessageLength(3));
         boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("NVRD", new String[]{"00", "65", "04"})));
         String receivedSwitchStates_1 = boardManager.receive(CBusAsciiMessageBuilder.getExpectedMessageLength(3));

@@ -7,6 +7,8 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -27,13 +29,21 @@ public class MainActivity extends AppCompatActivity {
     final private SwitchCompat[] sections = new SwitchCompat[sectionIdArray.length];
     final private int[] seekBarIdArray = new int[]{R.id.seekBar_1, R.id.seekBar_2, R.id.seekBar_3};
     final private int[] textViewIdArray = new int[]{R.id.sText_1, R.id.sText_2, R.id.sText_3};
-    final private SeekBar[] controllerSeekBars = new SeekBar[seekBarIdArray.length];
+    final private TwoDirSeekBar[] controllerSeekBars = new TwoDirSeekBar[seekBarIdArray.length];
     final private TextView[] seekBarTextViews = new TextView[textViewIdArray.length];
+    final private int[] sessionSwitchIdArray = new int[]{R.id.sessionSwitch_1, R.id.sessionSwitch_2, R.id.sessionSwitch_3};
+    final private SwitchCompat[] sessionSwitches = new SwitchCompat[sessionSwitchIdArray.length];
+    //final private int[] estopButtonIdArray = new int[]{R.id.button_estop_1, R.id.button_estop_2, R.id.button_estop_3};
+    final private int[] idleButtonIdArray = new int[]{R.id.button_idle_1, R.id.button_idle_2, R.id.button_idle_3};
+    //final private Button[] estopButtons = new Button[estopButtonIdArray.length];
+    final private Button[] idleButtons = new Button[idleButtonIdArray.length];
+    private final Runnable[] getSpeedRunnables = new Runnable[seekBarIdArray.length];
+    private final Cab[] cabs = new Cab[3];
     private ConstraintLayout accessoryFrame;
     private Menu menu;
     private Handler handler;
     private Runnable updateRunnable;
-
+    private Runnable keepAliveRunnable;
     private BoardManager boardManager;
     private AccessoryController accessoryController;
 
@@ -54,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
         boardManager = new BoardManager(host, port);
         boardManager.connect();
 
-        accessoryController = new AccessoryController(boardManager);
-
         handler = new Handler(getMainLooper());
         initLayout();
         updateLayout();
@@ -66,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_config_controller, menu);
+        updateLayout();
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -106,37 +115,73 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initLayout() {
-        initControllers();
+        initCabs();
         initAccessory();
-        initUpdate();
+        initUpdates();
     }
 
-    private void initControllers() {
+    private void initCabs() {
+        Button estopButton = findViewById(R.id.button_estop);
+        estopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cabs[0].estop();
+                for (TwoDirSeekBar controllerSeekBar : controllerSeekBars) {
+                    controllerSeekBar.setValue(0);
+                }
+            }
+        });
         for (int n = 0; n < controllerSeekBars.length; n++) {
+            cabs[n] = new Cab(boardManager);
+            sessionSwitches[n] = findViewById(sessionSwitchIdArray[n]);
             controllerSeekBars[n] = findViewById(seekBarIdArray[n]);
             seekBarTextViews[n] = findViewById(textViewIdArray[n]);
+            idleButtons[n] = findViewById(idleButtonIdArray[n]);
             final int finalN = n;
             controllerSeekBars[n].setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                    seekBarTextViews[finalN].setText(String.format("%s", i - 128));
+                    seekBarTextViews[finalN].setText(String.format("%s", i - 127));
                 }
 
                 @Override
                 public void onStartTrackingTouch(SeekBar seekBar) {
-
+                    handler.post(getSpeedRunnables[finalN]);
                 }
 
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
-
+                    handler.removeCallbacks(getSpeedRunnables[finalN]);
                 }
             });
 
+            sessionSwitches[finalN].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        try {
+                            sessionSwitches[finalN].setChecked(cabs[finalN].allocateSession());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        cabs[finalN].releaseSession();
+                    }
+                }
+            });
+
+            idleButtons[n].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cabs[finalN].idle();
+                    controllerSeekBars[finalN].setValue(0);
+                }
+            });
         }
     }
 
     private void initAccessory() {
+        accessoryController = new AccessoryController(boardManager);
         accessoryFrame = findViewById(R.id.frame_accessory);
         initSwitches();
         initSections();
@@ -149,10 +194,10 @@ public class MainActivity extends AppCompatActivity {
             switches[i].setTextOn(String.format("%s", i + 1) + " " + switches[i].getTextOn());
             switches[i].setChecked(false);
             final int finalI = i;
-            switches[i].setOnClickListener(new View.OnClickListener() {
+            switches[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onClick(View view) {
-                    accessoryController.setSwitch(finalI, switches[finalI].isChecked());
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    accessoryController.setSwitch(finalI, isChecked);
                 }
             });
         }
@@ -172,7 +217,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void initUpdate() {
+    private void initUpdates() {
+
         updateRunnable = new Runnable() {
             @Override
             public void run() {
@@ -191,15 +237,45 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-        handler.post(updateRunnable);
+
+        keepAliveRunnable = new Runnable() {
+            @Override
+            public void run() {
+                for (Cab cab : cabs) {
+                    cab.keepAlive();
+                }
+                handler.postDelayed(this, 3000);
+            }
+        };
+        handler.post(keepAliveRunnable);
+
+        for (int i = 0; i < getSpeedRunnables.length; i++) {
+            final int finalI = i;
+            getSpeedRunnables[i] = new Runnable() {
+                @Override
+                public void run() {
+                    int value = controllerSeekBars[finalI].getProgress() - 127;
+                    cabs[finalI].setSpeedDir(value);
+                    handler.postDelayed(this, 100);
+                }
+            };
+        }
     }
 
     private void updateLayout() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         if (sharedPreferences.getBoolean("is_accessory_on", false)) {
+            handler.post(updateRunnable);
             accessoryFrame.setVisibility(View.VISIBLE);
+            if (menu != null) {
+                menu.getItem(0).setVisible(true);
+            }
         } else {
+            handler.removeCallbacks(updateRunnable);
             accessoryFrame.setVisibility(View.GONE);
+            if (menu != null) {
+                menu.getItem(0).setVisible(false);
+            }
         }
     }
 
@@ -212,6 +288,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         handler.removeCallbacks(updateRunnable);
+        handler.removeCallbacks(keepAliveRunnable);
         try {
             boardManager.disconnect();
         } catch (IOException e) {

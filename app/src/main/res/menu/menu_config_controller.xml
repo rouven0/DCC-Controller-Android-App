@@ -5,7 +5,8 @@
         android:id="@+id/action_light"
         android:title="@string/action_light"
         android:icon="@drawable/ic_light_bulb_off"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
 
     <item
         android:id="@+id/action_config"
