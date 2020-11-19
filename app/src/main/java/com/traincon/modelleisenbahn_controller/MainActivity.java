@@ -33,9 +33,7 @@ public class MainActivity extends AppCompatActivity {
     final private TextView[] seekBarTextViews = new TextView[textViewIdArray.length];
     final private int[] sessionSwitchIdArray = new int[]{R.id.sessionSwitch_1, R.id.sessionSwitch_2, R.id.sessionSwitch_3};
     final private SwitchCompat[] sessionSwitches = new SwitchCompat[sessionSwitchIdArray.length];
-    //final private int[] estopButtonIdArray = new int[]{R.id.button_estop_1, R.id.button_estop_2, R.id.button_estop_3};
     final private int[] idleButtonIdArray = new int[]{R.id.button_idle_1, R.id.button_idle_2, R.id.button_idle_3};
-    //final private Button[] estopButtons = new Button[estopButtonIdArray.length];
     final private Button[] idleButtons = new Button[idleButtonIdArray.length];
     private final Runnable[] getSpeedRunnables = new Runnable[seekBarIdArray.length];
     private final Cab[] cabs = new Cab[3];
@@ -43,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     private Menu menu;
     private Handler handler;
     private Runnable updateSwitchStates;
-    private Runnable updateSwitchToggleButtons;
     private Runnable keepAlive;
     private BoardManager boardManager;
     private AccessoryController accessoryController;
@@ -223,14 +220,17 @@ public class MainActivity extends AppCompatActivity {
         updateSwitchStates = new Runnable() {
             @Override
             public void run() {
-                receiveSwitchStates();
-                handler.postDelayed(this, 1000);
-            }
-        };
-
-        updateSwitchToggleButtons = new Runnable() {
-            @Override
-            public void run() {
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            accessoryController.requestSwitchStates();
+                        } catch (InterruptedException | IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                thread.start();
                 for (int i = 0; i < accessoryController.switchStates.length; i++) {
                     switches[i].setChecked(accessoryController.switchStates[i]);
                 }
@@ -266,32 +266,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void receiveSwitchStates(){
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    accessoryController.requestSwitchStates();
-                } catch (InterruptedException | IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
-    }
-
     private void updateLayout() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         if (sharedPreferences.getBoolean("is_accessory_on", false)) {
             handler.post(updateSwitchStates);
-            handler.post(updateSwitchToggleButtons);
             accessoryFrame.setVisibility(View.VISIBLE);
             if (menu != null) {
                 menu.getItem(0).setVisible(true);
             }
         } else {
             handler.removeCallbacks(updateSwitchStates);
-            handler.removeCallbacks(updateSwitchToggleButtons);
             accessoryFrame.setVisibility(View.GONE);
             if (menu != null) {
                 menu.getItem(0).setVisible(false);
@@ -308,7 +292,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         handler.removeCallbacks(updateSwitchStates);
-        handler.removeCallbacks(updateSwitchToggleButtons);
         handler.removeCallbacks(keepAlive);
         try {
             boardManager.disconnect();

@@ -1,8 +1,5 @@
 package com.traincon.modelleisenbahn_controller;
 
-
-import android.util.Log;
-
 import com.traincon.CBusMessage.CBusMessage;
 
 import java.io.DataInputStream;
@@ -88,7 +85,6 @@ public class BoardManager {
         });
         thread.start();
         thread.join();
-        Log.d("0", "receive: " + message[0]);
         return message[0];
     }
 

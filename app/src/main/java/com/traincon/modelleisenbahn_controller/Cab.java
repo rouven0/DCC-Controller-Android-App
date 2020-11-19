@@ -1,13 +1,9 @@
 package com.traincon.modelleisenbahn_controller;
 
-import android.util.Log;
-
 import com.traincon.CBusMessage.CBusAsciiMessageBuilder;
 import com.traincon.CBusMessage.CBusMessage;
 
 import java.io.IOException;
-
-import static android.content.ContentValues.TAG;
 
 public class Cab {
     private final BoardManager boardManager;
@@ -68,7 +64,6 @@ public class Cab {
             }
             String hexSpeed = Integer.toHexString(targetSpeed);
             boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("DSPD", new String[]{session, hexSpeed})));
-            Log.d(TAG, "setSpeedDir: "+ cBusAsciiMessageBuilder.build(new CBusMessage("DSPD", new String[]{session, hexSpeed})));
         }
     }
 
