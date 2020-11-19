@@ -1,20 +1,25 @@
 package com.traincon.modelleisenbahn_controller;
 
+import android.util.Log;
+
 import com.traincon.CBusMessage.CBusAsciiMessageBuilder;
 import com.traincon.CBusMessage.CBusMessage;
 
 import java.io.IOException;
 
+import static android.content.ContentValues.TAG;
+
 public class Cab {
     private final BoardManager boardManager;
     private final CBusAsciiMessageBuilder cBusAsciiMessageBuilder;
     private String session;
-    private boolean isActive = false;
+    private boolean isSession = false;
 
     public Cab(BoardManager boardManager) {
         this.boardManager = boardManager;
         cBusAsciiMessageBuilder = new CBusAsciiMessageBuilder();
     }
+
 
     public boolean allocateSession() throws InterruptedException {
         final Thread thread = new Thread(new Runnable() {
@@ -28,40 +33,43 @@ public class Cab {
                     if (answer.getEvent().equals("PLOC")) {
                         session = answer.getData()[0];
                         //String speedDir = answer.getData()[3];
-                        isActive = true;
+                        isSession = true;
                     } else {
-                        isActive = false;
+                        isSession = false;
                     }
                 } catch (NullPointerException | InterruptedException | IOException e) {
-                    isActive = false;
+                    isSession = false;
                 }
             }
         });
         thread.start();
         thread.join();
-        return isActive;
+        return isSession;
     }
 
     public void releaseSession() {
         boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("KLOC", new String[]{session})));
-        isActive = false;
+        isSession = false;
         session = null;
     }
 
     public void keepAlive() {
-        if (isActive) {
+        if (isSession) {
             boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("DKEEP", new String[]{session})));
         }
     }
 
     public void setSpeedDir(int targetSpeed) {
-        if (targetSpeed < 0) {
-            targetSpeed = targetSpeed * -1;
-        } else {
-            targetSpeed = targetSpeed + 128;
+        if(isSession) {
+            if (targetSpeed < 0) {
+                targetSpeed = targetSpeed * -1;
+            } else {
+                targetSpeed = targetSpeed + 128;
+            }
+            String hexSpeed = Integer.toHexString(targetSpeed);
+            boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("DSPD", new String[]{session, hexSpeed})));
+            Log.d(TAG, "setSpeedDir: "+ cBusAsciiMessageBuilder.build(new CBusMessage("DSPD", new String[]{session, hexSpeed})));
         }
-        String hexSpeed = Integer.toHexString(targetSpeed);
-        boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("DSPD", new String[]{session, hexSpeed})));
     }
 
     public void idle() {

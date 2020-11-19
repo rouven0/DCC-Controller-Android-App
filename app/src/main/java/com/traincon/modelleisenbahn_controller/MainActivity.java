@@ -42,8 +42,9 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout accessoryFrame;
     private Menu menu;
     private Handler handler;
-    private Runnable updateRunnable;
-    private Runnable keepAliveRunnable;
+    private Runnable updateSwitchStates;
+    private Runnable updateSwitchToggleButtons;
+    private Runnable keepAlive;
     private BoardManager boardManager;
     private AccessoryController accessoryController;
 
@@ -190,8 +191,8 @@ public class MainActivity extends AppCompatActivity {
     private void initSwitches() {
         for (int i = 0; i < switchIdArray.length; i++) {
             switches[i] = findViewById(switchIdArray[i]);
-            switches[i].setTextOff(String.format("%s", i + 1) + " " + switches[i].getTextOff());
-            switches[i].setTextOn(String.format("%s", i + 1) + " " + switches[i].getTextOn());
+            switches[i].setTextOff(String.format("%s", i + 1) + " |");
+            switches[i].setTextOn(String.format("%s", i + 1) + " /");
             switches[i].setChecked(false);
             final int finalI = i;
             switches[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -219,26 +220,29 @@ public class MainActivity extends AppCompatActivity {
 
     private void initUpdates() {
 
-        updateRunnable = new Runnable() {
+        updateSwitchStates = new Runnable() {
             @Override
             public void run() {
-                try {
-                    accessoryController.requestSwitchStates();
-                    for (int i = 0; i < accessoryController.switchStates.length; i++) {
-                        switches[i].setChecked(accessoryController.switchStates[i]);
-                    }
-
-                    for (int i = 0; i < accessoryController.sectionStates.length; i++) {
-                        sections[i].setChecked(accessoryController.sectionStates[i]);
-                    }
-                    handler.postDelayed(this, 1000);
-                } catch (InterruptedException | IOException e) {
-                    e.printStackTrace();
-                }
+                receiveSwitchStates();
+                handler.postDelayed(this, 1000);
             }
         };
 
-        keepAliveRunnable = new Runnable() {
+        updateSwitchToggleButtons = new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < accessoryController.switchStates.length; i++) {
+                    switches[i].setChecked(accessoryController.switchStates[i]);
+                }
+
+                for (int i = 0; i < accessoryController.sectionStates.length; i++) {
+                    sections[i].setChecked(accessoryController.sectionStates[i]);
+                }
+                handler.postDelayed(this, 1000);
+            }
+        };
+
+        keepAlive = new Runnable() {
             @Override
             public void run() {
                 for (Cab cab : cabs) {
@@ -247,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
                 handler.postDelayed(this, 3000);
             }
         };
-        handler.post(keepAliveRunnable);
+        handler.post(keepAlive);
 
         for (int i = 0; i < getSpeedRunnables.length; i++) {
             final int finalI = i;
@@ -262,16 +266,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void receiveSwitchStates(){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    accessoryController.requestSwitchStates();
+                } catch (InterruptedException | IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+
     private void updateLayout() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         if (sharedPreferences.getBoolean("is_accessory_on", false)) {
-            handler.post(updateRunnable);
+            handler.post(updateSwitchStates);
+            handler.post(updateSwitchToggleButtons);
             accessoryFrame.setVisibility(View.VISIBLE);
             if (menu != null) {
                 menu.getItem(0).setVisible(true);
             }
         } else {
-            handler.removeCallbacks(updateRunnable);
+            handler.removeCallbacks(updateSwitchStates);
+            handler.removeCallbacks(updateSwitchToggleButtons);
             accessoryFrame.setVisibility(View.GONE);
             if (menu != null) {
                 menu.getItem(0).setVisible(false);
@@ -287,8 +307,9 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onDestroy() {
         super.onDestroy();
-        handler.removeCallbacks(updateRunnable);
-        handler.removeCallbacks(keepAliveRunnable);
+        handler.removeCallbacks(updateSwitchStates);
+        handler.removeCallbacks(updateSwitchToggleButtons);
+        handler.removeCallbacks(keepAlive);
         try {
             boardManager.disconnect();
         } catch (IOException e) {

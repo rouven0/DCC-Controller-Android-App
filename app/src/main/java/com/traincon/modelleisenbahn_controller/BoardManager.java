@@ -33,7 +33,7 @@ public class BoardManager {
                     mainSocket.connect(new InetSocketAddress(host, port));
                     socketInputStream = new DataInputStream(mainSocket.getInputStream());
                     socketOutputStream = new DataOutputStream(mainSocket.getOutputStream());
-                    receive(18);
+                    receive(18); // CLear the welcome Message
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
