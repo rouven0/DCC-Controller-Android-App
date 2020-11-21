@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
         handler = new Handler(getMainLooper());
         initLayout();
-        updateLayout();
 
     }
 
@@ -72,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_config_controller, menu);
-        updateLayout();
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -192,10 +190,10 @@ public class MainActivity extends AppCompatActivity {
             switches[i].setTextOn(String.format("%s", i + 1) + " /");
             switches[i].setChecked(false);
             final int finalI = i;
-            switches[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            switches[i].setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    accessoryController.setSwitch(finalI, isChecked);
+                public void onClick(View v) {
+                    accessoryController.setSwitch(finalI, switches[finalI].isChecked());
                 }
             });
         }
@@ -220,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
         updateSwitchStates = new Runnable() {
             @Override
             public void run() {
-                Thread thread = new Thread(new Runnable() {
+               Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
@@ -293,6 +291,9 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         handler.removeCallbacks(updateSwitchStates);
         handler.removeCallbacks(keepAlive);
+        for(Cab cab: cabs) {
+            cab.releaseSession();
+        }
         try {
             boardManager.disconnect();
         } catch (IOException e) {

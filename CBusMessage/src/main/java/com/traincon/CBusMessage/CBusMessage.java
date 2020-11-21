@@ -45,8 +45,8 @@ public class CBusMessage {
 
                         //1 data byte
                         {"KLOC", "21"},
-                        {"QLOC", "022"},
-                        {"DKEEP", "023"},
+                        {"QLOC", "22"},
+                        {"DKEEP", "23"},
                         {"DBG1", "30"},
                         {"EXTC", "3F"},
 

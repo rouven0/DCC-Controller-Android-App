@@ -1,5 +1,7 @@
 package com.traincon.modelleisenbahn_controller;
 
+import android.util.Log;
+
 import com.traincon.CBusMessage.CBusMessage;
 
 import java.io.DataInputStream;
@@ -8,6 +10,8 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+
+import static android.content.ContentValues.TAG;
 
 public class BoardManager {
     public final String host;
@@ -85,6 +89,7 @@ public class BoardManager {
         });
         thread.start();
         thread.join();
+        Log.d(TAG, "received: " + message[0]);
         return message[0];
     }
 

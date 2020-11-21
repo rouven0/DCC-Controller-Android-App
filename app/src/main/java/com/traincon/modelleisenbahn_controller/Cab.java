@@ -24,8 +24,7 @@ public class Cab {
                 try {
                     boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("RLOC", new String[]{"E3", "29"})));
                     Thread.sleep(500);
-                    String answerFrame = boardManager.receive(boardManager.getSocketInputStream().available());
-                    CBusMessage answer = boardManager.getReceivedCBusMessage(answerFrame);
+                    CBusMessage answer = boardManager.getReceivedCBusMessage(boardManager.receive(boardManager.getSocketInputStream().available()));
                     if (answer.getEvent().equals("PLOC")) {
                         session = answer.getData()[0];
                         //String speedDir = answer.getData()[3];
@@ -55,15 +54,12 @@ public class Cab {
         }
     }
 
-    public void setSpeedDir(int targetSpeed) {
+    public void setSpeedDir(int targetSpeedDir) {
         if(isSession) {
-            if (targetSpeed < 0) {
-                targetSpeed = targetSpeed * -1;
-            } else {
-                targetSpeed = targetSpeed + 128;
+            if (targetSpeedDir > 0) {
+                targetSpeedDir = targetSpeedDir +128;
             }
-            String hexSpeed = Integer.toHexString(targetSpeed);
-            boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("DSPD", new String[]{session, hexSpeed})));
+            boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("DSPD", new String[]{session, Integer.toHexString(Math.abs(targetSpeedDir)).toUpperCase()})));
         }
     }
 
@@ -73,6 +69,7 @@ public class Cab {
 
     public void estop() {
         boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("RESTP", CBusMessage.NO_DATA)));
+        //boardManager.receive(CBusAsciiMessageBuilder.getExpectedMessageLength(0));
     }
 
 }
