@@ -80,16 +80,21 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_light) {
             if (!accessoryController.getLightState()) {
                 accessoryController.setLightOn();
-                menu.getItem(0).setIcon(R.drawable.ic_light_bulb_on);
+                menu.getItem(0).setIcon(R.drawable.ic_light_bulb_on_24);
             } else {
                 accessoryController.setLightOff();
-                menu.getItem(0).setIcon(R.drawable.ic_light_bulb_off);
+                menu.getItem(0).setIcon(R.drawable.ic_light_bulb_off_24);
             }
         }
 
         //Configure
         if (item.getItemId() == R.id.action_config) {
             startActivity(new Intent(getBaseContext(), ControllerConfigActivity.class));
+        }
+
+        //Loco
+        if (item.getItemId() == R.id.action_locoList) {
+            startActivity(new Intent(getBaseContext(), LocoConfigActivity.class));
         }
 
         //Reconnect

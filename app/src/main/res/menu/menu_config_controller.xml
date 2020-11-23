@@ -4,9 +4,15 @@
     <item
         android:id="@+id/action_light"
         android:title="@string/action_light"
-        android:icon="@drawable/ic_light_bulb_off"
+        android:icon="@drawable/ic_light_bulb_off_24"
         app:showAsAction="ifRoom"
-        android:visible="false"/>
+        android:visible="false" />
+
+    <item
+        android:id="@+id/action_locoList"
+        android:title="@string/item_locoList"
+        android:icon="@drawable/ic_locolist_24"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_config"

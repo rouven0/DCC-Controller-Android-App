@@ -12,6 +12,12 @@
         app:showAsAction="always"/>
 
     <item
+        android:id="@+id/action_locoList"
+        android:title="@string/item_locoList"
+        android:icon="@drawable/ic_locolist_24"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/action_settings"
         android:title="@string/item_settings"
         android:icon="@drawable/ic_baseline_settings_24"

@@ -4,10 +4,12 @@
     <string name="label_activity_settings">Preferences</string>
     <string name="label_activity_console">Console</string>
     <string name="label_activity_controller_config">Configure</string>
+    <string name="label_activity_loco_config">Edit Locos</string>
 
     <!--LauncherActivity item titles -->
     <string name="item_settings">Preferences</string>
     <string name="item_console">CBUS-Console</string>
+    <string name="item_locoList">Edit Locos</string>
 
     <!-- LauncherActivity strings -->
     <string name="action_loadLast">Last used</string>
@@ -15,10 +17,16 @@
     <string name="input_portEntry">Port</string>
     <string name="cp_Start" translatable="false">Start</string>
 
-    <!-- Preference Titles -->
-
     <!-- General preferences -->
     <string name="preference_mode">Mode</string>
+    <string-array name="mode_entries">
+        <item>
+            Digital
+        </item>
+        <item>
+            Analog DCC (Virtual trains)
+        </item>
+    </string-array>
 
     <!-- Console Strings -->
     <string name="title_raw">All incoming</string>
@@ -49,11 +57,20 @@
     <string name="action_idle" translatable="false">Idle</string>
     <string name="label_switches">Switches</string>
     <string name="label_sections">Sections</string>
+    <string-array name="locoAddress_entries">
+        <item>
+            No locos found
+        </item>
+    </string-array>
+
 
     <!-- Config headers -->
     <string name="accessory_header">Accessory</string>
 
     <!-- Config items -->
     <string name="title_is_accessory_on">Control accessory</string>
-    <string name="summary_is_accessory_on">Control additional elements like Switches and Sections in landscape mode</string>
+    <string name="summary_is_accessory_on">Control additional elements like Switches and Sections</string>
+
+    <!--Loco Config strings-->
+    <string name="contentDescription_add">Add Loco</string>
 </resources>

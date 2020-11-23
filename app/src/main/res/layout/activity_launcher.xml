@@ -14,7 +14,7 @@
         android:clickable="true"
         android:contentDescription="@string/cp_Start"
         android:focusable="true"
-        android:src="@drawable/ic_baseline_directions_railway_24" />
+        android:src="@drawable/ic_train_24"/>
 
     <Button
         android:id="@+id/loadLast"

@@ -5,10 +5,12 @@
     <string name="label_activity_settings">Einstellungen</string>
     <string name="label_activity_console">Konsole</string>
     <string name="label_activity_controller_config">Konfigurieren</string>
+    <string name="label_activity_loco_config">Züge bearbeiten</string>
 
     <!--LauncherActivity item titles-->
     <string name="item_settings">Einstellungen</string>
     <string name="item_console" >CBUS-Konsole</string>
+    <string name="item_locoList">Züge bearbeiten</string>
 
     <!--LauncherActivity strings-->
     <string name="action_loadLast">Zuletzt verwendet</string>
@@ -17,6 +19,14 @@
 
     <!-- General preferences -->
     <string name="preference_mode">Modus</string>
+    <string-array name="mode_entries">
+        <item>
+            Digital
+        </item>
+        <item>
+            Analog DCC (Virtuelle Loks)
+        </item>
+    </string-array>
 
     <!--Console Strings-->
     <string name="title_raw">Eingehend</string>
@@ -33,11 +43,19 @@
     <string name="item_config">Konfigurieren</string>
     <string name="label_switches">Weichen</string>
     <string name="label_sections">Gleise</string>
+    <string-array name="locoAddress_entries">
+        <item>
+            Keine Loks eingetragen
+        </item>
+    </string-array>
 
     <!-- Config headers -->
     <string name="accessory_header">Weichen &amp; Gleise</string>
 
     <!-- Config items -->
     <string name="title_is_accessory_on">Zubehörsteuerung</string>
-    <string name="summary_is_accessory_on">Steuert zusätzliche Elemente im Querformat</string>
+    <string name="summary_is_accessory_on">Steuert zusätzliche Elemente</string>
+
+    <!--Loco Config-->
+    <string name="contentDescription_add">Lok Hinzufügen</string>
 </resources>
