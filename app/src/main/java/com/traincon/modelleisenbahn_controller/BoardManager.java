@@ -1,5 +1,7 @@
 package com.traincon.modelleisenbahn_controller;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.traincon.CBusMessage.CBusMessage;
@@ -13,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 
 import static android.content.ContentValues.TAG;
 
-public class BoardManager {
+public class BoardManager implements Parcelable {
     public final String host;
     public final int port;
     public Socket mainSocket;
@@ -24,6 +26,23 @@ public class BoardManager {
         this.host = host;
         this.port = port;
     }
+
+    protected BoardManager(Parcel in) {
+        host = in.readString();
+        port = in.readInt();
+    }
+
+    public static final Creator<BoardManager> CREATOR = new Creator<BoardManager>() {
+        @Override
+        public BoardManager createFromParcel(Parcel in) {
+            return new BoardManager(in);
+        }
+
+        @Override
+        public BoardManager[] newArray(int size) {
+            return new BoardManager[size];
+        }
+    };
 
     public void connect() {
         Thread thread = new Thread(new Runnable() {
@@ -95,5 +114,16 @@ public class BoardManager {
 
     public DataInputStream getSocketInputStream() {
         return socketInputStream;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(host);
+        dest.writeInt(port);
     }
 }

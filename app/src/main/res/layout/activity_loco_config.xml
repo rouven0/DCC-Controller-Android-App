@@ -5,9 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".LocoConfigActivity">
 
-    <include layout="@layout/content_loco_config" />
-    <include layout="@layout/content_loco_config" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_loco"
         android:layout_width="wrap_content"
