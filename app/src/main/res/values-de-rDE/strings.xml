@@ -41,6 +41,7 @@
 
     <!--Mainactivity-->
     <string name="item_config">Konfigurieren</string>
+    <string name="action_estop">Nothalt</string>
     <string name="label_switches">Weichen</string>
     <string name="label_sections">Gleise</string>
     <string-array name="locoAddress_entries">

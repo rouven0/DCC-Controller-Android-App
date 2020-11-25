@@ -34,29 +34,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/action_margin" />
+        android:layout_marginBottom="40dp" />
 
     <com.traincon.modelleisenbahn_controller.TwoDirSeekBar
         android:id="@+id/seekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:indeterminate="false"
         android:max="254"
-        android:progress="128" />
+        android:progress="128"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <LinearLayout
+    <!-- 3x3 Button Matrix-->
+    <include
+        layout="@layout/content_controller_function_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/action_margin">
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="@dimen/function_margin"/>
 
-        <Button
-            android:id="@+id/button_idle"
-            style="?buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/action_idle" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/button_idle"
+        style="?buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/action_margin"
+        android:text="@string/action_idle" />
 </FrameLayout>

@@ -67,6 +67,14 @@ public class Cab {
         setSpeedDir(0);
     }
 
+    public void setFunction(int function, boolean targetState) {
+        if(targetState) {
+            boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("DFNON", new String[]{session, "0"+Integer.toHexString(function).toUpperCase()})));
+        } else {
+            boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("DFNOF", new String[]{session, "0"+Integer.toHexString(function).toUpperCase()})));
+        }
+    }
+
     public static void estop(BoardManager boardManager) {
         boardManager.send(new CBusAsciiMessageBuilder().build(new CBusMessage("RESTP", CBusMessage.NO_DATA)));
         //boardManager.receive(CBusAsciiMessageBuilder.getExpectedMessageLength(0));

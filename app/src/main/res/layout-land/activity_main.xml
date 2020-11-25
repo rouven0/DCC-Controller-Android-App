@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,13 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!--Only one Cab will be visible -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/con1"
         android:tag="c1"
         android:name="com.traincon.modelleisenbahn_controller.ControllerFragment"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        app:layout_constraintEnd_toStartOf="@id/con2"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.fragment.app.FragmentContainerView
@@ -22,7 +23,9 @@
         android:name="com.traincon.modelleisenbahn_controller.ControllerFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        app:layout_constraintEnd_toStartOf="@id/con3"
+        app:layout_constraintStart_toEndOf="@id/con1"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/con3"
@@ -30,7 +33,9 @@
         android:name="com.traincon.modelleisenbahn_controller.ControllerFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        app:layout_constraintEnd_toStartOf="@id/accessory"
+        app:layout_constraintStart_toEndOf="@id/con2"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <include
         android:id="@+id/accessory"
@@ -43,5 +48,4 @@
         app:layout_constraintStart_toEndOf="@id/con3"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-</merge>
+</androidx.constraintlayout.widget.ConstraintLayout>

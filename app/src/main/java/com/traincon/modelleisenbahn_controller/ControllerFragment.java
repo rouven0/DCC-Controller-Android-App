@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
+import android.widget.ToggleButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
@@ -24,6 +24,8 @@ public class ControllerFragment extends Fragment {
     private TextView seekBarTextView;
     private Runnable keepAlive;
     private Runnable getSpeed;
+    final int[] buttonIdArray = new int[]{R.id.button_f1, R.id.button_f2,R.id.button_f3, R.id.button_f4, R.id.button_f5, R.id.button_f6, R.id.button_f7, R.id.button_f8, R.id.button_f9};
+    private  final ToggleButton[] functionButtons = new ToggleButton[buttonIdArray.length];
 
     public ControllerFragment() {
         // Required empty public constructor
@@ -55,7 +57,6 @@ public class ControllerFragment extends Fragment {
         controllerSeekBar = requireView().findViewById(R.id.seekBar);
         seekBarTextView = requireView().findViewById(R.id.sText);
         seekBarTextView.setText("0");
-        Button idleButton = requireView().findViewById(R.id.button_idle);
         controllerSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -85,9 +86,12 @@ public class ControllerFragment extends Fragment {
                 } else {
                     cab.releaseSession();
                 }
+                controllerSeekBar.setValue(0);
+                resetFunctionButtons();
             }
         });
 
+        Button idleButton = requireView().findViewById(R.id.button_idle);
         idleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +99,20 @@ public class ControllerFragment extends Fragment {
                 controllerSeekBar.setValue(0);
             }
         });
+
+        for (int i=0; i<functionButtons.length; i++) {
+            functionButtons[i] = requireView().findViewById(buttonIdArray[i]);
+            functionButtons[i].setTextOff("F"+(i+1)+" "+functionButtons[i].getTextOff());
+            functionButtons[i].setTextOn("F"+(i+1)+ " "+functionButtons[i].getTextOn());
+            functionButtons[i].setChecked(false);
+            final int finalI = i;
+            functionButtons[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cab.setFunction(finalI+1, functionButtons[finalI].isChecked());
+                }
+            });
+        }
     }
 
     private void initUpdates() {
@@ -117,9 +135,16 @@ public class ControllerFragment extends Fragment {
         };
     }
 
+    private void resetFunctionButtons(){
+        for (ToggleButton toggleButton : functionButtons) {
+            toggleButton.setChecked(false);
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
+        cab.idle();
         cab.releaseSession();
         handler.removeCallbacks(keepAlive);
     }

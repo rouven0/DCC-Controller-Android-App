@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ToggleButton;
 
 import java.io.IOException;
@@ -97,6 +96,10 @@ public class MainActivity extends AppCompatActivity {
             boardManager.connect();
         }
 
+        if (item.getItemId() == R.id.action_estop) {
+            Cab.estop(boardManager);
+        }
+
         //Back
         if (item.getItemId() == android.R.id.home) {
             super.onBackPressed();
@@ -115,14 +118,6 @@ public class MainActivity extends AppCompatActivity {
             assert controllers[i] != null;
             controllers[i].setArguments(bundle);
         }
-
-        Button estopButton = findViewById(R.id.button_estop);
-        estopButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Cab.estop(boardManager);
-            }
-        });
 
         accessoryController = new AccessoryController(boardManager);
         accessoryFrame = findViewById(R.id.accessory);
