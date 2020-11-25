@@ -54,7 +54,7 @@ public class ControllerFragment extends Fragment {
         sessionSwitch = requireView().findViewById(R.id.sessionSwitch);
         controllerSeekBar = requireView().findViewById(R.id.seekBar);
         seekBarTextView = requireView().findViewById(R.id.sText);
-        seekBarTextView.setText(0);
+        seekBarTextView.setText("0");
         Button idleButton = requireView().findViewById(R.id.button_idle);
         controllerSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
