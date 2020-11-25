@@ -1,229 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ConsoleActivity">
 
     <!--Log and interpretation-->
-    <LinearLayout
-        android:id="@+id/logFrame_raw"
-        android:layout_width="0dp"
+    <include
+        android:id="@+id/log"
+        layout="@layout/content_console_log"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/send"
-        app:layout_constraintEnd_toStartOf="@id/logFrame_processed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title_raw" />
-
-        <ScrollView
-            android:id="@+id/scrollView_raw"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/log_raw"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </ScrollView>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/logFrame_processed"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/send"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/logFrame_raw"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title_processed" />
-
-        <ScrollView
-            android:id="@+id/scrollView_processed"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/log_processed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </ScrollView>
-    </LinearLayout>
+        />
 
     <!--Message send row-->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <include
         android:id="@+id/send"
+        layout="@layout/content_console_send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        app:layout_constraintTop_toBottomOf="@id/log"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"><!--gone in portrait mode-->
+        android:visibility="gone"/> <!-- Do not show in portrait mode -->
 
-        <HorizontalScrollView
-            android:id="@+id/scrollView_sendRow"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/guideline1"
-            app:layout_constraintStart_toEndOf="@id/fab_cached">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/input_event"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/fab_margin"
-                    android:autofillHints="no"
-                    android:hint="@string/input_event"
-                    android:inputType="textShortMessage"
-                    android:nextFocusDown="@id/input_dat1" />
-
-                <EditText
-                    android:id="@+id/input_dat1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/fab_margin"
-                    android:autofillHints="no"
-                    android:hint="@string/input_dat1"
-                    android:inputType="textShortMessage"
-                    android:nextFocusDown="@id/input_dat2" />
-
-                <EditText
-                    android:id="@+id/input_dat2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/fab_margin"
-                    android:autofillHints="no"
-                    android:hint="@string/input_dat2"
-                    android:inputType="textShortMessage"
-                    android:nextFocusDown="@id/input_dat3" />
-
-                <EditText
-                    android:id="@+id/input_dat3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/fab_margin"
-                    android:autofillHints="no"
-                    android:hint="@string/input_dat3"
-                    android:inputType="textShortMessage"
-                    android:nextFocusDown="@id/input_dat4" />
-
-                <EditText
-                    android:id="@+id/input_dat4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/fab_margin"
-                    android:autofillHints="no"
-                    android:hint="@string/input_dat4"
-                    android:inputType="textShortMessage"
-                    android:nextFocusDown="@id/input_dat5" />
-
-                <EditText
-                    android:id="@+id/input_dat5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/fab_margin"
-                    android:autofillHints="no"
-                    android:hint="@string/input_dat5"
-                    android:inputType="textShortMessage"
-                    android:nextFocusDown="@id/input_dat6" />
-
-                <EditText
-                    android:id="@+id/input_dat6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/fab_margin"
-                    android:autofillHints="no"
-                    android:hint="@string/input_dat6"
-                    android:inputType="textShortMessage"
-                    android:nextFocusDown="@id/input_dat7" />
-
-                <EditText
-                    android:id="@+id/input_dat7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/fab_margin"
-                    android:autofillHints="no"
-                    android:hint="@string/input_dat7"
-                    android:inputType="textShortMessage" />
-            </LinearLayout>
-        </HorizontalScrollView>
-
-        <EditText
-            android:id="@+id/input_message"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/fab_margin"
-            android:autofillHints="no"
-            android:hint="@string/input_rawMessage"
-            android:inputType="textShortMessage"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/fab_send"
-            app:layout_constraintStart_toEndOf="@id/image_arrow" />
-
-        <!-- Build up message -->
-        <ImageView
-            android:id="@+id/image_arrow"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/fab_margin"
-            android:contentDescription="@string/contentDescription_arrow"
-            android:src="@drawable/ic_baseline_arrow_right_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/input_message"
-            app:layout_constraintStart_toEndOf="@id/guideline1" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_cached"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            android:clickable="true"
-            android:contentDescription="@string/action_loadLast"
-            android:focusable="true"
-            android:src="@drawable/ic_baseline_cached_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/scrollView_sendRow"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            android:clickable="true"
-            android:contentDescription="@string/cp_send"
-            android:focusable="true"
-            android:src="@drawable/ic_baseline_send_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/input_message" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

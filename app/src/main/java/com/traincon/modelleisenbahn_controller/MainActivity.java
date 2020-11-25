@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
             controllers[i] = fragmentManager.findFragmentByTag(controllerTags[i]);
             Bundle bundle = new Bundle();
             bundle.putParcelable("boardManager", boardManager);
+            assert controllers[i] != null;
             controllers[i].setArguments(bundle);
         }
 

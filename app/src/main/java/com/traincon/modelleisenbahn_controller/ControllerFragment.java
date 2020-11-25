@@ -42,6 +42,7 @@ public class ControllerFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        assert getArguments() != null;
         boardManager = getArguments().getParcelable("boardManager");
         initCab();
         initUpdates();
@@ -50,10 +51,11 @@ public class ControllerFragment extends Fragment {
 
     private void initCab() {
         cab = new Cab(boardManager);
-        sessionSwitch = getView().findViewById(R.id.sessionSwitch);
-        controllerSeekBar = getView().findViewById(R.id.seekBar);
-        seekBarTextView = getView().findViewById(R.id.sText);
-        Button idleButton = getView().findViewById(R.id.button_idle);
+        sessionSwitch = requireView().findViewById(R.id.sessionSwitch);
+        controllerSeekBar = requireView().findViewById(R.id.seekBar);
+        seekBarTextView = requireView().findViewById(R.id.sText);
+        seekBarTextView.setText(0);
+        Button idleButton = requireView().findViewById(R.id.button_idle);
         controllerSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {

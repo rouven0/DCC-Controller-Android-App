@@ -52,7 +52,6 @@
 
     <!-- MainActivity -->
     <string name="item_config">Configure</string>
-    <string name="default_seekBarTextView" translatable="false">0</string>
     <string name="action_estop" translatable="false">Stop</string>
     <string name="action_idle" translatable="false">Idle</string>
     <string name="label_switches">Switches</string>
