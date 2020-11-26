@@ -10,6 +10,7 @@ public class Cab {
     private final CBusAsciiMessageBuilder cBusAsciiMessageBuilder;
     private String session;
     private boolean isSession = false;
+    private String speedDir = "00";
 
     public Cab(BoardManager boardManager) {
         this.boardManager = boardManager;
@@ -27,7 +28,7 @@ public class Cab {
                     CBusMessage answer = boardManager.getReceivedCBusMessage(boardManager.receive(boardManager.getSocketInputStream().available()));
                     if (answer.getEvent().equals("PLOC")) {
                         session = answer.getData()[0];
-                        //String speedDir = answer.getData()[3];
+                        speedDir = answer.getData()[3];
                         isSession = true;
                     } else {
                         isSession = false;
@@ -59,8 +60,19 @@ public class Cab {
             if (targetSpeedDir > 0) {
                 targetSpeedDir = targetSpeedDir +128;
             }
-            boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("DSPD", new String[]{session, Integer.toHexString(Math.abs(targetSpeedDir)).toUpperCase()})));
+            speedDir = Integer.toHexString(Math.abs(targetSpeedDir)).toUpperCase();
+            boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("DSPD", new String[]{session, speedDir})));
         }
+    }
+
+    public int getSpeedDir() {
+        int intSpeedDir = Integer.valueOf(speedDir, 16);
+        if (intSpeedDir>127) {
+            intSpeedDir = intSpeedDir-128;
+        } else {
+            intSpeedDir = -intSpeedDir;
+        }
+        return intSpeedDir;
     }
 
     public void idle() {

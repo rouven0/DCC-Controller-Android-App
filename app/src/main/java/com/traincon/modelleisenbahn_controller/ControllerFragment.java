@@ -80,13 +80,14 @@ public class ControllerFragment extends Fragment {
                 if (isChecked) {
                     try {
                         sessionSwitch.setChecked(cab.allocateSession());
+                        controllerSeekBar.setValue(cab.getSpeedDir());
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 } else {
                     cab.releaseSession();
+                    controllerSeekBar.setValue(0);
                 }
-                controllerSeekBar.setValue(0);
                 resetFunctionButtons();
             }
         });
