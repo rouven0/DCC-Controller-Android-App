@@ -4,7 +4,7 @@ android {
     compileSdkVersion 30
     defaultConfig {
         applicationId "com.traincon.modelleisenbahn_controller"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 35
         versionName "2.6.4"
