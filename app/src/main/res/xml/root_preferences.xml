@@ -6,6 +6,7 @@
         android:key="mode"
         android:entries="@array/mode_entries"
         android:entryValues="@array/mode_entryValues"
+        android:defaultValue="D"
         app:useSimpleSummaryProvider="true"/>
 
 </PreferenceScreen>
