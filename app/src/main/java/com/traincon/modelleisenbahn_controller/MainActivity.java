@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         handler = new Handler(getMainLooper());
         initLayout();
+        updateLayout();
 
     }
 
@@ -187,13 +188,11 @@ public class MainActivity extends AppCompatActivity {
     private void updateLayout() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         if (sharedPreferences.getBoolean("is_accessory_on", false)) {
-            handler.post(updateSwitchStates);
             accessoryFrame.setVisibility(View.VISIBLE);
             if (menu != null) {
                 menu.getItem(0).setVisible(true);
             }
         } else {
-            handler.removeCallbacks(updateSwitchStates);
             accessoryFrame.setVisibility(View.GONE);
             if (menu != null) {
                 menu.getItem(0).setVisible(false);
@@ -201,10 +200,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void updateRunnables() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        if (sharedPreferences.getBoolean("is_accessory_on", false)) {
+            handler.post(updateSwitchStates);
+        } else {
+            handler.removeCallbacks(updateSwitchStates);
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         updateLayout();
+        updateRunnables();
     }
 
     protected void onDestroy() {
