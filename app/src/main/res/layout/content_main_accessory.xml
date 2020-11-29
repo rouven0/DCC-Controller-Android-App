@@ -8,15 +8,16 @@
 
     <TextView
         android:id="@+id/label_switches"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="@string/label_switches"
-        app:layout_constraintStart_toStartOf="@id/scrollView_switches"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/label_sections"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/scrollView_switches"
-        android:layout_width="0dp"
+        android:layout_width="100dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/scrollView_sections"
@@ -112,7 +113,7 @@
 
     <TextView
         android:id="@+id/label_sections"
-        android:layout_width="wrap_content"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:text="@string/label_sections"
         app:layout_constraintStart_toStartOf="@id/scrollView_sections"
@@ -120,7 +121,7 @@
 
     <ScrollView
         android:id="@+id/scrollView_sections"
-        android:layout_width="0dp"
+        android:layout_width="75dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

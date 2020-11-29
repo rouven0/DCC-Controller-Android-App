@@ -8,9 +8,13 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -125,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         initSwitches();
         initSections();
         initUpdates();
+        applyMode();
     }
 
 
@@ -206,6 +211,16 @@ public class MainActivity extends AppCompatActivity {
             handler.post(updateSwitchStates);
         } else {
             handler.removeCallbacks(updateSwitchStates);
+        }
+    }
+
+    private void applyMode(){
+        TextView sectionTextView = findViewById(R.id.label_sections);
+        ScrollView sectionScrollView = findViewById(R.id.scrollView_sections);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        if (Objects.equals(sharedPreferences.getString("mode", "D"), "D")) {
+            sectionTextView.setVisibility(View.GONE);
+            sectionScrollView.setVisibility(View.GONE);
         }
     }
 
