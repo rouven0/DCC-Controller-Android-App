@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".LauncherActivity">
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_console"
-        android:title="@string/item_console"
-        android:icon="@drawable/ic_baseline_settings_remote_24"
-        app:showAsAction="always"/>
+        android:id="@+id/action_light"
+        android:title="@string/action_light"
+        android:icon="@drawable/ic_light_bulb_off_24"
+        app:showAsAction="ifRoom"
+        android:visible="false" />
 
     <item
         android:id="@+id/action_locoList"
@@ -18,8 +15,22 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/action_settings"
-        android:title="@string/item_settings"
-        android:icon="@drawable/ic_baseline_settings_24"
-        app:showAsAction="ifRoom"/>
+        android:id="@+id/action_config"
+        android:title="@string/action_config"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_reconnect"
+        android:title="@string/action_reconnect"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_estop"
+        android:title="@string/action_estop"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_exit"
+        android:title="@string/action_exit"
+        app:showAsAction="never"/>
 </menu>

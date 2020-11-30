@@ -1,6 +1,5 @@
 package com.traincon.modelleisenbahn_controller;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -45,11 +44,6 @@ public class MainActivity extends AppCompatActivity {
         String host = intent.getStringExtra("host");
         int port = intent.getIntExtra("port", 0);
 
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
         boardManager = new BoardManager(host, port);
         boardManager.connect();
 
@@ -61,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
-        getMenuInflater().inflate(R.menu.menu_config_controller, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         updateLayout();
         return super.onCreateOptionsMenu(menu);
 
@@ -104,10 +98,8 @@ public class MainActivity extends AppCompatActivity {
             Cab.estop(boardManager);
         }
 
-        //Back
-        if (item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == R.id.action_exit) {
             super.onBackPressed();
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }

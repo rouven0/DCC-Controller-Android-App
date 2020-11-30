@@ -47,12 +47,13 @@
     <string name="action_playPause" translatable="false">Play/Pause</string>
 
     <!-- Strings for the Menu-->
-    <string name="action_reconnect">Reconnect</string>
     <string name="action_light">Light</string>
+    <string name="action_config">Configure</string>
+    <string name="action_reconnect">Reconnect</string>
+    <string name="action_estop">Emergency stop</string>
+    <string name="action_exit">Exit</string>
 
     <!-- MainActivity -->
-    <string name="item_config">Configure</string>
-    <string name="action_estop">Emergency stop</string>
     <string name="action_idle" translatable="false">Idle</string>
     <string name="action_f1" translatable="false">F1</string>
     <string name="action_f2" translatable="false">F2</string>
