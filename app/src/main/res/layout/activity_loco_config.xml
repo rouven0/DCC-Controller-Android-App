@@ -5,6 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".LocoConfigActivity">
 
+    <ListView
+        android:id="@+id/locoList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_loco"
         android:layout_width="wrap_content"
