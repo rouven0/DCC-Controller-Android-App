@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -56,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
 
         handler = new Handler(getMainLooper());
         initLayout();
-        updateLayout();
 
     }
 
@@ -64,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_config_controller, menu);
+        updateLayout();
         return super.onCreateOptionsMenu(menu);
 
     }
