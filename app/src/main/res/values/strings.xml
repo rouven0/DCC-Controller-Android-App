@@ -1,6 +1,6 @@
 <resources>
     <!-- Activity labels and App Name -->
-    <string name="app_name">DCC-Controller</string>
+    <string name="app_name" translatable="false">DCC-Controller</string>
     <string name="label_activity_settings">Preferences</string>
     <string name="label_activity_console">Console</string>
     <string name="label_activity_controller_config">Configure</string>

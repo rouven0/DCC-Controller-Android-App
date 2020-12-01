@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--Activity Labels and App Name-->
-    <string name="app_name">Modelleisenbahn-Controller</string>
     <string name="label_activity_settings">Einstellungen</string>
     <string name="label_activity_console">Konsole</string>
     <string name="label_activity_controller_config">Konfigurieren</string>
