@@ -144,9 +144,8 @@ public class ControllerFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-        cab.idle();
         cab.releaseSession();
         handler.removeCallbacks(keepAlive);
+        super.onDestroy();
     }
 }

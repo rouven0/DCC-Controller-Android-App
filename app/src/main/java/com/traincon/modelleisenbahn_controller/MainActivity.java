@@ -223,12 +223,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void onDestroy() {
-        super.onDestroy();
         handler.removeCallbacks(updateSwitchStates);
-        try {
-            boardManager.disconnect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        super.onDestroy();
     }
 }

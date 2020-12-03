@@ -45,6 +45,11 @@ public class BoardManager implements Parcelable {
     };
 
     public void connect() {
+        Log.d(TAG, "Trying to connect");
+        //disconnect in case of failed destruction
+        try {
+            disconnect();
+        } catch (IOException | NullPointerException ignore) {}
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -53,13 +58,19 @@ public class BoardManager implements Parcelable {
                     mainSocket.connect(new InetSocketAddress(host, port));
                     socketInputStream = new DataInputStream(mainSocket.getInputStream());
                     socketOutputStream = new DataOutputStream(mainSocket.getOutputStream());
-                    receive(18); // CLear the welcome Message
+                    Log.d(TAG, "connected");
+                    Thread.sleep(500);
+                    clear();
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         });
         thread.start();
+    }
+
+    public void clear() throws InterruptedException {
+        receive(18);
     }
 
     public void disconnect() throws IOException {
@@ -73,7 +84,10 @@ public class BoardManager implements Parcelable {
                 try {
                     byte[] bMessage = message.getBytes(StandardCharsets.UTF_8);
                     socketOutputStream.write(bMessage);
-                } catch (IOException | NullPointerException ignored) {
+                    Log.d(TAG, "send: "+ message + getReceivedCBusMessage(message).getEvent());
+                } catch (IOException | NullPointerException e) {
+                    e.printStackTrace();
+                    Log.d(TAG, "Failed to send a frame: "+ message + getReceivedCBusMessage(message).getEvent());
                 }
 
             }
@@ -108,7 +122,7 @@ public class BoardManager implements Parcelable {
         });
         thread.start();
         thread.join();
-        Log.d(TAG, "received: " + message[0]);
+        Log.d(TAG, "received: length="+ length + " message: "+ message[0]);
         return message[0];
     }
 

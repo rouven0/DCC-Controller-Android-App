@@ -1,9 +1,13 @@
 package com.traincon.modelleisenbahn_controller;
 
+import android.util.Log;
+
 import com.traincon.CBusMessage.CBusAsciiMessageBuilder;
 import com.traincon.CBusMessage.CBusMessage;
 
 import java.io.IOException;
+
+import static android.content.ContentValues.TAG;
 
 public class Cab {
     private final BoardManager boardManager;
@@ -23,7 +27,6 @@ public class Cab {
         cBusAsciiMessageBuilder = new CBusAsciiMessageBuilder();
     }
 
-
     public boolean allocateSession(final int locoAddress) throws InterruptedException {
         final Thread thread = new Thread(new Runnable() {
             @Override
@@ -36,11 +39,14 @@ public class Cab {
                         session = answer.getData()[0];
                         speedDir = answer.getData()[3];
                         isSession = true;
+                        Log.d(TAG, "allocated Session");
                     } else {
                         isSession = false;
+                        Log.d(TAG, "failed to allocate Session");
                     }
-                } catch (NullPointerException | InterruptedException | IOException e) {
+                } catch (NullPointerException | InterruptedException | IOException | StringIndexOutOfBoundsException e) {
                     isSession = false;
+                    Log.d(TAG, "failed to allocate session");
                 }
             }
         });
@@ -50,9 +56,12 @@ public class Cab {
     }
 
     public void releaseSession() {
-        boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("KLOC", new String[]{session})));
-        isSession = false;
-        session = null;
+        if(isSession){
+            boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("KLOC", new String[]{session})));
+            isSession = false;
+            session = null;
+            Log.d(TAG, "released Session");
+        }
     }
 
     public void keepAlive() {
