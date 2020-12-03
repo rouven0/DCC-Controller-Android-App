@@ -79,7 +79,7 @@ public class ControllerFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     try {
-                        sessionSwitch.setChecked(cab.allocateSession());
+                        sessionSwitch.setChecked(cab.allocateSession(9001));
                         controllerSeekBar.setValue(cab.getSpeedDir());
                     } catch (InterruptedException e) {
                         e.printStackTrace();
