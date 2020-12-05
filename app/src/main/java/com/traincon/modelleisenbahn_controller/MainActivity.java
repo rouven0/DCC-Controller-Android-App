@@ -2,6 +2,7 @@ package com.traincon.modelleisenbahn_controller;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -113,6 +114,10 @@ public class MainActivity extends AppCompatActivity {
             bundle.putParcelable("boardManager", boardManager);
             assert controllers[i] != null;
             controllers[i].setArguments(bundle);
+            //Destroy controller 2 and 3 because they are not shown in portrait mode
+            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && i != 0) {
+                controllers[i].onDestroy();
+            }
         }
 
         accessoryController = new AccessoryController(boardManager);
