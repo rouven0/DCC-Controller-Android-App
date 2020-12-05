@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/LocoListFragment">
+
+    <fragment
+        android:id="@+id/LocoListFragment"
+        android:name="com.traincon.modelleisenbahn_controller.LocoListFragment"
+        android:label="Loco List"
+        tools:layout="@layout/fragment_loco_list">
+
+        <action
+            android:id="@+id/action_LocoListFragment_to_AddLocoFragment"
+            app:destination="@id/AddLocoFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/AddLocoFragment"
+        android:name="com.traincon.modelleisenbahn_controller.AddLocoFragment"
+        android:label="Add Loco"
+        tools:layout="@layout/fragment_loco_add">
+
+        <action
+            android:id="@+id/action_AddLocoFragment_to_LocoListFragment"
+            app:destination="@id/LocoListFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+</navigation>

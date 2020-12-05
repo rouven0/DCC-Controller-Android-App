@@ -119,7 +119,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/fab_margin"
         android:contentDescription="@string/contentDescription_arrow"
-        android:src="@drawable/ic_baseline_arrow_right_24"
+        android:src="@drawable/ic_baseline_arrow_right_50"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/input_message"
         app:layout_constraintStart_toEndOf="@id/guideline1" />

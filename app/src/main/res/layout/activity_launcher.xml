@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginEnd="147dp"
-        android:autofillHints="@string/input_ipEntry"
+        android:autofillHints="none"
         android:hint="@string/input_ipEntry"
         android:inputType="textNoSuggestions"
         android:singleLine="true" />
@@ -40,7 +40,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="147dp"
-        android:autofillHints="@string/input_portEntry"
+        android:autofillHints="none"
         android:hint="@string/input_portEntry"
         android:inputType="number"
         android:singleLine="true" />

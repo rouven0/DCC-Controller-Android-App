@@ -58,5 +58,8 @@
     <string name="summary_is_accessory_on">Steuert zusätzliche Elemente</string>
 
     <!--Loco Config-->
-    <string name="contentDescription_add">Lok Hinzufügen</string>
+    <string name="contentDescription_add">Lokomotive hinzufügen</string>
+    <string name="contentDescription_save">Lokomotive speichern</string>
+    <string name="input_locoName">Name/Bezeichnung</string>
+    <string name="input_locoAddress">Adresse</string>
 </resources>

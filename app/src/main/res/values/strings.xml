@@ -78,8 +78,11 @@
 
     <!-- Config items -->
     <string name="title_is_accessory_on">Control accessory</string>
-    <string name="summary_is_accessory_on">Control additional elements like Switches and Sections</string>
+    <string name="summary_is_accessory_on">Control additional elements</string>
 
     <!--Loco Config strings-->
-    <string name="contentDescription_add">Add Loco</string>
+    <string name="contentDescription_add">Add loco</string>
+    <string name="contentDescription_save">Save loco</string>
+    <string name="input_locoName">Name/Designation</string>
+    <string name="input_locoAddress">Address</string>
 </resources>

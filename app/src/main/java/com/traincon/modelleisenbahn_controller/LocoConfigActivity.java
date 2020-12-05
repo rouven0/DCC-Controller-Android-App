@@ -1,10 +1,11 @@
 package com.traincon.modelleisenbahn_controller;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.MenuItem;
 
 public class LocoConfigActivity extends AppCompatActivity {
 
@@ -21,7 +22,7 @@ public class LocoConfigActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            super.onBackPressed();
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
