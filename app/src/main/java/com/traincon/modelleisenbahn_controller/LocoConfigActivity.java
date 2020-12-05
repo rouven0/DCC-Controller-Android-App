@@ -4,8 +4,12 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 
 import android.view.MenuItem;
+
+import java.util.Objects;
 
 public class LocoConfigActivity extends AppCompatActivity {
 
@@ -22,9 +26,18 @@ public class LocoConfigActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(Objects.requireNonNull(getSupportFragmentManager().getPrimaryNavigationFragment()).getChildFragmentManager().getFragments().get(0) instanceof LocoListFragment){
+            finish();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
