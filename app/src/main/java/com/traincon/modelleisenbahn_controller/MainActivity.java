@@ -116,7 +116,12 @@ public class MainActivity extends AppCompatActivity {
             controllers[i].setArguments(bundle);
             //Destroy controller 2 and 3 because they are not shown in portrait mode
             if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && i != 0) {
-                controllers[i].onDestroy();
+                try {
+
+                    controllers[i].onDestroy();
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
