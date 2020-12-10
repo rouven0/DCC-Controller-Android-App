@@ -5,6 +5,7 @@
     <string name="label_activity_console">Console</string>
     <string name="label_activity_controller_config">Configure</string>
     <string name="label_activity_loco_config">Edit Locos</string>
+    <string name="label_loco_add">Add Loco</string>
 
     <!--LauncherActivity item titles -->
     <string name="item_settings">Preferences</string>
