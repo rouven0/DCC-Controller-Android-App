@@ -21,7 +21,7 @@ public class CBusAsciiMessageBuilder {
         for (int i=0; i<cBusMessage.getData().length; i++){
             data.append(cBusMessage.getData()[i]);
         }
-        return ":S0000N" + eventAddress + data + ";";
+        return ":S0C80N" + eventAddress + data + ";";
     }
 
 }
