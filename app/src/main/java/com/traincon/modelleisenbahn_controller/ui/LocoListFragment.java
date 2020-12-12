@@ -1,9 +1,11 @@
-package com.traincon.modelleisenbahn_controller;
+package com.traincon.modelleisenbahn_controller.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.traincon.modelleisenbahn_controller.R;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

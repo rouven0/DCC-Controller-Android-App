@@ -13,13 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ControllerConfigActivity"
+            android:name=".ui.ControllerConfigActivity"
             android:label="@string/label_activity_controller_config" />
         <activity
-            android:name=".LocoConfigActivity"
+            android:name=".ui.LocoConfigActivity"
             android:label="@string/label_activity_loco_config"/>
         <activity
-            android:name=".LauncherActivity"
+            android:name=".ui.LauncherActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,13 +28,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".ui.SettingsActivity"
             android:label="@string/label_activity_settings" />
         <activity
-            android:name=".ConsoleActivity"
+            android:name=".ui.ConsoleActivity"
             android:label="@string/label_activity_console" />
     </application>
 

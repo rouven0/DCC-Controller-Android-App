@@ -1,4 +1,4 @@
-package com.traincon.modelleisenbahn_controller;
+package com.traincon.modelleisenbahn_controller.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +12,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.traincon.modelleisenbahn_controller.AccessoryController;
+import com.traincon.modelleisenbahn_controller.BoardManager;
+import com.traincon.modelleisenbahn_controller.Cab;
+import com.traincon.modelleisenbahn_controller.R;
 import java.io.IOException;
 import java.util.Objects;
 

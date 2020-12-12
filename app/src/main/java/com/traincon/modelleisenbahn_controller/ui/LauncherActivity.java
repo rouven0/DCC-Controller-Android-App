@@ -1,4 +1,4 @@
-package com.traincon.modelleisenbahn_controller;
+package com.traincon.modelleisenbahn_controller.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.traincon.modelleisenbahn_controller.R;
 
 import java.util.Objects;
 

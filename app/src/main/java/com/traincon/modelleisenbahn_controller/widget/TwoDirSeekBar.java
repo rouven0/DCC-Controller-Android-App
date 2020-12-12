@@ -1,4 +1,4 @@
-package com.traincon.modelleisenbahn_controller;
+package com.traincon.modelleisenbahn_controller.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;

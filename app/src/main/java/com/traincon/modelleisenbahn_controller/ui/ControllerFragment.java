@@ -1,4 +1,4 @@
-package com.traincon.modelleisenbahn_controller;
+package com.traincon.modelleisenbahn_controller.ui;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +10,12 @@ import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
+import com.traincon.modelleisenbahn_controller.BoardManager;
+import com.traincon.modelleisenbahn_controller.Cab;
+import com.traincon.modelleisenbahn_controller.R;
+import com.traincon.modelleisenbahn_controller.widget.TwoDirSeekBar;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;

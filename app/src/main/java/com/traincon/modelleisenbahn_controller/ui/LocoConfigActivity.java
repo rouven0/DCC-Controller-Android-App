@@ -1,4 +1,4 @@
-package com.traincon.modelleisenbahn_controller;
+package com.traincon.modelleisenbahn_controller.ui;
 
 import android.os.Bundle;
 
@@ -11,6 +11,8 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.MenuItem;
+
+import com.traincon.modelleisenbahn_controller.R;
 
 import java.util.Objects;
 
@@ -29,6 +31,7 @@ public class LocoConfigActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().getPrimaryNavigationFragment();
+        assert navHostFragment != null;
         final NavController navController = navHostFragment.getNavController();
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override

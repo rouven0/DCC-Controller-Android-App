@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/LocoListFragment"
-        android:name="com.traincon.modelleisenbahn_controller.LocoListFragment"
+        android:name="com.traincon.modelleisenbahn_controller.ui.LocoListFragment"
         android:label="Loco List"
         tools:layout="@layout/fragment_loco_list">
 
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/AddLocoFragment"
-        android:name="com.traincon.modelleisenbahn_controller.AddLocoFragment"
+        android:name="com.traincon.modelleisenbahn_controller.ui.AddLocoFragment"
         android:label="Add Loco"
         tools:layout="@layout/fragment_loco_add">
 

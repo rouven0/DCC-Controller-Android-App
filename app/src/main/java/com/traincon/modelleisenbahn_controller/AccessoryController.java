@@ -54,7 +54,7 @@ public class AccessoryController {
         return lightState;
     }
 
-    protected void requestSwitchStates() throws InterruptedException, IOException {
+    public void requestSwitchStates() throws InterruptedException, IOException {
         //get the node variable
         boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("NVRD", new String[]{"00", "65", "03"})));
         String receivedSwitchStates_0 = boardManager.receive(CBusAsciiMessageBuilder.getExpectedMessageLength(3));

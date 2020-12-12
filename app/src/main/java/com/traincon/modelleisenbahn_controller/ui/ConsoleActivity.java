@@ -1,4 +1,4 @@
-package com.traincon.modelleisenbahn_controller;
+package com.traincon.modelleisenbahn_controller.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.traincon.CBusMessage.CBusAsciiMessageBuilder;
 import com.traincon.CBusMessage.CBusMessage;
+import com.traincon.modelleisenbahn_controller.BoardManager;
+import com.traincon.modelleisenbahn_controller.R;
 
 import java.io.IOException;
 import java.util.Arrays;
