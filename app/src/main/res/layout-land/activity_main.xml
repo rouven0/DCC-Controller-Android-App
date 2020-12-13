@@ -10,7 +10,7 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/con1"
         android:tag="c1"
-        android:name="com.traincon.modelleisenbahn_controller.ControllerFragment"
+        android:name="com.traincon.modelleisenbahn_controller.ui.ControllerFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toStartOf="@id/con2"
@@ -20,7 +20,7 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/con2"
         android:tag="c2"
-        android:name="com.traincon.modelleisenbahn_controller.ControllerFragment"
+        android:name="com.traincon.modelleisenbahn_controller.ui.ControllerFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toStartOf="@id/con3"
@@ -30,7 +30,7 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/con3"
         android:tag="c3"
-        android:name="com.traincon.modelleisenbahn_controller.ControllerFragment"
+        android:name="com.traincon.modelleisenbahn_controller.ui.ControllerFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toStartOf="@id/accessory"
