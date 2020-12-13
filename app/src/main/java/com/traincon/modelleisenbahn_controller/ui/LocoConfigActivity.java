@@ -30,7 +30,9 @@ public class LocoConfigActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().getPrimaryNavigationFragment();
+    protected void onStart() {
+        super.onStart();
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().getPrimaryNavigationFragment();
         assert navHostFragment != null;
         final NavController navController = navHostFragment.getNavController();
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
@@ -43,7 +45,6 @@ public class LocoConfigActivity extends AppCompatActivity {
                 }
             }
         });
-        super.onResume();
     }
 
     @Override

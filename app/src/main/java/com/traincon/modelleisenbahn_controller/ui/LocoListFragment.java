@@ -6,24 +6,42 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.traincon.modelleisenbahn_controller.R;
+import com.traincon.modelleisenbahn_controller.database.AppDatabase;
+import com.traincon.modelleisenbahn_controller.database.Loco;
 
-import androidx.annotation.NonNull;
+import java.util.List;
+
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
-
+import androidx.recyclerview.widget.RecyclerView;
 public class LocoListFragment extends Fragment {
 
-    @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_loco_list, container, false);
-    }
+    private AppDatabase database;
+    private List<Loco> locos;
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_loco_list, container, false);
+        DatabaseViewModel viewModel = new ViewModelProvider(requireActivity()).get(DatabaseViewModel.class);
+        database = viewModel.appDatabase;
+
+        final Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                locos = database.locoDao().getAll();
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        RecyclerView recyclerView = view.findViewById(R.id.list);
+        final ItemRecyclerViewAdapter adapter = new ItemRecyclerViewAdapter(locos);
+        recyclerView.setAdapter(adapter);
+
 
         view.findViewById(R.id.button_add_loco).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,5 +50,7 @@ public class LocoListFragment extends Fragment {
                         .navigate(R.id.action_LocoListFragment_to_AddLocoFragment);
             }
         });
+        return view;
     }
+
 }

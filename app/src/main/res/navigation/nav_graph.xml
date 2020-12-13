@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/AddLocoFragment"
-        android:name="com.traincon.modelleisenbahn_controller.ui.AddLocoFragment"
+        android:name="com.traincon.modelleisenbahn_controller.ui.LocoAddFragment"
         android:label="Add Loco"
         tools:layout="@layout/fragment_loco_add">
 
