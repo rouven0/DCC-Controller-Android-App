@@ -67,11 +67,6 @@
     <string name="action_f9" translatable="false">F9</string>
     <string name="label_switches">Switches</string>
     <string name="label_sections">Sections</string>
-    <string-array name="locoAddress_entries">
-        <item>
-            No locos found
-        </item>
-    </string-array>
 
 
     <!-- Config headers -->

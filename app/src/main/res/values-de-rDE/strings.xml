@@ -45,11 +45,6 @@
     <string name="action_estop">Nothalt</string>
     <string name="label_switches">Weichen</string>
     <string name="label_sections">Gleise</string>
-    <string-array name="locoAddress_entries">
-        <item>
-            Keine Loks eingetragen
-        </item>
-    </string-array>
 
     <!-- Config headers -->
     <string name="accessory_header">Weichen &amp; Gleise</string>

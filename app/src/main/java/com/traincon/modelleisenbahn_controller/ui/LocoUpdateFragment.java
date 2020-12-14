@@ -12,6 +12,7 @@ import com.traincon.modelleisenbahn_controller.database.AppDatabase;
 import com.traincon.modelleisenbahn_controller.database.Loco;
 
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -45,11 +46,11 @@ public class LocoUpdateFragment extends DialogFragment {
                         Thread thread = new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                if (!designationInput.getText().toString().equals("")) {
+                                if (!Objects.requireNonNull(designationInput.getText()).toString().equals("")) {
                                     loco.setDesignation(designationInput.getText().toString());
                                     locos.get(position).setDesignation(designationInput.getText().toString());
                                 }
-                                if (!addressInput.getText().toString().equals("")) {
+                                if (!Objects.requireNonNull(addressInput.getText()).toString().equals("")) {
                                     try {
 
                                         loco.setAddress(Integer.parseInt(addressInput.getText().toString()));
