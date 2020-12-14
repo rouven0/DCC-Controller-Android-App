@@ -8,18 +8,26 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.traincon.modelleisenbahn_controller.BoardManager;
 import com.traincon.modelleisenbahn_controller.Cab;
 import com.traincon.modelleisenbahn_controller.R;
+import com.traincon.modelleisenbahn_controller.database.AppDatabase;
+import com.traincon.modelleisenbahn_controller.database.DatabaseSpinnerAdapter;
+import com.traincon.modelleisenbahn_controller.database.DatabaseViewModel;
+import com.traincon.modelleisenbahn_controller.database.Loco;
 import com.traincon.modelleisenbahn_controller.widget.TwoDirSeekBar;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 public class ControllerFragment extends Fragment {
     private final Handler handler = new Handler();
@@ -33,6 +41,10 @@ public class ControllerFragment extends Fragment {
     final int[] buttonIdArray = new int[]{R.id.button_f1, R.id.button_f2,R.id.button_f3, R.id.button_f4, R.id.button_f5, R.id.button_f6, R.id.button_f7, R.id.button_f8, R.id.button_f9};
     private  final ToggleButton[] functionButtons = new ToggleButton[buttonIdArray.length];
 
+    private AppDatabase database;
+    private List<Loco> locos;
+    private Spinner spinner;
+
     public ControllerFragment() {
         // Required empty public constructor
     }
@@ -40,6 +52,25 @@ public class ControllerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        database = new ViewModelProvider(requireActivity()).get(DatabaseViewModel.class).appDatabase;
+    }
+
+    @Override
+    public void onResume() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                locos = database.locoDao().getAll();
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+            spinner.setAdapter(new DatabaseSpinnerAdapter(getContext(), locos));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        super.onResume();
     }
 
     @Override
@@ -57,6 +88,7 @@ public class ControllerFragment extends Fragment {
     }
 
     private void initCab() {
+        spinner = requireView().findViewById(R.id.spinner);
         cab = new Cab(boardManager);
         sessionSwitch = requireView().findViewById(R.id.sessionSwitch);
         controllerSeekBar = requireView().findViewById(R.id.seekBar);
@@ -84,7 +116,7 @@ public class ControllerFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     try {
-                        sessionSwitch.setChecked(cab.allocateSession(9001));
+                        sessionSwitch.setChecked(cab.allocateSession((((Loco) spinner.getSelectedItem()).address)));
                         controllerSeekBar.setValue(cab.getSpeedDir());
                     } catch (InterruptedException e) {
                         e.printStackTrace();

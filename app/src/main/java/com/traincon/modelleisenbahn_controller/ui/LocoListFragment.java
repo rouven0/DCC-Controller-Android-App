@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.traincon.modelleisenbahn_controller.R;
 import com.traincon.modelleisenbahn_controller.database.AppDatabase;
+import com.traincon.modelleisenbahn_controller.database.DatabaseViewModel;
 import com.traincon.modelleisenbahn_controller.database.Loco;
 
 import java.util.List;

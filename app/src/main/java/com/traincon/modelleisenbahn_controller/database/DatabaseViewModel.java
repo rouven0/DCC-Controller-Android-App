@@ -1,4 +1,4 @@
-package com.traincon.modelleisenbahn_controller.ui;
+package com.traincon.modelleisenbahn_controller.database;
 
 import android.app.Application;
 
