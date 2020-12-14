@@ -6,7 +6,11 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Loco {
 
-    @PrimaryKey
+
+
+    @PrimaryKey(autoGenerate = true)
+    public int id;
+
     public int address;
 
     public String designation;

@@ -60,7 +60,20 @@
 
     <!--Loco Config-->
     <string name="contentDescription_add">Lokomotive hinzufügen</string>
-    <string name="contentDescription_save">Lokomotive speichern</string>
+    <string name="contentDescription_save">Speichern</string>
+    <string name="contentDescription_edit">Lokomotive bearbeiten</string>
+    <string name="contentDescription_delete">Löschen</string>
+
+    <string name="title_confirm_deletion">Löschen bestätigen</string>
+    <string name="message_confirm_deletion_1">Soll\u0020</string>
+    <string name="message_confirm_deletion_2">\u0020wirklich gelöscht werden soll\?</string>
+    <string name="positive_button_del">Ja</string>
+    <string name="negative_button_del">Nein</string>
+
+
+    <string name="positive_button_edit">Speichern</string>
+    <string name="negative_button_edit">Abbrechen</string>
+
     <string name="input_locoName">Name/Bezeichnung</string>
     <string name="input_locoAddress">Adresse</string>
 </resources>

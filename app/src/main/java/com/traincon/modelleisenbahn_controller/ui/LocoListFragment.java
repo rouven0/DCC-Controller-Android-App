@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
+
 public class LocoListFragment extends Fragment {
 
     private AppDatabase database;
@@ -39,7 +40,7 @@ public class LocoListFragment extends Fragment {
             e.printStackTrace();
         }
         RecyclerView recyclerView = view.findViewById(R.id.list);
-        final ItemRecyclerViewAdapter adapter = new ItemRecyclerViewAdapter(locos);
+        final ItemRecyclerViewAdapter adapter = new ItemRecyclerViewAdapter(locos, database, getParentFragmentManager());
         recyclerView.setAdapter(adapter);
 
 

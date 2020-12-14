@@ -83,7 +83,19 @@
 
     <!--Loco Config strings-->
     <string name="contentDescription_add">Add loco</string>
-    <string name="contentDescription_save">Save loco</string>
+    <string name="contentDescription_save">Save</string>
+    <string name="contentDescription_edit">Edit Loco</string>
+    <string name="contentDescription_delete">Delete</string>
+
+    <string name="title_confirm_deletion">Confirm deletion</string>
+    <string name="message_confirm_deletion_1">Are you sure deleting\u0020</string>
+    <string name="message_confirm_deletion_2">\?</string>
+    <string name="positive_button_del">Yes</string>
+    <string name="negative_button_del">No</string>
+
+    <string name="positive_button_edit">Save</string>
+    <string name="negative_button_edit">Cancel</string>
+
     <string name="input_locoName">Name/Designation</string>
     <string name="input_locoAddress">Address</string>
 </resources>
