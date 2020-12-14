@@ -61,7 +61,7 @@
 
     <string name="title_confirm_deletion">Löschen bestätigen</string>
     <string name="message_confirm_deletion_1">Soll\u0020</string>
-    <string name="message_confirm_deletion_2">\u0020wirklich gelöscht werden soll\?</string>
+    <string name="message_confirm_deletion_2">\u0020wirklich gelöscht werden\?</string>
     <string name="positive_button_del">Ja</string>
     <string name="negative_button_del">Nein</string>
 
