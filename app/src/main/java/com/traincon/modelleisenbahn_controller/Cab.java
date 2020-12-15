@@ -108,4 +108,8 @@ public class Cab {
         String hexAddress = Integer.toHexString(address).toUpperCase();
         return new String[]{hexAddress.substring(0,2), hexAddress.substring(2)};
     }
+
+    public String getSession() {
+        return session;
+    }
 }

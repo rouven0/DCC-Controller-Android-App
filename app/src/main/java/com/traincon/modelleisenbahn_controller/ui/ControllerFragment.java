@@ -2,6 +2,7 @@ package com.traincon.modelleisenbahn_controller.ui;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import static android.content.ContentValues.TAG;
+
 public class ControllerFragment extends Fragment {
     private final Handler handler = new Handler();
     private BoardManager boardManager;
@@ -46,14 +49,11 @@ public class ControllerFragment extends Fragment {
     private Spinner spinner;
 
     private Bundle savedInstanceState;
-    private boolean isPause = false;
     private final String KEY_SELECTED_ITEM = "selectedItem";
 
     public ControllerFragment() {
         // Required empty public constructor
     }
-
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,12 +62,6 @@ public class ControllerFragment extends Fragment {
             this.savedInstanceState = savedInstanceState;
         }
         return inflater.inflate(R.layout.fragment_controller, container, false);
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(KEY_SELECTED_ITEM, spinner.getSelectedItemPosition());
     }
 
     @Override
@@ -91,18 +85,24 @@ public class ControllerFragment extends Fragment {
         try {
             thread.join();
             spinner.setAdapter(new DatabaseSpinnerAdapter(getContext(), locos));
-            if (savedInstanceState != null && !isPause) {
+            if (savedInstanceState != null && cab.getSession() == null) {
                 spinner.setSelection(savedInstanceState.getInt(KEY_SELECTED_ITEM));
-                isPause = false;
             }
         } catch (InterruptedException e) {e.printStackTrace();}
         super.onResume();
     }
 
     @Override
-    public void onPause() {
-        isPause = true;
-        super.onPause();
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_SELECTED_ITEM, spinner.getSelectedItemPosition());
+    }
+
+    @Override
+    public void onDestroy() {
+        cab.releaseSession();
+        handler.removeCallbacks(keepAlive);
+        super.onDestroy();
     }
 
     private void initCab() {
@@ -171,8 +171,6 @@ public class ControllerFragment extends Fragment {
         }
     }
 
-
-
     private void initUpdates() {
         keepAlive = new Runnable() {
             @Override
@@ -197,12 +195,5 @@ public class ControllerFragment extends Fragment {
         for (ToggleButton toggleButton : functionButtons) {
             toggleButton.setChecked(false);
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        cab.releaseSession();
-        handler.removeCallbacks(keepAlive);
-        super.onDestroy();
     }
 }
