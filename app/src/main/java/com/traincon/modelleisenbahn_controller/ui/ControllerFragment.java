@@ -86,7 +86,11 @@ public class ControllerFragment extends Fragment {
             thread.join();
             spinner.setAdapter(new DatabaseSpinnerAdapter(getContext(), locos));
             if (savedInstanceState != null && cab.getSession() == null) {
-                spinner.setSelection(savedInstanceState.getInt(KEY_SELECTED_ITEM));
+                Log.d(TAG, "onResume: "+ cab.getSession());
+                try {
+                    spinner.setSelection(savedInstanceState.getInt(KEY_SELECTED_ITEM));
+                } catch (IndexOutOfBoundsException ignored) {}
+
             }
         } catch (InterruptedException e) {e.printStackTrace();}
         super.onResume();
