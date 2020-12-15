@@ -45,14 +45,38 @@ public class ControllerFragment extends Fragment {
     private List<Loco> locos;
     private Spinner spinner;
 
+    private Bundle savedInstanceState;
+    private boolean isPause = false;
+    private final String KEY_SELECTED_ITEM = "selectedItem";
+
     public ControllerFragment() {
         // Required empty public constructor
     }
 
+
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         database = new ViewModelProvider(requireActivity()).get(DatabaseViewModel.class).appDatabase;
+        if (savedInstanceState != null) {
+            this.savedInstanceState = savedInstanceState;
+        }
+        return inflater.inflate(R.layout.fragment_controller, container, false);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_SELECTED_ITEM, spinner.getSelectedItemPosition());
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        assert getArguments() != null;
+        boardManager = getArguments().getParcelable("boardManager");
+        initCab();
+        initUpdates();
     }
 
     @Override
@@ -67,24 +91,18 @@ public class ControllerFragment extends Fragment {
         try {
             thread.join();
             spinner.setAdapter(new DatabaseSpinnerAdapter(getContext(), locos));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            if (savedInstanceState != null && !isPause) {
+                spinner.setSelection(savedInstanceState.getInt(KEY_SELECTED_ITEM));
+                isPause = false;
+            }
+        } catch (InterruptedException e) {e.printStackTrace();}
         super.onResume();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_controller, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        assert getArguments() != null;
-        boardManager = getArguments().getParcelable("boardManager");
-        initCab();
-        initUpdates();
-        super.onViewCreated(view, savedInstanceState);
+    public void onPause() {
+        isPause = true;
+        super.onPause();
     }
 
     private void initCab() {
@@ -152,6 +170,8 @@ public class ControllerFragment extends Fragment {
             });
         }
     }
+
+
 
     private void initUpdates() {
         keepAlive = new Runnable() {
