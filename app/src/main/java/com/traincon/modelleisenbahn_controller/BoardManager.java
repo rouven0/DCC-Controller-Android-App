@@ -86,8 +86,8 @@ public class BoardManager implements Parcelable {
                     socketOutputStream.write(bMessage);
                     Log.d(TAG, "send: "+ message + getReceivedCBusMessage(message).getEvent());
                 } catch (IOException | NullPointerException e) {
-                    //e.printStackTrace();
-                    //Log.d(TAG, "Failed to send a frame: "+ message + getReceivedCBusMessage(message).getEvent());
+                    e.printStackTrace();
+                    Log.d(TAG, "Failed to send a frame: "+ message + getReceivedCBusMessage(message).getEvent());
                 }
 
             }
@@ -122,7 +122,7 @@ public class BoardManager implements Parcelable {
         });
         thread.start();
         thread.join();
-        //Log.d(TAG, "received: length="+ length + " message: "+ message[0]);
+        Log.d(TAG, "received: length="+ length + " message: "+ message[0]);
         return message[0];
     }
 
