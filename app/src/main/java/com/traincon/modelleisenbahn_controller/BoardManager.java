@@ -45,7 +45,7 @@ public class BoardManager implements Parcelable {
     };
 
     public void connect() {
-        Log.d(TAG, "Trying to connect");
+        Log.v(TAG, "Trying to connect");
         //disconnect in case of failed destruction
         try {
             disconnect();
@@ -58,7 +58,7 @@ public class BoardManager implements Parcelable {
                     mainSocket.connect(new InetSocketAddress(host, port));
                     socketInputStream = new DataInputStream(mainSocket.getInputStream());
                     socketOutputStream = new DataOutputStream(mainSocket.getOutputStream());
-                    Log.d(TAG, "connected");
+                    Log.v(TAG, "connected");
                     Thread.sleep(500);
                     clear();
                 } catch (IOException | InterruptedException e) {
@@ -84,10 +84,10 @@ public class BoardManager implements Parcelable {
                 try {
                     byte[] bMessage = message.getBytes(StandardCharsets.UTF_8);
                     socketOutputStream.write(bMessage);
-                    Log.d(TAG, "send: "+ message + getReceivedCBusMessage(message).getEvent());
+                    Log.v(TAG, "send: "+ message + getReceivedCBusMessage(message).getEvent());
                 } catch (IOException | NullPointerException e) {
                     e.printStackTrace();
-                    Log.d(TAG, "Failed to send a frame: "+ message + getReceivedCBusMessage(message).getEvent());
+                    Log.v(TAG, "Failed to send a frame: "+ message + getReceivedCBusMessage(message).getEvent());
                 }
 
             }
@@ -122,7 +122,7 @@ public class BoardManager implements Parcelable {
         });
         thread.start();
         thread.join();
-        Log.d(TAG, "received: length="+ length + " message: "+ message[0]);
+        Log.v(TAG, "received: length="+ length + " message: "+ message[0]);
         return message[0];
     }
 

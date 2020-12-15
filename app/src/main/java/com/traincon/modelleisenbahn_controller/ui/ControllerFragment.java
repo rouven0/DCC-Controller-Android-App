@@ -2,7 +2,6 @@ package com.traincon.modelleisenbahn_controller.ui;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +28,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
-import static android.content.ContentValues.TAG;
 
 public class ControllerFragment extends Fragment {
     private final Handler handler = new Handler();
@@ -86,7 +83,6 @@ public class ControllerFragment extends Fragment {
             thread.join();
             spinner.setAdapter(new DatabaseSpinnerAdapter(getContext(), locos));
             if (savedInstanceState != null && cab.getSession() == null) {
-                Log.d(TAG, "onResume: "+ cab.getSession());
                 try {
                     spinner.setSelection(savedInstanceState.getInt(KEY_SELECTED_ITEM));
                 } catch (IndexOutOfBoundsException ignored) {}
