@@ -33,7 +33,7 @@ public class LocoUpdateFragment extends DialogFragment {
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        final View view = requireActivity().getLayoutInflater().inflate(R.layout.content_loco_add, null);
+        final View view = requireActivity().getLayoutInflater().inflate(R.layout.content_loco_update, null);
         final TextInputEditText designationInput = view.findViewById(R.id.input_designation);
         final TextInputEditText addressInput = view.findViewById(R.id.input_address);
         final Loco loco = locos.get(position);

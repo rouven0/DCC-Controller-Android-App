@@ -6,35 +6,39 @@
     android:orientation="vertical">
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/textInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/editText_margin_horizontal"
-        android:layout_marginVertical="@dimen/editText_margin_vertical">
+        android:layout_marginHorizontal="@dimen/editText_margin_horizontal_dialog"
+        android:layout_marginVertical="@dimen/editText_margin_vertical_dialog">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_designation"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:autofillHints=" "
             android:hint="@string/input_locoName"
             android:inputType="textNoSuggestions"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@null"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/textInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/editText_margin_horizontal"
-        android:layout_marginVertical="@dimen/editText_margin_vertical">
+        android:layout_marginHorizontal="@dimen/editText_margin_horizontal_dialog"
+        android:layout_marginVertical="@dimen/editText_margin_vertical_dialog">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_address"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:autofillHints=" "
             android:hint="@string/input_locoAddress"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@null"
             android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

@@ -5,43 +5,20 @@
     android:layout_height="match_parent"
     tools:context=".ui.LauncherActivity">
 
+    <include
+        layout="@layout/content_launcher"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/editText_margin_horizontal" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
         android:contentDescription="@string/cp_Start"
         android:focusable="true"
-        android:src="@drawable/ic_train_24"/>
-
-    <Button
-        android:id="@+id/loadLast"
-        android:layout_width="147dp"
-        android:layout_height="120dp"
-        android:layout_gravity="end"
-        android:text="@string/action_loadLast"
-        android:textSize="12sp" />
-
-    <EditText
-        android:id="@+id/ipEntry"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginEnd="147dp"
-        android:autofillHints="none"
-        android:hint="@string/input_ipEntry"
-        android:inputType="textNoSuggestions"
-        android:singleLine="true" />
-
-    <EditText
-        android:id="@+id/portEntry"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="147dp"
-        android:autofillHints="none"
-        android:hint="@string/input_portEntry"
-        android:inputType="number"
-        android:singleLine="true" />
+        android:src="@drawable/ic_train_24" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

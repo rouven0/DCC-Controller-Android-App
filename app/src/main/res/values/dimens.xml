@@ -2,7 +2,9 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="action_margin">200dp</dimen>
     <dimen name="function_margin">100dp</dimen>
-    <dimen name="editText_margin_horizontal">16dp</dimen>
-    <dimen name="editText_margin_vertical">5dp</dimen>
+    <dimen name="editText_margin_horizontal_dialog">16dp</dimen>
+    <dimen name="editText_margin_vertical_dialog">5dp</dimen>
+    <dimen name="editText_margin_horizontal">30dp</dimen>
+    <dimen name="editText_margin_vertical">25dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 </resources>

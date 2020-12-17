@@ -34,13 +34,7 @@ public class LauncherActivity extends AppCompatActivity {
         portEntry = findViewById(R.id.portEntry);
 
         //Load last values
-        Button loadLast = findViewById(R.id.loadLast);
-        loadLast.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadLastConnectedBoard(ipEntry, portEntry);
-            }
-        });
+        loadLastConnectedBoard(ipEntry, portEntry);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
