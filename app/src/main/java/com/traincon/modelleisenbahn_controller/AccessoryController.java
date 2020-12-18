@@ -18,7 +18,7 @@ public class AccessoryController {
         this.boardManager = boardManager;
         Arrays.fill(switchStates, false);
         Arrays.fill(sectionStates, false);
-        cBusAsciiMessageBuilder = new CBusAsciiMessageBuilder(); //Gerätenummer wird zur canId
+        cBusAsciiMessageBuilder = new CBusAsciiMessageBuilder();
     }
 
     public void setSwitch(int targetSwitch, boolean targetState) {

@@ -40,7 +40,6 @@ public class LauncherActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    //Daten auslesen
                     String host = Objects.requireNonNull(ipEntry.getText()).toString();
                     int port = Integer.parseInt(Objects.requireNonNull(portEntry.getText()).toString());
 

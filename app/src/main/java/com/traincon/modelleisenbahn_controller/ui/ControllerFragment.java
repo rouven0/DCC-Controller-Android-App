@@ -134,8 +134,12 @@ public class ControllerFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     try {
-                        sessionSwitch.setChecked(cab.allocateSession((((Loco) spinner.getSelectedItem()).address)));
-                        controllerSeekBar.setValue(cab.getSpeedDir());
+                        if(spinner.getSelectedItem() != null){
+                            sessionSwitch.setChecked(cab.allocateSession((((Loco) spinner.getSelectedItem()).address)));
+                            controllerSeekBar.setValue(cab.getSpeedDir());
+                        } else {
+                            sessionSwitch.setChecked(false);
+                        }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

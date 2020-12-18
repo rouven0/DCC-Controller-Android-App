@@ -4,6 +4,7 @@
       <w>acdat</w>
       <w>acof</w>
       <w>acon</w>
+      <w>appname</w>
       <w>ardat</w>
       <w>arec</w>
       <w>arof</w>
@@ -27,6 +28,7 @@
       <w>dkeep</w>
       <w>dspd</w>
       <w>enrsp</w>
+      <w>errorlevel</w>
       <w>estop</w>
       <w>evlrn</w>
       <w>evnlf</w>
@@ -37,6 +39,7 @@
       <w>kcon</w>
       <w>kloc</w>
       <w>locolist</w>
+      <w>modelleisenbahn</w>
       <w>nenrd</w>
       <w>neval</w>
       <w>nnack</w>
@@ -71,6 +74,7 @@
       <w>rtof</w>
       <w>rton</w>
       <w>runnables</w>
+      <w>setlocal</w>
       <w>sstat</w>
       <w>stmod</w>
       <w>traincon</w>

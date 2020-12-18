@@ -35,13 +35,13 @@
     <string name="info_event" translatable="false">Event:</string>
     <string name="info_data" translatable="false">Data:</string>
     <string name="input_event" translatable="false">Event</string>
-    <string name="input_dat1" translatable="false">Dat1</string>
-    <string name="input_dat2" translatable="false">Dat2</string>
-    <string name="input_dat3" translatable="false">Dat3</string>
-    <string name="input_dat4" translatable="false">Dat4</string>
-    <string name="input_dat5" translatable="false">Dat5</string>
-    <string name="input_dat6" translatable="false">Dat6</string>
-    <string name="input_dat7" translatable="false">Dat7</string>
+    <string name="input_dat1" translatable="false">D1</string>
+    <string name="input_dat2" translatable="false">D2</string>
+    <string name="input_dat3" translatable="false">D3</string>
+    <string name="input_dat4" translatable="false">D4</string>
+    <string name="input_dat5" translatable="false">D5</string>
+    <string name="input_dat6" translatable="false">D6</string>
+    <string name="input_dat7" translatable="false">D7</string>
     <string name="contentDescription_arrow">Arrow right</string>
     <string name="input_rawMessage">Message</string>
     <string name="cp_send">Send frame</string>
