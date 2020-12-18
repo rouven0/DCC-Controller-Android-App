@@ -2,7 +2,6 @@ package com.traincon.modelleisenbahn_controller.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 
@@ -41,39 +40,32 @@ public class LocoUpdateFragment extends DialogFragment {
         addressInput.setText(String.format("%s", loco.address));
         builder.setView(view)
                 .setTitle(R.string.contentDescription_edit)
-                .setPositiveButton(R.string.positive_button_edit, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Thread thread = new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (!Objects.requireNonNull(designationInput.getText()).toString().equals("")) {
-                                    loco.setDesignation(designationInput.getText().toString());
-                                    locos.get(position).setDesignation(designationInput.getText().toString());
-                                }
-                                if (!Objects.requireNonNull(addressInput.getText()).toString().equals("")) {
-                                    try {
-
-                                        loco.setAddress(Integer.parseInt(addressInput.getText().toString()));
-                                        locos.get(position).setAddress(Integer.parseInt(addressInput.getText().toString()));
-                                    } catch (NumberFormatException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                database.locoDao().updateLoco(loco);
-                            }
-                        });
-                        thread.start();
-                        try {
-                            thread.join();
-                            parentViewAdapter.notifyDataSetChanged();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                .setPositiveButton(R.string.positive_button_edit, (dialog, id) -> {
+                    Thread thread = new Thread(() -> {
+                        if (!Objects.requireNonNull(designationInput.getText()).toString().equals("")) {
+                            loco.setDesignation(designationInput.getText().toString());
+                            locos.get(position).setDesignation(designationInput.getText().toString());
                         }
+                        if (!Objects.requireNonNull(addressInput.getText()).toString().equals("")) {
+                            try {
+
+                                loco.setAddress(Integer.parseInt(addressInput.getText().toString()));
+                                locos.get(position).setAddress(Integer.parseInt(addressInput.getText().toString()));
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        database.locoDao().updateLoco(loco);
+                    });
+                    thread.start();
+                    try {
+                        thread.join();
+                        parentViewAdapter.notifyDataSetChanged();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 })
-                .setNegativeButton(R.string.negative_button_edit, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
+                .setNegativeButton(R.string.negative_button_edit, (dialog, id) -> {
                 });
         return builder.create();
     }

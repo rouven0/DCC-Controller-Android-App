@@ -41,18 +41,8 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.designation.setText(locos.get(position).designation);
         holder.address.setText(String.format("%s", locos.get(position).address));
-        holder.editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new LocoUpdateFragment(itemRecyclerViewAdapter, database, locos, position).show(fragmentManager, "j");
-            }
-        });
-        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new ConfirmDeletionFragment(itemRecyclerViewAdapter, database, locos, position).show(fragmentManager, "Confirm deletion");
-            }
-        });
+        holder.editButton.setOnClickListener(v -> new LocoUpdateFragment(itemRecyclerViewAdapter, database, locos, position).show(fragmentManager, "j"));
+        holder.deleteButton.setOnClickListener(v -> new ConfirmDeletionFragment(itemRecyclerViewAdapter, database, locos, position).show(fragmentManager, "Confirm deletion"));
     }
 
     @Override

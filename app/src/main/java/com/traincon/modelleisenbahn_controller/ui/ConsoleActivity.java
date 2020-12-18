@@ -143,25 +143,17 @@ public class ConsoleActivity extends AppCompatActivity {
         }
         currentMessage = findViewById(R.id.input_message);
         FloatingActionButton sendButton = findViewById(R.id.fab_send);
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateMessage();
-                boardManager.send((new CBusAsciiMessageBuilder().build(currentCBusMessage)));
-                //Save the message
-                for (int i = 0; i < lastPartialMessage.length; i++) {
-                    lastPartialMessage[i] = currentPartialMessage[i].getText().toString();
-                }
-                clearInput();
+        sendButton.setOnClickListener(view -> {
+            updateMessage();
+            boardManager.send((new CBusAsciiMessageBuilder().build(currentCBusMessage)));
+            //Save the message
+            for (int i = 0; i < lastPartialMessage.length; i++) {
+                lastPartialMessage[i] = currentPartialMessage[i].getText().toString();
             }
+            clearInput();
         });
         FloatingActionButton cachedButton = findViewById(R.id.fab_cached);
-        cachedButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getLastMessage();
-            }
-        });
+        cachedButton.setOnClickListener(v -> getLastMessage());
     }
 
     private void updateMessage() {

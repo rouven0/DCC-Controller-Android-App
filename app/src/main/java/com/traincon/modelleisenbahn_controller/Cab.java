@@ -28,26 +28,23 @@ public class Cab {
     }
 
     public boolean allocateSession(final int locoAddress) throws InterruptedException {
-        final Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("RLOC", getHexAddress(locoAddress))));
-                    Thread.sleep(500);
-                    CBusMessage answer = boardManager.getReceivedCBusMessage(boardManager.receive(boardManager.getSocketInputStream().available()));
-                    if (answer.getEvent().equals("PLOC")) {
-                        session = answer.getData()[0];
-                        speedDir = answer.getData()[3];
-                        isSession = true;
-                        Log.d(TAG, "allocated Session");
-                    } else {
-                        isSession = false;
-                        Log.d(TAG, "failed to allocate Session");
-                    }
-                } catch (NullPointerException | InterruptedException | IOException | StringIndexOutOfBoundsException e) {
+        final Thread thread = new Thread(() -> {
+            try {
+                boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("RLOC", getHexAddress(locoAddress))));
+                Thread.sleep(500);
+                CBusMessage answer = boardManager.getReceivedCBusMessage(boardManager.receive(boardManager.getSocketInputStream().available()));
+                if (answer.getEvent().equals("PLOC")) {
+                    session = answer.getData()[0];
+                    speedDir = answer.getData()[3];
+                    isSession = true;
+                    Log.d(TAG, "allocated Session");
+                } else {
                     isSession = false;
-                    Log.d(TAG, "failed to allocate session");
+                    Log.d(TAG, "failed to allocate Session");
                 }
+            } catch (NullPointerException | InterruptedException | IOException | StringIndexOutOfBoundsException e) {
+                isSession = false;
+                Log.d(TAG, "failed to allocate session");
             }
         });
         thread.start();

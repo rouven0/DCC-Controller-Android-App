@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -72,12 +71,7 @@ public class ControllerFragment extends Fragment {
 
     @Override
     public void onResume() {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                locos = database.locoDao().getAll();
-            }
-        });
+        Thread thread = new Thread(() -> locos = database.locoDao().getAll());
         thread.start();
         try {
             thread.join();
@@ -129,35 +123,29 @@ public class ControllerFragment extends Fragment {
             }
         });
 
-        sessionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    try {
-                        if(spinner.getSelectedItem() != null){
-                            sessionSwitch.setChecked(cab.allocateSession((((Loco) spinner.getSelectedItem()).address)));
-                            controllerSeekBar.setValue(cab.getSpeedDir());
-                        } else {
-                            sessionSwitch.setChecked(false);
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+        sessionSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                try {
+                    if(spinner.getSelectedItem() != null){
+                        sessionSwitch.setChecked(cab.allocateSession((((Loco) spinner.getSelectedItem()).address)));
+                        controllerSeekBar.setValue(cab.getSpeedDir());
+                    } else {
+                        sessionSwitch.setChecked(false);
                     }
-                } else {
-                    cab.releaseSession();
-                    controllerSeekBar.setValue(0);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                resetFunctionButtons();
+            } else {
+                cab.releaseSession();
+                controllerSeekBar.setValue(0);
             }
+            resetFunctionButtons();
         });
 
         Button idleButton = requireView().findViewById(R.id.button_idle);
-        idleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cab.idle();
-                controllerSeekBar.setValue(0);
-            }
+        idleButton.setOnClickListener(v -> {
+            cab.idle();
+            controllerSeekBar.setValue(0);
         });
 
         for (int i=0; i<functionButtons.length; i++) {
@@ -166,12 +154,7 @@ public class ControllerFragment extends Fragment {
             functionButtons[i].setTextOn("F"+(i+1)+ " "+functionButtons[i].getTextOn());
             functionButtons[i].setChecked(false);
             final int finalI = i;
-            functionButtons[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    cab.setFunction(finalI+1, functionButtons[finalI].isChecked());
-                }
-            });
+            functionButtons[i].setOnClickListener(v -> cab.setFunction(finalI+1, functionButtons[finalI].isChecked()));
         }
     }
 

@@ -28,12 +28,7 @@ public class LocoListFragment extends Fragment {
         DatabaseViewModel viewModel = new ViewModelProvider(requireActivity()).get(DatabaseViewModel.class);
         database = viewModel.appDatabase;
 
-        final Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                locos = database.locoDao().getAll();
-            }
-        });
+        final Thread thread = new Thread(() -> locos = database.locoDao().getAll());
         thread.start();
         try {
             thread.join();
@@ -45,13 +40,8 @@ public class LocoListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
 
-        view.findViewById(R.id.button_add_loco).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(LocoListFragment.this)
-                        .navigate(R.id.action_LocoListFragment_to_AddLocoFragment);
-            }
-        });
+        view.findViewById(R.id.button_add_loco).setOnClickListener(view1 -> NavHostFragment.findNavController(LocoListFragment.this)
+                .navigate(R.id.action_LocoListFragment_to_AddLocoFragment));
         return view;
     }
 

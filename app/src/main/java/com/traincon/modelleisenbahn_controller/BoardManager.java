@@ -50,20 +50,17 @@ public class BoardManager implements Parcelable {
         try {
             disconnect();
         } catch (IOException | NullPointerException ignore) {}
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    mainSocket = new Socket();
-                    mainSocket.connect(new InetSocketAddress(host, port));
-                    socketInputStream = new DataInputStream(mainSocket.getInputStream());
-                    socketOutputStream = new DataOutputStream(mainSocket.getOutputStream());
-                    Log.v(TAG, "connected");
-                    Thread.sleep(500);
-                    clear();
-                } catch (IOException | InterruptedException e) {
-                    e.printStackTrace();
-                }
+        Thread thread = new Thread(() -> {
+            try {
+                mainSocket = new Socket();
+                mainSocket.connect(new InetSocketAddress(host, port));
+                socketInputStream = new DataInputStream(mainSocket.getInputStream());
+                socketOutputStream = new DataOutputStream(mainSocket.getOutputStream());
+                Log.v(TAG, "connected");
+                Thread.sleep(500);
+                clear();
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
             }
         });
         thread.start();
@@ -78,19 +75,16 @@ public class BoardManager implements Parcelable {
     }
 
     public void send(final String message) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    byte[] bMessage = message.getBytes(StandardCharsets.UTF_8);
-                    socketOutputStream.write(bMessage);
-                    Log.v(TAG, "send: "+ message + getReceivedCBusMessage(message).getEvent());
-                } catch (IOException | NullPointerException e) {
-                    e.printStackTrace();
-                    Log.v(TAG, "Failed to send a frame: "+ message + getReceivedCBusMessage(message).getEvent());
-                }
-
+        Thread thread = new Thread(() -> {
+            try {
+                byte[] bMessage = message.getBytes(StandardCharsets.UTF_8);
+                socketOutputStream.write(bMessage);
+                Log.v(TAG, "send: "+ message + getReceivedCBusMessage(message).getEvent());
+            } catch (IOException | NullPointerException e) {
+                e.printStackTrace();
+                Log.v(TAG, "Failed to send a frame: "+ message + getReceivedCBusMessage(message).getEvent());
             }
+
         });
         thread.start();
     }
@@ -108,16 +102,13 @@ public class BoardManager implements Parcelable {
         final String[] message = new String[]{""};
         final byte[] rawMessage = new byte[length];
 
-        final Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < rawMessage.length; i++) {
-                    try {
-                        rawMessage[i] = socketInputStream.readByte();
-                    } catch (IOException | NullPointerException ignored) {
-                    }
-                    message[0] += (char) rawMessage[i];
+        final Thread thread = new Thread(() -> {
+            for (int i = 0; i < rawMessage.length; i++) {
+                try {
+                    rawMessage[i] = socketInputStream.readByte();
+                } catch (IOException | NullPointerException ignored) {
                 }
+                message[0] += (char) rawMessage[i];
             }
         });
         thread.start();

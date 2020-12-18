@@ -2,7 +2,6 @@ package com.traincon.modelleisenbahn_controller.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import com.traincon.modelleisenbahn_controller.R;
@@ -32,27 +31,20 @@ public class ConfirmDeletionFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(getResources().getString(R.string.message_confirm_deletion_1) + locos.get(position).designation + getResources().getString(R.string.message_confirm_deletion_2))
                 .setTitle(R.string.title_confirm_deletion)
-                .setPositiveButton(R.string.positive_button_del, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Thread thread = new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                database.locoDao().delete(locos.get(position));
-                                locos.remove(position);
-                            }
-                        });
-                        thread.start();
-                        try {
-                            thread.join();
-                            parentViewAdapter.notifyDataSetChanged();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                .setPositiveButton(R.string.positive_button_del, (dialog, id) -> {
+                    Thread thread = new Thread(() -> {
+                        database.locoDao().delete(locos.get(position));
+                        locos.remove(position);
+                    });
+                    thread.start();
+                    try {
+                        thread.join();
+                        parentViewAdapter.notifyDataSetChanged();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 })
-                .setNegativeButton(R.string.negative_button_del, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
+                .setNegativeButton(R.string.negative_button_del, (dialog, id) -> {
                 });
         return builder.create();
     }

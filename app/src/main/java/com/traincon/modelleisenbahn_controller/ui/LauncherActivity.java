@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 
@@ -36,22 +35,19 @@ public class LauncherActivity extends AppCompatActivity {
         loadLastConnectedBoard(ipEntry, portEntry);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    String host = Objects.requireNonNull(ipEntry.getText()).toString();
-                    int port = Integer.parseInt(Objects.requireNonNull(portEntry.getText()).toString());
+        fab.setOnClickListener(view -> {
+            try {
+                String host = Objects.requireNonNull(ipEntry.getText()).toString();
+                int port = Integer.parseInt(Objects.requireNonNull(portEntry.getText()).toString());
 
-                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                    intent.putExtra("host", host);
-                    intent.putExtra("port", port);
-                    saveLastConnectedBoard(host, port);
-                    startActivity(intent);
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    portEntry.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.animation_shake));
-                }
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                intent.putExtra("host", host);
+                intent.putExtra("port", port);
+                saveLastConnectedBoard(host, port);
+                startActivity(intent);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                portEntry.startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.animation_shake));
             }
         });
     }

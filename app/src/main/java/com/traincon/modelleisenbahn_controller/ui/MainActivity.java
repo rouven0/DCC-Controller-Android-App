@@ -145,12 +145,7 @@ public class MainActivity extends AppCompatActivity {
             switches[i].setTextOn(String.format("%s", i + 1) + " /");
             switches[i].setChecked(false);
             final int finalI = i;
-            switches[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    accessoryController.setSwitch(finalI, switches[finalI].isChecked());
-                }
-            });
+            switches[i].setOnClickListener(v -> accessoryController.setSwitch(finalI, switches[finalI].isChecked()));
         }
     }
 
@@ -159,12 +154,7 @@ public class MainActivity extends AppCompatActivity {
             sections[i] = findViewById(sectionIdArray[i]);
             sections[i].setText(String.format("%s", i + 1));
             final int finalI = i;
-            sections[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    accessoryController.setSection(finalI, sections[finalI].isChecked());
-                }
-            });
+            sections[i].setOnClickListener(view -> accessoryController.setSection(finalI, sections[finalI].isChecked()));
         }
     }
 
@@ -172,14 +162,11 @@ public class MainActivity extends AppCompatActivity {
         updateSwitchStates = new Runnable() {
             @Override
             public void run() {
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            accessoryController.requestSwitchStates();
-                        } catch (InterruptedException | IOException e) {
-                            e.printStackTrace();
-                        }
+                Thread thread = new Thread(() -> {
+                    try {
+                        accessoryController.requestSwitchStates();
+                    } catch (InterruptedException | IOException e) {
+                        e.printStackTrace();
                     }
                 });
                 thread.start();

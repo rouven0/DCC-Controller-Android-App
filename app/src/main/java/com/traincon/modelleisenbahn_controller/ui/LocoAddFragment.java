@@ -44,12 +44,7 @@ public class LocoAddFragment extends Fragment {
                         loco.setDesignation(designationInput.getText().toString());
                         loco.setAddress(Integer.parseInt(addressInput.getText().toString()));
 
-                        final Thread thread = new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                database.locoDao().insertLoco(loco);
-                            }
-                        });
+                        final Thread thread = new Thread(() -> database.locoDao().insertLoco(loco));
 
                         Runnable getThreadStateRunnable = new Runnable() {
                             @Override
