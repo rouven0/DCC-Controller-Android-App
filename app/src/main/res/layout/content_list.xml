@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_marginVertical="@dimen/editText_margin_vertical_dialog">
+    android:layout_marginVertical="@dimen/editText_margin_vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -14,7 +14,7 @@
             android:id="@+id/loco_designation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/text_margin"
+            android:layout_marginStart="32dp"
             android:textAppearance="?attr/textAppearanceListItem"
             android:textSize="18sp" />
 
@@ -22,7 +22,7 @@
             android:id="@+id/loco_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/text_margin"
+            android:layout_marginStart="32dp"
             android:textSize="14sp" />
     </LinearLayout>
     
