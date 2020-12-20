@@ -5,13 +5,19 @@
         android:id="@+id/action_light"
         android:title="@string/action_light"
         android:icon="@drawable/ic_light_bulb_off_24"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:visible="false" />
 
     <item
         android:id="@+id/action_locoList"
         android:title="@string/item_locoList"
         android:icon="@drawable/ic_locolist_24"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_estop"
+        android:title="@string/action_estop"
+        android:icon="@drawable/ic_stop_sign_icon_24"
         app:showAsAction="always" />
 
     <item
@@ -22,11 +28,6 @@
     <item
         android:id="@+id/action_reconnect"
         android:title="@string/action_reconnect"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/action_estop"
-        android:title="@string/action_estop"
         app:showAsAction="never" />
 
     <item

@@ -61,4 +61,19 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/action_margin"
         android:text="@string/action_idle" />
+
+    <TextView
+        android:id="@+id/message_estop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:textColor="@android:color/white"
+        android:textSize="40sp"
+        android:textAllCaps="true"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:text="@string/messageString_estop"
+        android:background="@android:color/holo_red_dark"/>
 </FrameLayout>

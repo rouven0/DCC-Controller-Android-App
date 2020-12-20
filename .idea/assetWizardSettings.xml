@@ -335,10 +335,11 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="autoMirrored" value="true" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_baseline_save_24" />
-                            <entry key="sourceFile" value="$USER_HOME$/GIMP/ic_launcher-playstore.svg" />
+                            <entry key="outputName" value="ic_stop_sign_icon_1" />
+                            <entry key="sourceFile" value="$USER_HOME$/Downloads/stop-sign-icon-1.svg" />
                           </map>
                         </option>
                       </PersistentState>

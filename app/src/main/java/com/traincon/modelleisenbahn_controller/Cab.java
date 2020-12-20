@@ -1,25 +1,19 @@
 package com.traincon.modelleisenbahn_controller;
 
-import android.util.Log;
-
 import com.traincon.CBusMessage.CBusAsciiMessageBuilder;
 import com.traincon.CBusMessage.CBusMessage;
-
-import java.io.IOException;
-
-import static android.content.ContentValues.TAG;
 
 public class Cab {
     private final BoardManager boardManager;
     private final CBusAsciiMessageBuilder cBusAsciiMessageBuilder;
     private String session;
-    private boolean isSession = false;
+    boolean isSession = false;
     private String speedDir = "00";
+    int locoAddress = 0;
 
 
     public static void estop(BoardManager boardManager) {
         boardManager.send(new CBusAsciiMessageBuilder().build(new CBusMessage("RESTP", CBusMessage.NO_DATA)));
-        //boardManager.receive(CBusAsciiMessageBuilder.getExpectedMessageLength(0));
     }
 
     public Cab(BoardManager boardManager) {
@@ -27,28 +21,16 @@ public class Cab {
         cBusAsciiMessageBuilder = new CBusAsciiMessageBuilder();
     }
 
-    public boolean allocateSession(final int locoAddress) throws InterruptedException {
-        final Thread thread = new Thread(() -> {
-            try {
-                boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("RLOC", getHexAddress(locoAddress))));
-                Thread.sleep(500);
-                CBusMessage answer = boardManager.getReceivedCBusMessage(boardManager.receive(boardManager.getSocketInputStream().available()));
-                if (answer.getEvent().equals("PLOC")) {
-                    session = answer.getData()[0];
-                    speedDir = answer.getData()[3];
-                    isSession = true;
-                    Log.d(TAG, "allocated Session");
-                } else {
-                    isSession = false;
-                    Log.d(TAG, "failed to allocate Session");
-                }
-            } catch (NullPointerException | InterruptedException | IOException | StringIndexOutOfBoundsException e) {
-                isSession = false;
-                Log.d(TAG, "failed to allocate session");
-            }
-        });
-        thread.start();
-        thread.join();
+    public void allocateSession(final int locoAddress){
+        this.locoAddress = locoAddress;
+        boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("RLOC", getHexAddress(locoAddress))));
+    }
+    public boolean sessionAllocated(CBusMessage message){
+        if(message.getData()[1].equals(getHexAddress(locoAddress)[0]) && message.getData()[2].equals(getHexAddress(locoAddress)[1])) {
+            session = message.getData()[0];
+            speedDir = message.getData()[3];
+            isSession = true;
+        }
         return isSession;
     }
 
@@ -57,7 +39,6 @@ public class Cab {
             boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("KLOC", new String[]{session})));
             isSession = false;
             session = null;
-            Log.d(TAG, "released Session");
         }
     }
 

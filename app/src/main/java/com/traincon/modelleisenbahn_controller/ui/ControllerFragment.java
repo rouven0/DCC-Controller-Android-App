@@ -1,5 +1,6 @@
 package com.traincon.modelleisenbahn_controller.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -11,6 +12,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.traincon.CBusMessage.CBusMessage;
 import com.traincon.modelleisenbahn_controller.BoardManager;
 import com.traincon.modelleisenbahn_controller.Cab;
 import com.traincon.modelleisenbahn_controller.R;
@@ -22,14 +30,11 @@ import com.traincon.modelleisenbahn_controller.widget.TwoDirSeekBar;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 public class ControllerFragment extends Fragment {
-    private final Handler handler = new Handler();
+    final int[] buttonIdArray = new int[]{R.id.button_f1, R.id.button_f2, R.id.button_f3, R.id.button_f4, R.id.button_f5, R.id.button_f6, R.id.button_f7, R.id.button_f8, R.id.button_f9};
+    private final ToggleButton[] functionButtons = new ToggleButton[buttonIdArray.length];
+    private final String KEY_SELECTED_ITEM = "selectedItem";
+    private Handler handler;
     private BoardManager boardManager;
     private Cab cab;
     private SwitchCompat sessionSwitch;
@@ -37,15 +42,10 @@ public class ControllerFragment extends Fragment {
     private TextView seekBarTextView;
     private Runnable keepAlive;
     private Runnable getSpeed;
-    final int[] buttonIdArray = new int[]{R.id.button_f1, R.id.button_f2,R.id.button_f3, R.id.button_f4, R.id.button_f5, R.id.button_f6, R.id.button_f7, R.id.button_f8, R.id.button_f9};
-    private  final ToggleButton[] functionButtons = new ToggleButton[buttonIdArray.length];
-
     private AppDatabase database;
     private List<Loco> locos;
     private Spinner spinner;
-
     private Bundle savedInstanceState;
-    private final String KEY_SELECTED_ITEM = "selectedItem";
 
     public ControllerFragment() {
         // Required empty public constructor
@@ -65,24 +65,23 @@ public class ControllerFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         assert getArguments() != null;
         boardManager = getArguments().getParcelable("boardManager");
+        assert boardManager != null;
+        handler = boardManager.getHandler();
         initCab();
         initUpdates();
     }
 
     @Override
     public void onResume() {
-        Thread thread = new Thread(() -> locos = database.locoDao().getAll());
-        thread.start();
-        try {
-            thread.join();
-            spinner.setAdapter(new DatabaseSpinnerAdapter(getContext(), locos));
-            if (savedInstanceState != null && cab.getSession() == null) {
-                try {
-                    spinner.setSelection(savedInstanceState.getInt(KEY_SELECTED_ITEM));
-                } catch (IndexOutOfBoundsException ignored) {}
-
+        loadSpinnerItems();
+        if (savedInstanceState != null && cab.getSession() == null) {
+            try {
+                spinner.setSelection(savedInstanceState.getInt(KEY_SELECTED_ITEM));
+            } catch (IndexOutOfBoundsException ignored) {
             }
-        } catch (InterruptedException e) {e.printStackTrace();}
+
+        }
+
         super.onResume();
     }
 
@@ -101,11 +100,14 @@ public class ControllerFragment extends Fragment {
 
     private void initCab() {
         spinner = requireView().findViewById(R.id.spinner);
-        cab = new Cab(boardManager);
         sessionSwitch = requireView().findViewById(R.id.sessionSwitch);
         controllerSeekBar = requireView().findViewById(R.id.seekBar);
         seekBarTextView = requireView().findViewById(R.id.sText);
         seekBarTextView.setText("0");
+        Button idleButton = requireView().findViewById(R.id.button_idle);
+        loadSpinnerItems();
+        cab = new Cab(boardManager);
+
         controllerSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -124,38 +126,58 @@ public class ControllerFragment extends Fragment {
         });
 
         sessionSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                try {
-                    if(spinner.getSelectedItem() != null){
-                        sessionSwitch.setChecked(cab.allocateSession((((Loco) spinner.getSelectedItem()).address)));
-                        controllerSeekBar.setValue(cab.getSpeedDir());
-                    } else {
-                        sessionSwitch.setChecked(false);
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            } else {
+            if (isChecked && cab.getSession() == null && spinner.getSelectedItem() != null) {
+                sessionSwitch.setChecked(false);
+                cab.allocateSession((((Loco) spinner.getSelectedItem()).address));
+            } else if (!isChecked && cab.getSession() != null) {
                 cab.releaseSession();
                 controllerSeekBar.setValue(0);
+            } else if (spinner.getSelectedItem() == null) {
+                sessionSwitch.setChecked(false);
+                startActivity(new Intent(getContext(), LocoConfigActivity.class));
             }
             resetFunctionButtons();
         });
 
-        Button idleButton = requireView().findViewById(R.id.button_idle);
         idleButton.setOnClickListener(v -> {
             cab.idle();
             controllerSeekBar.setValue(0);
         });
 
-        for (int i=0; i<functionButtons.length; i++) {
+        for (int i = 0; i < functionButtons.length; i++) {
             functionButtons[i] = requireView().findViewById(buttonIdArray[i]);
-            functionButtons[i].setTextOff("F"+(i+1)+" "+functionButtons[i].getTextOff());
-            functionButtons[i].setTextOn("F"+(i+1)+ " "+functionButtons[i].getTextOn());
+            functionButtons[i].setTextOff("F" + (i + 1) + " " + functionButtons[i].getTextOff());
+            functionButtons[i].setTextOn("F" + (i + 1) + " " + functionButtons[i].getTextOn());
             functionButtons[i].setChecked(false);
             final int finalI = i;
-            functionButtons[i].setOnClickListener(v -> cab.setFunction(finalI+1, functionButtons[finalI].isChecked()));
+            functionButtons[i].setOnClickListener(v -> cab.setFunction(finalI + 1, functionButtons[finalI].isChecked()));
         }
+    }
+
+    private void loadSpinnerItems() {
+        Thread thread = new Thread(() -> locos = database.locoDao().getAll());
+        thread.start();
+        try {
+            thread.join();
+            spinner.setAdapter(new DatabaseSpinnerAdapter(getContext(), locos));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean sessionAllocated(CBusMessage message) {
+        boolean success = cab.sessionAllocated(message);
+        sessionSwitch.setChecked(success);
+        controllerSeekBar.setValue(cab.getSpeedDir());
+        return success;
+    }
+
+    public void displayEstop() {
+        TextView textView = requireView().findViewById(R.id.message_estop);
+        textView.setVisibility(View.VISIBLE);
+        resetFunctionButtons();
+        controllerSeekBar.setValue(0);
+        handler.postDelayed(() -> textView.setVisibility(View.GONE), 4000);
     }
 
     private void initUpdates() {
@@ -178,9 +200,10 @@ public class ControllerFragment extends Fragment {
         };
     }
 
-    private void resetFunctionButtons(){
+    private void resetFunctionButtons() {
         for (ToggleButton toggleButton : functionButtons) {
             toggleButton.setChecked(false);
         }
     }
+
 }

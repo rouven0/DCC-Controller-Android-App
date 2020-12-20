@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,13 +13,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.traincon.modelleisenbahn_controller.AccessoryController;
-import com.traincon.modelleisenbahn_controller.BoardManager;
-import com.traincon.modelleisenbahn_controller.Cab;
-import com.traincon.modelleisenbahn_controller.R;
-import java.io.IOException;
-import java.util.Objects;
-
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
@@ -27,17 +22,31 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 
+import com.traincon.CBusMessage.CBusMessage;
+import com.traincon.modelleisenbahn_controller.AccessoryController;
+import com.traincon.modelleisenbahn_controller.BoardManager;
+import com.traincon.modelleisenbahn_controller.Cab;
+import com.traincon.modelleisenbahn_controller.R;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
     final private int[] switchIdArray = {R.id.switch_1, R.id.switch_2, R.id.switch_3, R.id.switch_4, R.id.switch_5, R.id.switch_6, R.id.switch_7, R.id.switch_8, R.id.switch_9, R.id.switch_10, R.id.switch_11, R.id.switch_12, R.id.switch_13, R.id.switch_14, R.id.switch_15, R.id.switch_16};
     final private int[] sectionIdArray = {R.id.section_1, R.id.section_2, R.id.section_3, R.id.section_4, R.id.section_5, R.id.section_6, R.id.section_7, R.id.section_8, R.id.section_9, R.id.section_10, R.id.section_11, R.id.section_12, R.id.section_13};
     final private ToggleButton[] switches = new ToggleButton[switchIdArray.length];
     final private SwitchCompat[] sections = new SwitchCompat[sectionIdArray.length];
     private final FragmentManager fragmentManager = getSupportFragmentManager();
+    private final String KEY_LIGHTSTATE = "lightState";
     private ConstraintLayout accessoryFrame;
+    private Fragment[] controllers;
     private Menu menu;
     private Handler handler;
     private Runnable updateSwitchStates;
     private BoardManager boardManager;
+    private Runnable cbusUpdateRunnable;
     private AccessoryController accessoryController;
 
     @Override
@@ -51,10 +60,20 @@ public class MainActivity extends AppCompatActivity {
 
         boardManager = new BoardManager(host, port);
         boardManager.connect();
+        boardManager.startFrameListener();
 
-        handler = new Handler(getMainLooper());
+        handler = boardManager.getHandler();
+        accessoryController = new AccessoryController(boardManager);
+        if (savedInstanceState != null) {
+            accessoryController.setLightState(savedInstanceState.getBoolean(KEY_LIGHTSTATE));
+        }
         initLayout();
+    }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(KEY_LIGHTSTATE, accessoryController.getLightState());
     }
 
     @Override
@@ -62,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
         this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_main, menu);
         updateLayout();
+        if (accessoryController.getLightState()) {
+            menu.getItem(0).setIcon(R.drawable.ic_light_bulb_on_24);
+        }
         return super.onCreateOptionsMenu(menu);
 
     }
@@ -109,9 +131,24 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateLayout();
+        applyAccessoryMode();
+    }
+
+    @Override
+    protected void onDestroy() {
+        handler.removeCallbacks(updateSwitchStates);
+        handler.removeCallbacks(boardManager.getMessagesRunnable);
+        handler.removeCallbacks(cbusUpdateRunnable);
+        super.onDestroy();
+    }
+
     private void initLayout() {
         String[] controllerTags = new String[]{"c1", "c2", "c3"};
-        Fragment[] controllers = new Fragment[controllerTags.length];
+        controllers = new Fragment[controllerTags.length];
         for (int i = 0; i < controllers.length; i++) {
             controllers[i] = fragmentManager.findFragmentByTag(controllerTags[i]);
             Bundle bundle = new Bundle();
@@ -119,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
             assert controllers[i] != null;
             controllers[i].setArguments(bundle);
             //Destroy controller 2 and 3 because they are not shown in portrait mode
-            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && i != 0) {
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && i != 0) {
                 try {
 
                     controllers[i].onDestroy();
@@ -128,15 +165,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
-        accessoryController = new AccessoryController(boardManager);
         accessoryFrame = findViewById(R.id.accessory);
         initSwitches();
         initSections();
         initUpdates();
         applyMode();
     }
-
 
     private void initSwitches() {
         for (int i = 0; i < switchIdArray.length; i++) {
@@ -159,6 +193,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initUpdates() {
+        cbusUpdateRunnable = new Runnable() {
+            @Override
+            public void run() {
+                List<CBusMessage> receivedMessages = boardManager.getReceivedMessages();
+                List<CBusMessage> messagesToRemove = new ArrayList<>();
+                for (CBusMessage cbusMessage : receivedMessages) {
+                    Log.d("TAG", "run: " + cbusMessage.getEvent());
+                    switch (cbusMessage.getEvent()) {
+                        case "ESTOP":
+                            for (Fragment fragment : controllers) {
+                                ControllerFragment controllerFragment = (ControllerFragment) fragment;
+                                controllerFragment.displayEstop();
+                            }
+                            messagesToRemove.add(cbusMessage);
+                            break;
+                        case "PLOC":
+                            for (Fragment fragment : controllers) {
+                                ControllerFragment controllerFragment = (ControllerFragment) fragment;
+                                if (controllerFragment.sessionAllocated(cbusMessage)) {
+                                    messagesToRemove.add(cbusMessage);
+                                }
+                            }
+                        default:
+                            messagesToRemove.add(cbusMessage);
+                    }
+                }
+                for (CBusMessage messageToRemove : messagesToRemove) {
+                    receivedMessages.remove(messageToRemove);
+                }
+                messagesToRemove.clear();
+                handler.postDelayed(this, 1000);
+            }
+        };
+        handler.post(cbusUpdateRunnable);
+
+
         updateSwitchStates = new Runnable() {
             @Override
             public void run() {
@@ -197,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void updateRunnables() {
+    private void applyAccessoryMode() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         if (sharedPreferences.getBoolean("is_accessory_on", false)) {
             handler.post(updateSwitchStates);
@@ -206,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void applyMode(){
+    private void applyMode() {
         TextView sectionTextView = findViewById(R.id.label_sections);
         ScrollView sectionScrollView = findViewById(R.id.scrollView_sections);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -216,15 +286,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        updateLayout();
-        updateRunnables();
-    }
-
-    protected void onDestroy() {
-        handler.removeCallbacks(updateSwitchStates);
-        super.onDestroy();
-    }
 }

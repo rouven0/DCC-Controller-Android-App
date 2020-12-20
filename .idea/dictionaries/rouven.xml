@@ -38,6 +38,7 @@
       <w>gloc</w>
       <w>kcon</w>
       <w>kloc</w>
+      <w>lightstate</w>
       <w>locolist</w>
       <w>modelleisenbahn</w>
       <w>nenrd</w>
@@ -71,6 +72,7 @@
       <w>rqnp</w>
       <w>rqnpn</w>
       <w>rstat</w>
+      <w>rstp</w>
       <w>rtof</w>
       <w>rton</w>
       <w>runnables</w>

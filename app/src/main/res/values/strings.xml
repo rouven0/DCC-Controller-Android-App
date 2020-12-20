@@ -67,6 +67,7 @@
     <string name="action_f9" translatable="false">F9</string>
     <string name="label_switches">Switches</string>
     <string name="label_sections">Sections</string>
+    <string name="messageString_estop">Stopped</string>
 
 
     <!-- Config headers -->

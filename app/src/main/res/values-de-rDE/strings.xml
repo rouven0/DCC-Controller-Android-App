@@ -45,6 +45,7 @@
     <string name="action_estop">Nothalt</string>
     <string name="label_switches">Weichen</string>
     <string name="label_sections">Gleise</string>
+    <string name="messageString_estop">Gestoppt</string>
 
     <!-- Config headers -->
     <string name="accessory_header">Weichen &amp; Gleise</string>

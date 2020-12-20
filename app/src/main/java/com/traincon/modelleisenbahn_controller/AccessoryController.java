@@ -1,10 +1,14 @@
 package com.traincon.modelleisenbahn_controller;
 
+import android.util.Log;
+
 import com.traincon.CBusMessage.CBusAsciiMessageBuilder;
 import com.traincon.CBusMessage.CBusMessage;
 
 import java.io.IOException;
 import java.util.Arrays;
+
+import static android.content.ContentValues.TAG;
 
 public class AccessoryController {
     public final BoardManager boardManager;
@@ -12,7 +16,7 @@ public class AccessoryController {
 
     public final boolean[] switchStates = new boolean[16];
     public final boolean[] sectionStates = new boolean[13];
-    public boolean lightState = false;
+    private boolean lightState = false;
 
     public AccessoryController(BoardManager boardManager){
         this.boardManager = boardManager;
@@ -42,12 +46,17 @@ public class AccessoryController {
 
     public void setLightOn() {
         lightState = true;
+        Log.d(TAG, "setLightOn: ");
         boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("ASON", new String[]{"00", "11", "24", "0D"})));
     }
 
     public void setLightOff() {
         lightState = false;
         boardManager.send(cBusAsciiMessageBuilder.build(new CBusMessage("ASOF", new String[]{"00", "11", "24", "0D"})));
+    }
+
+    public void setLightState(boolean lightState) {
+        this.lightState = lightState;
     }
 
     public boolean getLightState(){

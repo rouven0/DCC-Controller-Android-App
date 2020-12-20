@@ -1,5 +1,7 @@
 package com.traincon.modelleisenbahn_controller;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -12,15 +14,22 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
 public class BoardManager implements Parcelable {
     public final String host;
     public final int port;
-    public Socket mainSocket;
+    public Runnable getMessagesRunnable;
+
+    private Socket mainSocket;
     private DataInputStream socketInputStream;
     private DataOutputStream socketOutputStream;
+
+    private final List<CBusMessage> receivedMessages = new ArrayList<>();
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     public BoardManager(String host, int port) {
         this.host = host;
@@ -50,24 +59,41 @@ public class BoardManager implements Parcelable {
         try {
             disconnect();
         } catch (IOException | NullPointerException ignore) {}
-        Thread thread = new Thread(() -> {
+        new Thread(() -> {
             try {
                 mainSocket = new Socket();
                 mainSocket.connect(new InetSocketAddress(host, port));
                 socketInputStream = new DataInputStream(mainSocket.getInputStream());
                 socketOutputStream = new DataOutputStream(mainSocket.getOutputStream());
                 Log.v(TAG, "connected");
-                Thread.sleep(500);
-                clear();
-            } catch (IOException | InterruptedException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-        });
-        thread.start();
+        }).start();
     }
 
-    public void clear() throws InterruptedException {
-        receive(18);
+    public void startFrameListener() {
+        getMessagesRunnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //Get the message
+                    String receivedCharacters = receive(socketInputStream.available());
+                    //Divide it
+                    String[] receivedFrames = receivedCharacters.split(";");
+                    //Add messages to the list
+                    for(String frame : receivedFrames){
+                        if(!frame.equals("")){
+                            CBusMessage receivedMessage = getReceivedCBusMessage(frame);
+                            Log.v(TAG, "received Event: "+ receivedMessage.getEvent());
+                            receivedMessages.add(receivedMessage);
+                        }
+                    }
+                } catch (InterruptedException | IOException | StringIndexOutOfBoundsException | NullPointerException ignored) { }
+                handler.postDelayed(this, 1000);
+            }
+        };
+        handler.post(getMessagesRunnable);
     }
 
     public void disconnect() throws IOException {
@@ -80,8 +106,7 @@ public class BoardManager implements Parcelable {
                 byte[] bMessage = message.getBytes(StandardCharsets.UTF_8);
                 socketOutputStream.write(bMessage);
                 Log.v(TAG, "send: "+ message + getReceivedCBusMessage(message).getEvent());
-            } catch (IOException | NullPointerException e) {
-                e.printStackTrace();
+            } catch (IOException | NullPointerException ignored) {
                 Log.v(TAG, "Failed to send a frame: "+ message + getReceivedCBusMessage(message).getEvent());
             }
 
@@ -96,6 +121,10 @@ public class BoardManager implements Parcelable {
             data[i] = receivedFrame.substring(9+(2*i), 11+(2*i));
         }
         return new CBusMessage(event, data);
+    }
+
+    public List<CBusMessage> getReceivedMessages() {
+        return receivedMessages;
     }
 
     public String receive(int length) throws InterruptedException {
@@ -115,6 +144,10 @@ public class BoardManager implements Parcelable {
         thread.join();
         Log.v(TAG, "received: length="+ length + " message: "+ message[0]);
         return message[0];
+    }
+
+    public Handler getHandler() {
+        return handler;
     }
 
     public DataInputStream getSocketInputStream() {

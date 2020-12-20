@@ -12,6 +12,10 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.traincon.CBusMessage.CBusAsciiMessageBuilder;
 import com.traincon.CBusMessage.CBusMessage;
@@ -20,10 +24,6 @@ import com.traincon.modelleisenbahn_controller.R;
 
 import java.io.IOException;
 import java.util.Arrays;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 
 public class ConsoleActivity extends AppCompatActivity {
     private final int[] editTextIdArray = new int[]{R.id.input_event, R.id.input_dat1, R.id.input_dat2, R.id.input_dat3, R.id.input_dat4, R.id.input_dat5, R.id.input_dat6, R.id.input_dat7};
@@ -65,7 +65,7 @@ public class ConsoleActivity extends AppCompatActivity {
             super.onBackPressed();
             return true;
         }
-        if(item.getItemId() == R.id.action_playPause && isRunning) {
+        if (item.getItemId() == R.id.action_playPause && isRunning) {
             handler.removeCallbacks(logUpdateRunnable);
             isRunning = false;
 
@@ -92,23 +92,30 @@ public class ConsoleActivity extends AppCompatActivity {
             public void run() {
                 try {
                     //Initialize
-                    String oldLog = rawLogTextView.getText().toString();
-                    String oldLog_processed = processedLogTextView.getText().toString();
                     //Get string
                     String receivedString = "";
-                    if(boardManager.getSocketInputStream()!=null){
+                    String[] receivedFrames;
+                    try {
                         receivedString = boardManager.receive(boardManager.getSocketInputStream().available());
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
                     }
-                    //update the log
-                    if (!receivedString.equals("")) {
-                        //raw string
-                        String combinedLog = oldLog + "\n" + receivedString;
-                        rawLogTextView.setText(combinedLog);
-                        rawLogScrollView.fullScroll(View.FOCUS_DOWN);
-                        //processed string
-                        String combinedLog_processed = oldLog_processed + "\n" + getResources().getString(R.string.info_event)+ " " +boardManager.getReceivedCBusMessage(receivedString).getEvent() + ", " + getResources().getString(R.string.info_data) + " " + Arrays.toString(boardManager.getReceivedCBusMessage(receivedString).getData());
-                        processedLogTextView.setText(combinedLog_processed);
-                        processedLogScrollView.fullScroll(View.FOCUS_DOWN);
+                    receivedFrames = receivedString.split(";");
+
+                    for (String frame : receivedFrames) {
+                        String oldLog = rawLogTextView.getText().toString();
+                        String oldLog_processed = processedLogTextView.getText().toString();
+                        //update the log
+                        if (!receivedString.equals("")) {
+                            //raw string
+                            String combinedLog = oldLog + "\n" + frame;
+                            rawLogTextView.setText(combinedLog);
+                            rawLogScrollView.fullScroll(View.FOCUS_DOWN);
+                            //processed string
+                            String combinedLog_processed = oldLog_processed + "\n" + getResources().getString(R.string.info_event) + " " + boardManager.getReceivedCBusMessage(frame).getEvent() + ", " + getResources().getString(R.string.info_data) + " " + Arrays.toString(boardManager.getReceivedCBusMessage(frame).getData());
+                            processedLogTextView.setText(combinedLog_processed);
+                            processedLogScrollView.fullScroll(View.FOCUS_DOWN);
+                        }
                     }
 
                 } catch (InterruptedException | IOException e) {
