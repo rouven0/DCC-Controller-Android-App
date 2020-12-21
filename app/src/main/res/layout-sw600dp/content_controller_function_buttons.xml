@@ -23,7 +23,8 @@
             style="?buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/action_f4" />
+            android:text="@string/action_f4"
+            android:layout_marginVertical="20dp" />
 
         <ToggleButton
             android:id="@+id/button_f7"
@@ -51,7 +52,8 @@
             style="?buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/action_f5" />
+            android:text="@string/action_f5"
+            android:layout_marginVertical="20dp" />
 
         <ToggleButton
             android:id="@+id/button_f8"
@@ -79,7 +81,8 @@
             style="?buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/action_f6" />
+            android:text="@string/action_f6"
+            android:layout_marginVertical="20dp" />
 
         <ToggleButton
             android:id="@+id/button_f9"
