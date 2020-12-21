@@ -9,8 +9,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -31,7 +29,6 @@ import com.traincon.modelleisenbahn_controller.R;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     final private int[] switchIdArray = {R.id.switch_1, R.id.switch_2, R.id.switch_3, R.id.switch_4, R.id.switch_5, R.id.switch_6, R.id.switch_7, R.id.switch_8, R.id.switch_9, R.id.switch_10, R.id.switch_11, R.id.switch_12, R.id.switch_13, R.id.switch_14, R.id.switch_15, R.id.switch_16};
@@ -169,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
         initSwitches();
         initSections();
         initUpdates();
-        applyMode();
     }
 
     private void initSwitches() {
@@ -275,15 +271,4 @@ public class MainActivity extends AppCompatActivity {
             handler.removeCallbacks(updateSwitchStates);
         }
     }
-
-    private void applyMode() {
-        TextView sectionTextView = findViewById(R.id.label_sections);
-        ScrollView sectionScrollView = findViewById(R.id.scrollView_sections);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        if (Objects.equals(sharedPreferences.getString("mode", "D"), "D")) {
-            sectionTextView.setVisibility(View.GONE);
-            sectionScrollView.setVisibility(View.GONE);
-        }
-    }
-
 }

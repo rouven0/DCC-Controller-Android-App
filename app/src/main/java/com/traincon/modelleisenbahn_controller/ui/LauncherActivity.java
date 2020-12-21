@@ -27,11 +27,9 @@ public class LauncherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_launcher);
         getSupportActionBar();
 
-        //Init Entries
         ipEntry = findViewById(R.id.ipEntry);
         portEntry = findViewById(R.id.portEntry);
 
-        //Load last values
         loadLastConnectedBoard(ipEntry, portEntry);
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -60,16 +58,11 @@ public class LauncherActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int itemId = item.getItemId();
-
-        //Loco
         if (item.getItemId() == R.id.action_locoList) {
             startActivity(new Intent(getBaseContext(), LocoConfigActivity.class));
         }
 
-        if (itemId == R.id.action_settings) {
-            startActivity(new Intent(getBaseContext(), SettingsActivity.class));
-        } else if (itemId == R.id.action_console) {
+        if (item.getItemId() == R.id.action_console) {
             try {
                 String host = Objects.requireNonNull(ipEntry.getText()).toString();
                 int port = Integer.parseInt(Objects.requireNonNull(portEntry.getText()).toString());

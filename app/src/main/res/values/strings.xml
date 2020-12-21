@@ -1,7 +1,6 @@
 <resources>
     <!-- Activity labels and App Name -->
     <string name="app_name" translatable="false">DCC-Controller</string>
-    <string name="label_activity_settings">Preferences</string>
     <string name="label_activity_console">Console</string>
     <string name="label_activity_controller_config">Configure</string>
     <string name="label_activity_loco_config">Edit Locos</string>
@@ -17,17 +16,6 @@
     <string name="input_ipEntry">Hostname</string>
     <string name="input_portEntry">Port</string>
     <string name="cp_Start" translatable="false">Start</string>
-
-    <!-- General preferences -->
-    <string name="preference_mode">Mode</string>
-    <string-array name="mode_entries">
-        <item>
-            Digital
-        </item>
-        <item>
-            Analog DCC (Virtual trains)
-        </item>
-    </string-array>
 
     <!-- Console Strings -->
     <string name="title_raw">All incoming</string>

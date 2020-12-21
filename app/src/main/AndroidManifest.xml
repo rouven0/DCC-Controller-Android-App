@@ -31,9 +31,6 @@
             android:name=".ui.MainActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".ui.SettingsActivity"
-            android:label="@string/label_activity_settings" />
-        <activity
             android:name=".ui.ConsoleActivity"
             android:label="@string/label_activity_console" />
     </application>

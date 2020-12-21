@@ -3,18 +3,6 @@ package com.traincon.CBusMessage;
 public class CBusMessage {
     public static final String[] NO_DATA = new String[0];
 
-    public String eventAddress;
-    public String[] data;
-
-    public CBusMessage(String event, String[] data) {
-        if (event.length() == 2) {
-            this.eventAddress = event;
-        } else {
-            this.eventAddress = getAddressByEvent(event);
-        }
-        this.data = data;
-    }
-
     public static String getAddressByEvent(String event) {
         return getEventStringArray()[indexOfEvent(event)][1];
     }
@@ -200,6 +188,18 @@ public class CBusMessage {
             }
         }
         return count;
+    }
+
+    private String eventAddress;
+    private String[] data;
+
+    public CBusMessage(String event, String[] data) {
+        if (event.length() == 2) {
+            this.eventAddress = event;
+        } else {
+            this.eventAddress = getAddressByEvent(event);
+        }
+        this.data = data;
     }
 
     public String getEventAddress() {
