@@ -140,6 +140,11 @@ public class MainActivity extends AppCompatActivity {
         handler.removeCallbacks(updateSwitchStates);
         handler.removeCallbacks(boardManager.getMessagesRunnable);
         handler.removeCallbacks(cbusUpdateRunnable);
+        try {
+            boardManager.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         super.onDestroy();
     }
 
