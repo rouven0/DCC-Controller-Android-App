@@ -190,6 +190,11 @@ public class ConsoleActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        try {
+            boardManager.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         handler.removeCallbacks(logUpdateRunnable);
     }
 }
