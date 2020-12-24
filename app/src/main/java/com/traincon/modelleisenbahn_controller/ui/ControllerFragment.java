@@ -150,7 +150,7 @@ public class ControllerFragment extends Fragment {
             functionButtons[i].setTextOn("F" + (i) + " " + functionButtons[i].getTextOn());
             functionButtons[i].setChecked(false);
             final int finalI = i;
-            functionButtons[i].setOnClickListener(v -> cab.setFunction(finalI + 1, functionButtons[finalI].isChecked()));
+            functionButtons[i].setOnClickListener(v -> cab.setFunction(finalI, functionButtons[finalI].isChecked()));
         }
     }
 

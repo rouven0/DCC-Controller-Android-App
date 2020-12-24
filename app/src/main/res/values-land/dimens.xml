@@ -2,4 +2,5 @@
 <resources>
     <dimen name="function_margin">60dp</dimen>
     <dimen name="action_margin">125dp</dimen>
+    <dimen name="seekbar_margin">50dp</dimen>
 </resources>

@@ -42,11 +42,11 @@ public class Cab {
                 if (i == 0) {
                     functions[i] = String.valueOf(byteCodes[0].charAt(4)).equals("1");
                 } else if (i < 5) {
-                    functions[i] = String.valueOf(byteCodes[0].charAt(i)).equals("1");
+                    functions[i] = String.valueOf(byteCodes[0].charAt(i-1)).equals("1");
                 } else if (i < 9) {
-                    functions[i] = String.valueOf(byteCodes[1].charAt(i - 4)).equals("1");
+                    functions[i] = String.valueOf(byteCodes[1].charAt(i - 5)).equals("1");
                 } else {
-                    functions[i] = String.valueOf(byteCodes[2].charAt(i - 8)).equals("1");
+                    functions[i] = String.valueOf(byteCodes[2].charAt(i - 9)).equals("1");
                 }
             }
         }

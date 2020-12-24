@@ -37,18 +37,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="40dp" />
+        android:layout_marginBottom="35dp" />
 
+    <!-- 3x3 Button Matrix-->
     <com.traincon.modelleisenbahn_controller.widget.TwoDirSeekBar
         android:id="@+id/seekBar"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/seekbar_margin"
         android:max="254"
         android:progress="128"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- 3x3 Button Matrix-->
     <include
         layout="@layout/content_controller_function_buttons"
         android:layout_width="match_parent"
