@@ -249,6 +249,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case "NVANS":
                     accessoryController.onReceiveSwitchStates(cbusMessage);
+                    messagesToRemove.add(cbusMessage);
                     break;
                 default:
                     messagesToRemove.add(cbusMessage);
