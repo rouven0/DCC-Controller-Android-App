@@ -3,6 +3,7 @@ package com.traincon.modelleisenbahn_controller.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,7 @@ import com.traincon.modelleisenbahn_controller.widget.TwoDirSeekBar;
 import java.util.List;
 
 public class ControllerFragment extends Fragment {
-    final int[] buttonIdArray = new int[]{R.id.button_f1, R.id.button_f2, R.id.button_f3, R.id.button_f4, R.id.button_f5, R.id.button_f6, R.id.button_f7, R.id.button_f8, R.id.button_f9};
+    private final int[] buttonIdArray = new int[]{R.id.button_f0, R.id.button_f1, R.id.button_f2, R.id.button_f3, R.id.button_f4, R.id.button_f5, R.id.button_f6, R.id.button_f7, R.id.button_f8, R.id.button_f9};
     private final ToggleButton[] functionButtons = new ToggleButton[buttonIdArray.length];
     private final String KEY_SELECTED_ITEM = "selectedItem";
     private Handler handler;
@@ -66,7 +67,7 @@ public class ControllerFragment extends Fragment {
         assert getArguments() != null;
         boardManager = getArguments().getParcelable("boardManager");
         assert boardManager != null;
-        handler = boardManager.getHandler();
+        handler = new Handler(Looper.getMainLooper());
         initCab();
         initUpdates();
     }
@@ -93,7 +94,6 @@ public class ControllerFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        cab.releaseSession();
         handler.removeCallbacks(keepAlive);
         super.onDestroy();
     }
@@ -146,8 +146,8 @@ public class ControllerFragment extends Fragment {
 
         for (int i = 0; i < functionButtons.length; i++) {
             functionButtons[i] = requireView().findViewById(buttonIdArray[i]);
-            functionButtons[i].setTextOff("F" + (i + 1) + " " + functionButtons[i].getTextOff());
-            functionButtons[i].setTextOn("F" + (i + 1) + " " + functionButtons[i].getTextOn());
+            functionButtons[i].setTextOff("F" + (i) + " " + functionButtons[i].getTextOff());
+            functionButtons[i].setTextOn("F" + (i) + " " + functionButtons[i].getTextOn());
             functionButtons[i].setChecked(false);
             final int finalI = i;
             functionButtons[i].setOnClickListener(v -> cab.setFunction(finalI + 1, functionButtons[finalI].isChecked()));
@@ -165,11 +165,25 @@ public class ControllerFragment extends Fragment {
         }
     }
 
-    public boolean sessionAllocated(CBusMessage message) {
-        boolean success = cab.sessionAllocated(message);
+    public boolean onSessionAllocated(CBusMessage message) {
+        boolean success = cab.onSessionAllocated(message);
         sessionSwitch.setChecked(success);
-        controllerSeekBar.setValue(cab.getSpeedDir());
+        if (success) {
+            controllerSeekBar.setValue(cab.getSpeedDir());
+            for (int i = 0; i < functionButtons.length; i++) {
+                functionButtons[i].setChecked(cab.getFunctions()[i]);
+            }
+        }
         return success;
+    }
+
+    public boolean onSessionCancelled(CBusMessage cBusMessage) {
+        if (cBusMessage.getData()[0].equals(cab.getSession())) {
+            sessionSwitch.setChecked(false);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void displayEstop() {
@@ -206,4 +220,7 @@ public class ControllerFragment extends Fragment {
         }
     }
 
+    public Cab getCab() {
+        return cab;
+    }
 }

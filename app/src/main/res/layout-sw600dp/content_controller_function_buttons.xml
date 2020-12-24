@@ -16,7 +16,7 @@
             style="?buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textOn="@string/action_f1" />
+            android:text="@string/action_f1" />
 
         <ToggleButton
             android:id="@+id/button_f4"

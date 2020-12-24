@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="48dp">
 
         <Spinner
             android:id="@+id/spinner"
@@ -16,17 +17,19 @@
             android:spinnerMode="dropdown"
             app:layout_constraintEnd_toStartOf="@id/sessionSwitch"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/sessionSwitch"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="end"
             android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/spinner"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -39,7 +42,7 @@
     <com.traincon.modelleisenbahn_controller.widget.TwoDirSeekBar
         android:id="@+id/seekBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_gravity="center"
         android:max="254"
         android:progress="128"
@@ -53,14 +56,35 @@
         android:layout_gravity="center_vertical"
         android:layout_marginTop="@dimen/function_margin"/>
 
-    <Button
-        android:id="@+id/button_idle"
-        style="?buttonBarButtonStyle"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/action_margin"
-        android:text="@string/action_idle" />
+        android:layout_marginTop="@dimen/action_margin">
+
+        <ToggleButton
+            android:id="@+id/button_f0"
+            style="?buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/action_f0" />
+
+        <Button
+            android:id="@+id/button_idle"
+            style="?buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="@string/action_idle" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/message_estop"
@@ -70,7 +94,7 @@
         android:layout_gravity="center"
         android:visibility="gone"
         android:textColor="@android:color/white"
-        android:textSize="40sp"
+        android:textSize="30sp"
         android:textAllCaps="true"
         android:textAlignment="center"
         android:textStyle="bold"

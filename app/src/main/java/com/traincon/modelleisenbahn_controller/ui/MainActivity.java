@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +25,6 @@ import com.traincon.modelleisenbahn_controller.BoardManager;
 import com.traincon.modelleisenbahn_controller.Cab;
 import com.traincon.modelleisenbahn_controller.R;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         boardManager = new BoardManager(host, port);
         boardManager.connect();
-        boardManager.startFrameListener();
+        boardManager.onStartFrameListener();
 
         handler = boardManager.getHandler();
         accessoryController = new AccessoryController(boardManager);
@@ -110,11 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Reconnect
         if (item.getItemId() == R.id.action_reconnect) {
-            try {
-                boardManager.disconnect();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            boardManager.disconnect();
             boardManager.connect();
         }
 
@@ -138,13 +132,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         handler.removeCallbacks(updateSwitchStates);
-        handler.removeCallbacks(boardManager.getMessagesRunnable);
-        handler.removeCallbacks(cbusUpdateRunnable);
+        for (Fragment fragment : controllers){
+            ((ControllerFragment) fragment).getCab().releaseSession();
+        }
+        //Wait until all sessions are released
         try {
-            boardManager.disconnect();
-        } catch (IOException e) {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        handler.removeCallbacks(cbusUpdateRunnable);
+        boardManager.onStopFrameListener();
+        boardManager.disconnect();
         super.onDestroy();
     }
 
@@ -160,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
             //Destroy controller 2 and 3 because they are not shown in portrait mode
             if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && i != 0) {
                 try {
-
                     controllers[i].onDestroy();
                 } catch (NullPointerException e) {
                     e.printStackTrace();
@@ -197,34 +195,8 @@ public class MainActivity extends AppCompatActivity {
         cbusUpdateRunnable = new Runnable() {
             @Override
             public void run() {
-                List<CBusMessage> receivedMessages = boardManager.getReceivedMessages();
-                List<CBusMessage> messagesToRemove = new ArrayList<>();
-                for (CBusMessage cbusMessage : receivedMessages) {
-                    Log.d("TAG", "run: " + cbusMessage.getEvent());
-                    switch (cbusMessage.getEvent()) {
-                        case "ESTOP":
-                            for (Fragment fragment : controllers) {
-                                ControllerFragment controllerFragment = (ControllerFragment) fragment;
-                                controllerFragment.displayEstop();
-                            }
-                            messagesToRemove.add(cbusMessage);
-                            break;
-                        case "PLOC":
-                            for (Fragment fragment : controllers) {
-                                ControllerFragment controllerFragment = (ControllerFragment) fragment;
-                                if (controllerFragment.sessionAllocated(cbusMessage)) {
-                                    messagesToRemove.add(cbusMessage);
-                                }
-                            }
-                        default:
-                            messagesToRemove.add(cbusMessage);
-                    }
-                }
-                for (CBusMessage messageToRemove : messagesToRemove) {
-                    receivedMessages.remove(messageToRemove);
-                }
-                messagesToRemove.clear();
-                handler.postDelayed(this, 1000);
+                processCbusMessages();
+                handler.postDelayed(this, 200);
             }
         };
         handler.post(cbusUpdateRunnable);
@@ -233,14 +205,7 @@ public class MainActivity extends AppCompatActivity {
         updateSwitchStates = new Runnable() {
             @Override
             public void run() {
-                Thread thread = new Thread(() -> {
-                    try {
-                        accessoryController.requestSwitchStates();
-                    } catch (InterruptedException | IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-                thread.start();
+                accessoryController.requestSwitchStates();
                 for (int i = 0; i < accessoryController.switchStates.length; i++) {
                     switches[i].setChecked(accessoryController.switchStates[i]);
                 }
@@ -251,6 +216,49 @@ public class MainActivity extends AppCompatActivity {
                 handler.postDelayed(this, 1000);
             }
         };
+    }
+
+    private void processCbusMessages(){
+        List<CBusMessage> receivedMessages = boardManager.getReceivedMessages();
+        List<CBusMessage> messagesToRemove = new ArrayList<>();
+        for (CBusMessage cbusMessage : receivedMessages) {
+            switch (cbusMessage.getEvent()) {
+                case "ESTOP":
+                    for (Fragment fragment : controllers) {
+                        ((ControllerFragment) fragment).displayEstop();
+                    }
+                    messagesToRemove.add(cbusMessage);
+                    break;
+                case "PLOC":
+                    for (Fragment fragment : controllers) {
+                        if (((ControllerFragment) fragment).onSessionAllocated(cbusMessage)) {
+                            messagesToRemove.add(cbusMessage);
+                        }
+                    }
+
+                case "ERR":
+                    if(cbusMessage.getData()[2].equals("08")){
+                        for(Fragment fragment :  controllers){
+                            if(((ControllerFragment) fragment).onSessionCancelled(cbusMessage)){
+                                messagesToRemove.add(cbusMessage);
+                            }
+                        }
+                    } else {
+                        messagesToRemove.add(cbusMessage);
+                    }
+                    break;
+                case "NVANS":
+                    accessoryController.onReceiveSwitchStates(cbusMessage);
+                    break;
+                default:
+                    messagesToRemove.add(cbusMessage);
+            }
+        }
+
+        for (CBusMessage messageToRemove : messagesToRemove) {
+            receivedMessages.remove(messageToRemove);
+        }
+        messagesToRemove.clear();
     }
 
     private void updateLayout() {

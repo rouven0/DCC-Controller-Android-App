@@ -86,7 +86,7 @@ public class ConsoleActivity extends AppCompatActivity {
         final ScrollView processedLogScrollView = findViewById(R.id.scrollView_processed);
         final TextView rawLogTextView = findViewById(R.id.log_raw);
         final TextView processedLogTextView = findViewById(R.id.log_processed);
-        handler = new Handler(getBaseContext().getMainLooper());
+        handler = new Handler(getMainLooper());
         logUpdateRunnable = new Runnable() {
             @Override
             public void run() {
@@ -152,7 +152,7 @@ public class ConsoleActivity extends AppCompatActivity {
         FloatingActionButton sendButton = findViewById(R.id.fab_send);
         sendButton.setOnClickListener(view -> {
             updateMessage();
-            boardManager.send((new CBusAsciiMessageBuilder().build(currentCBusMessage)));
+            boardManager.send((CBusAsciiMessageBuilder.build(currentCBusMessage)));
             //Save the message
             for (int i = 0; i < lastPartialMessage.length; i++) {
                 lastPartialMessage[i] = currentPartialMessage[i].getText().toString();
@@ -170,7 +170,7 @@ public class ConsoleActivity extends AppCompatActivity {
         }
         currentCBusMessage.setEvent(currentPartialMessage[0].getText().toString());
         currentCBusMessage.setData(data);
-        currentMessage.setText((new CBusAsciiMessageBuilder()).build(currentCBusMessage));
+        currentMessage.setText(CBusAsciiMessageBuilder.build(currentCBusMessage));
     }
 
     private void clearInput() {
@@ -190,11 +190,7 @@ public class ConsoleActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        try {
-            boardManager.disconnect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        boardManager.disconnect();
         handler.removeCallbacks(logUpdateRunnable);
     }
 }

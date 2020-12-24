@@ -17,30 +17,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
-
 public class BoardManager implements Parcelable {
-    public final String host;
-    public final int port;
-    public Runnable getMessagesRunnable;
-
-    private Socket mainSocket;
-    private DataInputStream socketInputStream;
-    private DataOutputStream socketOutputStream;
-
-    private final List<CBusMessage> receivedMessages = new ArrayList<>();
-    private final Handler handler = new Handler(Looper.getMainLooper());
-
-    public BoardManager(String host, int port) {
-        this.host = host;
-        this.port = port;
-    }
-
-    protected BoardManager(Parcel in) {
-        host = in.readString();
-        port = in.readInt();
-    }
-
     public static final Creator<BoardManager> CREATOR = new Creator<BoardManager>() {
         @Override
         public BoardManager createFromParcel(Parcel in) {
@@ -52,13 +29,28 @@ public class BoardManager implements Parcelable {
             return new BoardManager[size];
         }
     };
+    public final String host;
+    public final int port;
+    private final List<CBusMessage> receivedMessages = new ArrayList<>();
+    private final Handler handler = new Handler(Looper.getMainLooper());
+    private final String TAG = "DCC-Controller: Network: ";
+    public Runnable getMessagesRunnable;
+    private Socket mainSocket;
+    private DataInputStream socketInputStream;
+    private DataOutputStream socketOutputStream;
+
+    public BoardManager(String host, int port) {
+        this.host = host;
+        this.port = port;
+    }
+
+    protected BoardManager(Parcel in) {
+        host = in.readString();
+        port = in.readInt();
+    }
 
     public void connect() {
         Log.v(TAG, "Trying to connect");
-        //disconnect in case of failed destruction
-        try {
-            disconnect();
-        } catch (IOException | NullPointerException ignore) {}
         new Thread(() -> {
             try {
                 mainSocket = new Socket();
@@ -72,7 +64,16 @@ public class BoardManager implements Parcelable {
         }).start();
     }
 
-    public void startFrameListener() {
+    public void disconnect() {
+        try {
+            mainSocket.close();
+            Log.v(TAG, "disconnected");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void onStartFrameListener() {
         getMessagesRunnable = new Runnable() {
             @Override
             public void run() {
@@ -82,22 +83,23 @@ public class BoardManager implements Parcelable {
                     //Divide it
                     String[] receivedFrames = receivedCharacters.split(";");
                     //Add messages to the list
-                    for(String frame : receivedFrames){
-                        if(!frame.equals("")){
+                    for (String frame : receivedFrames) {
+                        if (!frame.equals("")) {
                             CBusMessage receivedMessage = getReceivedCBusMessage(frame);
-                            Log.v(TAG, "received Event: "+ receivedMessage.getEvent());
+                            Log.v(TAG, "received Event: " + receivedMessage.getEvent());
                             receivedMessages.add(receivedMessage);
                         }
                     }
-                } catch (InterruptedException | IOException | StringIndexOutOfBoundsException | NullPointerException ignored) { }
-                handler.postDelayed(this, 1000);
+                } catch (InterruptedException | IOException | StringIndexOutOfBoundsException | NullPointerException ignored) {
+                }
+                handler.postDelayed(this, 100);
             }
         };
         handler.post(getMessagesRunnable);
     }
 
-    public void disconnect() throws IOException {
-        mainSocket.close();
+    public void onStopFrameListener() {
+        handler.removeCallbacks(getMessagesRunnable);
     }
 
     public void send(final String message) {
@@ -105,20 +107,20 @@ public class BoardManager implements Parcelable {
             try {
                 byte[] bMessage = message.getBytes(StandardCharsets.UTF_8);
                 socketOutputStream.write(bMessage);
-                Log.v(TAG, "send: "+ message + getReceivedCBusMessage(message).getEvent());
+                Log.v(TAG, "send: " + message + getReceivedCBusMessage(message).getEvent());
             } catch (IOException | NullPointerException ignored) {
-                Log.v(TAG, "Failed to send a frame: "+ message + getReceivedCBusMessage(message).getEvent());
+                Log.v(TAG, "Failed to send a frame: " + message + getReceivedCBusMessage(message).getEvent());
             }
 
         });
         thread.start();
     }
 
-    public CBusMessage getReceivedCBusMessage(String receivedFrame){
-        String event = receivedFrame.substring(7,9);
-        String[] data = new String[receivedFrame.substring(9).length()/2];
-        for(int i=0; i<data.length; i++){
-            data[i] = receivedFrame.substring(9+(2*i), 11+(2*i));
+    public CBusMessage getReceivedCBusMessage(String receivedFrame) {
+        String event = receivedFrame.substring(7, 9);
+        String[] data = new String[receivedFrame.substring(9).length() / 2];
+        for (int i = 0; i < data.length; i++) {
+            data[i] = receivedFrame.substring(9 + (2 * i), 11 + (2 * i));
         }
         return new CBusMessage(event, data);
     }
@@ -142,7 +144,7 @@ public class BoardManager implements Parcelable {
         });
         thread.start();
         thread.join();
-        Log.v(TAG, "received: length="+ length + " message: "+ message[0]);
+        Log.v(TAG, "received: length=" + length + " message: " + message[0]);
         return message[0];
     }
 

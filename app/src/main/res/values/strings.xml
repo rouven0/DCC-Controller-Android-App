@@ -44,6 +44,7 @@
 
     <!-- MainActivity -->
     <string name="action_idle" translatable="false">Idle</string>
+    <string name="action_f0" translatable="false">F0</string>
     <string name="action_f1" translatable="false">F1</string>
     <string name="action_f2" translatable="false">F2</string>
     <string name="action_f3" translatable="false">F3</string>
