@@ -110,18 +110,18 @@ public class ConsoleActivity extends AppCompatActivity {
                             //raw string
                             String combinedLog = oldLog + "\n" + frame;
                             rawLogTextView.setText(combinedLog);
-                            rawLogScrollView.fullScroll(View.FOCUS_DOWN);
+                            rawLogScrollView.postDelayed(() -> rawLogScrollView.fullScroll(View.FOCUS_DOWN), 300);
                             //processed string
                             String combinedLog_processed = oldLog_processed + "\n" + getResources().getString(R.string.info_event) + " " + boardManager.getReceivedCBusMessage(frame).getEvent() + ", " + getResources().getString(R.string.info_data) + " " + Arrays.toString(boardManager.getReceivedCBusMessage(frame).getData());
                             processedLogTextView.setText(combinedLog_processed);
-                            processedLogScrollView.fullScroll(View.FOCUS_DOWN);
+                            processedLogScrollView.postDelayed(() -> processedLogScrollView.fullScroll(View.FOCUS_DOWN), 300);
                         }
                     }
 
                 } catch (InterruptedException | IOException e) {
                     e.printStackTrace();
                 }
-                handler.postDelayed(this, 10);
+                handler.postDelayed(this, 350);
             }
         };
         handler.post(logUpdateRunnable);

@@ -33,7 +33,7 @@ public class BoardManager implements Parcelable {
     public final int port;
     private final List<CBusMessage> receivedMessages = new ArrayList<>();
     private final Handler handler = new Handler(Looper.getMainLooper());
-    private final String TAG = "DCC-Controller: Network: ";
+    private final String TAG = "DCC-Controller: Network";
     public Runnable getMessagesRunnable;
     private Socket mainSocket;
     private DataInputStream socketInputStream;
