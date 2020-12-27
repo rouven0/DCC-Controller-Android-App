@@ -220,46 +220,36 @@ public class MainActivity extends AppCompatActivity {
 
     private void processCbusMessages(){
         List<CBusMessage> receivedMessages = boardManager.getReceivedMessages();
-        List<CBusMessage> messagesToRemove = new ArrayList<>();
         for (CBusMessage cbusMessage : receivedMessages) {
             switch (cbusMessage.getEvent()) {
                 case "ESTOP":
                     for (Fragment fragment : controllers) {
                         ((ControllerFragment) fragment).displayEstop();
                     }
-                    messagesToRemove.add(cbusMessage);
                     break;
                 case "PLOC":
                     for (Fragment fragment : controllers) {
                         if (((ControllerFragment) fragment).onSessionAllocated(cbusMessage)) {
-                            messagesToRemove.add(cbusMessage);
+                            break;
                         }
                     }
+                    break;
 
                 case "ERR":
                     if(cbusMessage.getData()[2].equals("08")){
                         for(Fragment fragment :  controllers){
                             if(((ControllerFragment) fragment).onSessionCancelled(cbusMessage)){
-                                messagesToRemove.add(cbusMessage);
+                                break;
                             }
                         }
-                    } else {
-                        messagesToRemove.add(cbusMessage);
                     }
                     break;
                 case "NVANS":
                     accessoryController.onReceiveSwitchStates(cbusMessage);
-                    messagesToRemove.add(cbusMessage);
                     break;
-                default:
-                    messagesToRemove.add(cbusMessage);
             }
         }
-
-        for (CBusMessage messageToRemove : messagesToRemove) {
-            receivedMessages.remove(messageToRemove);
-        }
-        messagesToRemove.clear();
+        receivedMessages.clear();
     }
 
     private void updateLayout() {

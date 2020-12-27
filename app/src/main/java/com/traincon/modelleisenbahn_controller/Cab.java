@@ -7,7 +7,7 @@ public class Cab {
     private final BoardManager boardManager;
     private final boolean[] functions = new boolean[12];
     boolean isSession = false;
-    int locoAddress = 0;
+    int locoAddress;
     private String session;
     private String speedDir = "00";
 
@@ -58,6 +58,7 @@ public class Cab {
             boardManager.send(CBusAsciiMessageBuilder.build(new CBusMessage("KLOC", new String[]{session})));
             isSession = false;
             session = null;
+            locoAddress = 0;
         }
     }
 
