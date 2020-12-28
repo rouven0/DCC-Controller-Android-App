@@ -34,10 +34,12 @@
     <string name="input_rawMessage">Message</string>
     <string name="cp_send">Send frame</string>
     <string name="action_playPause" translatable="false">Play/Pause</string>
+    <string name="action_clear">Clear</string>
 
     <!-- Strings for the Menu-->
     <string name="action_light">Light</string>
     <string name="action_config">Configure</string>
+    <string name="action_reset" translatable="false">Reset</string>
     <string name="action_reconnect">Reconnect</string>
     <string name="action_estop">Emergency stop</string>
     <string name="action_exit">Exit</string>

@@ -25,7 +25,6 @@ import com.traincon.modelleisenbahn_controller.BoardManager;
 import com.traincon.modelleisenbahn_controller.Cab;
 import com.traincon.modelleisenbahn_controller.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -104,6 +103,11 @@ public class MainActivity extends AppCompatActivity {
         //Loco
         if (item.getItemId() == R.id.action_locoList) {
             startActivity(new Intent(getBaseContext(), LocoConfigActivity.class));
+        }
+
+        //Reset
+        if(item.getItemId() == R.id.action_reset){
+            Cab.reset(boardManager);
         }
 
         //Reconnect

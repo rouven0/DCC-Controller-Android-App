@@ -20,6 +20,10 @@ public class Cab {
         boardManager.send(CBusAsciiMessageBuilder.build(new CBusMessage("RESTP", CBusMessage.NO_DATA)));
     }
 
+    public static void reset(BoardManager boardManager){
+        boardManager.send(CBusAsciiMessageBuilder.build(new CBusMessage("ARST", CBusMessage.NO_DATA)));
+    }
+
     public void allocateSession(final int locoAddress) {
         this.locoAddress = locoAddress;
         boardManager.send(CBusAsciiMessageBuilder.build(new CBusMessage("RLOC", getHexAddress(locoAddress))));

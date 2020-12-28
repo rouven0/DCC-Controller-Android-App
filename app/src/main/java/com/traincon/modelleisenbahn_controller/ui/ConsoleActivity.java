@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +37,12 @@ public class ConsoleActivity extends AppCompatActivity {
     private Runnable logUpdateRunnable;
     private boolean isRunning = true;
 
+    private TextView rawLogTextView;
+    private TextView processedLogTextView;
+
+    private final String KEY_LOG_RAW = "logText_raw";
+    private final String KEY_LOG_PROCESSED = "logText_processed";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +56,15 @@ public class ConsoleActivity extends AppCompatActivity {
         int port = intent.getIntExtra("port", 0);
         boardManager = new BoardManager(host, port);
         boardManager.connect();
-        initLog();
+        initLog(savedInstanceState);
         initSendRow();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(KEY_LOG_RAW, rawLogTextView.getText().toString());
+        outState.putString(KEY_LOG_PROCESSED, processedLogTextView.getText().toString());
     }
 
     @Override
@@ -65,10 +79,14 @@ public class ConsoleActivity extends AppCompatActivity {
             super.onBackPressed();
             return true;
         }
+
+        if(item.getItemId() == R.id.action_clear){
+            clear();
+        }
+
         if (item.getItemId() == R.id.action_playPause && isRunning) {
             handler.removeCallbacks(logUpdateRunnable);
             isRunning = false;
-
             item.setIcon(R.drawable.ic_baseline_play_arrow_24);
             return true;
         } else if (item.getItemId() == R.id.action_playPause && !isRunning) {
@@ -81,11 +99,15 @@ public class ConsoleActivity extends AppCompatActivity {
     }
 
     //Log functions
-    private void initLog() {
+    private void initLog(Bundle savedInstanceState) {
         final ScrollView rawLogScrollView = findViewById(R.id.scrollView_raw);
         final ScrollView processedLogScrollView = findViewById(R.id.scrollView_processed);
-        final TextView rawLogTextView = findViewById(R.id.log_raw);
-        final TextView processedLogTextView = findViewById(R.id.log_processed);
+        rawLogTextView = findViewById(R.id.log_raw);
+        processedLogTextView = findViewById(R.id.log_processed);
+        if(savedInstanceState != null){
+            rawLogTextView.setText(savedInstanceState.getString(KEY_LOG_RAW));
+            processedLogTextView.setText(savedInstanceState.getString(KEY_LOG_PROCESSED));
+        }
         handler = new Handler(getMainLooper());
         logUpdateRunnable = new Runnable() {
             @Override
@@ -125,6 +147,11 @@ public class ConsoleActivity extends AppCompatActivity {
             }
         };
         handler.post(logUpdateRunnable);
+    }
+
+    public void clear(){
+        rawLogTextView.setText("");
+        processedLogTextView.setText("");
     }
 
     //Functions to send messages

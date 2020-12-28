@@ -22,6 +22,7 @@
     <string name="input_rawMessage">Nachricht</string>
     <string name="contentDescription_arrow">Pfeil nach rechts</string>
     <string name="cp_send">Frame senden</string>
+    <string name="action_clear">Alles Löschen</string>
 
     <!-- Strings for the menu-->
     <string name="action_light">Licht</string>
