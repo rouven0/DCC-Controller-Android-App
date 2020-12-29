@@ -83,7 +83,7 @@ public class Cab {
     }
 
     public void setSpeedDir(int targetSpeedDir) {
-        if (isSession) {
+        if (isSession && Math.abs(targetSpeedDir) != 1) {
             if (targetSpeedDir > 0) {
                 targetSpeedDir = targetSpeedDir + 128;
             }
@@ -96,6 +96,10 @@ public class Cab {
         setSpeedDir(0);
     }
 
+    public void stop(){
+        setSpeedDir(1);
+    }
+
     public void setFunction(int number, boolean targetState) {
         functions[number] = targetState;
         if (targetState) {
@@ -106,9 +110,14 @@ public class Cab {
     }
 
     private String[] getHexAddress(int address) {
-        //set the highest 2 bits to 1 with 2^15 + 2^14; The address input will be limited to 2*14 (16383)
-        address = address + 49152;
-        String hexAddress = Integer.toHexString(address).toUpperCase();
+        if(address > 127){
+            //set the highest 2 bits to 1 with 2^15 + 2^14; The address input will be limited to 2*14 (16383)
+            address = address + 49152;
+        }
+        StringBuilder hexAddress = new StringBuilder(Integer.toHexString(address).toUpperCase());
+        while(hexAddress.length() < 4){
+            hexAddress.insert(0, "0");
+        }
         return new String[]{hexAddress.substring(0, 2), hexAddress.substring(2)};
     }
 

@@ -47,6 +47,7 @@ public class ControllerFragment extends Fragment {
     private List<Loco> locos;
     private Spinner spinner;
     private Bundle savedInstanceState;
+    private boolean deletionInLocos = false;
 
     public ControllerFragment() {
         // Required empty public constructor
@@ -75,12 +76,8 @@ public class ControllerFragment extends Fragment {
     @Override
     public void onResume() {
         loadSpinnerItems();
-        if (savedInstanceState != null && cab.getSession() == null) {
-            try {
-                spinner.setSelection(savedInstanceState.getInt(KEY_SELECTED_ITEM));
-            } catch (IndexOutOfBoundsException ignored) {
-            }
-
+        if (savedInstanceState != null && !deletionInLocos) {
+            spinner.setSelection(savedInstanceState.getInt(KEY_SELECTED_ITEM));
         }
 
         super.onResume();
@@ -105,6 +102,7 @@ public class ControllerFragment extends Fragment {
         seekBarTextView = requireView().findViewById(R.id.sText);
         seekBarTextView.setText("0");
         Button idleButton = requireView().findViewById(R.id.button_idle);
+        Button stopButton = requireView().findViewById(R.id.button_stop);
         loadSpinnerItems();
         cab = new Cab(boardManager);
 
@@ -144,6 +142,11 @@ public class ControllerFragment extends Fragment {
             controllerSeekBar.setValue(0);
         });
 
+        stopButton.setOnClickListener(v -> {
+            cab.stop();
+            controllerSeekBar.setValue(0);
+        });
+
         for (int i = 0; i < functionButtons.length; i++) {
             functionButtons[i] = requireView().findViewById(buttonIdArray[i]);
             functionButtons[i].setTextOff("F" + (i) + " " + functionButtons[i].getTextOff());
@@ -155,10 +158,15 @@ public class ControllerFragment extends Fragment {
     }
 
     private void loadSpinnerItems() {
+        deletionInLocos = false;
+        List<Loco> oldLocos = locos;
         Thread thread = new Thread(() -> locos = database.locoDao().getAll());
         thread.start();
         try {
             thread.join();
+            if(oldLocos!=null && locos.size()<oldLocos.size()){
+                deletionInLocos = true;
+            }
             spinner.setAdapter(new DatabaseSpinnerAdapter(getContext(), locos));
         } catch (InterruptedException e) {
             e.printStackTrace();

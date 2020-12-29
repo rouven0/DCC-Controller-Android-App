@@ -42,6 +42,7 @@
     <string name="action_reset" translatable="false">Reset</string>
     <string name="action_reconnect">Reconnect</string>
     <string name="action_estop">Emergency stop</string>
+    <string name="action_stop" translatable="false">Stop</string>
     <string name="action_exit">Exit</string>
 
     <!-- MainActivity -->
