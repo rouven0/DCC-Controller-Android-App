@@ -4,7 +4,7 @@ public class CBusMessage {
     public static final String[] NO_DATA = new String[0];
 
     public static String getAddressByEvent(String event) {
-        return getEventStringArray()[indexOfEvent(event)][1];
+        return getEventStringArray()[indexOfEvent(event.toUpperCase())][1];
     }
 
     public static String getEventByAddress(String address) {

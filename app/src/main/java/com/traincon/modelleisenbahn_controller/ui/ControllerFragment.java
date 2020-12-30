@@ -48,6 +48,8 @@ public class ControllerFragment extends Fragment {
     private Spinner spinner;
     private Bundle savedInstanceState;
     private boolean deletionInLocos = false;
+    private boolean paused = false;
+    private int selectedSpinnerItem = 0;
 
     public ControllerFragment() {
         // Required empty public constructor
@@ -79,8 +81,17 @@ public class ControllerFragment extends Fragment {
         if (savedInstanceState != null && !deletionInLocos) {
             spinner.setSelection(savedInstanceState.getInt(KEY_SELECTED_ITEM));
         }
-
+        if(paused){
+            spinner.setSelection(selectedSpinnerItem);
+        }
         super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        selectedSpinnerItem = spinner.getSelectedItemPosition();
+        paused = true;
+        super.onPause();
     }
 
     @Override
