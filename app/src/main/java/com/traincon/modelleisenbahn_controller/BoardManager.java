@@ -144,7 +144,9 @@ public class BoardManager implements Parcelable {
         });
         thread.start();
         thread.join();
-        Log.v(TAG, "received: length=" + length + " message: " + message[0]);
+        if(length != 0){
+            Log.v(TAG, "received: length=" + length + " message: " + message[0]);
+        }
         return message[0];
     }
 

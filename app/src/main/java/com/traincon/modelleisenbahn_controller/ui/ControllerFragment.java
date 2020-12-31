@@ -184,7 +184,7 @@ public class ControllerFragment extends Fragment {
         }
     }
 
-    public boolean onSessionAllocated(CBusMessage message) {
+    public void onSessionAllocated(CBusMessage message) {
         boolean success = cab.onSessionAllocated(message);
         sessionSwitch.setChecked(success);
         if (success) {
@@ -193,7 +193,6 @@ public class ControllerFragment extends Fragment {
                 functionButtons[i].setChecked(cab.getFunctions()[i]);
             }
         }
-        return success;
     }
 
     public boolean onSessionCancelled(CBusMessage cBusMessage) {

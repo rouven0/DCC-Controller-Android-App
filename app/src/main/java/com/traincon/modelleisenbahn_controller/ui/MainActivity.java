@@ -224,9 +224,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case "PLOC":
                     for (Fragment fragment : controllers) {
-                        if (((ControllerFragment) fragment).onSessionAllocated(cbusMessage)) {
-                            break;
-                        }
+                        ((ControllerFragment) fragment).onSessionAllocated(cbusMessage);
                     }
                     break;
 
