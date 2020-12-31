@@ -97,7 +97,7 @@ public class Cab {
     }
 
     public void stop(){
-        setSpeedDir(1);
+        boardManager.send(CBusAsciiMessageBuilder.build(new CBusMessage("DSPD", new String[]{session, "01"})));
     }
 
     public void setFunction(int number, boolean targetState) {
