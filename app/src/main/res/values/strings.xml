@@ -46,6 +46,9 @@
     <string name="action_exit">Exit</string>
 
     <!-- MainActivity -->
+    <string name="tab_cab_1" translatable="false">Cab 1</string>
+    <string name="tab_cab_2" translatable="false">Cab 2</string>
+    <string name="tab_cab_3" translatable="false">Cab 3</string>
     <string name="action_idle" translatable="false">Idle</string>
     <string name="action_f0" translatable="false">F0</string>
     <string name="action_f1" translatable="false">F1</string>

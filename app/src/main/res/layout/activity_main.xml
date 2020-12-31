@@ -1,37 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.MainActivity"
+    android:orientation="vertical">
 
-    <!--Only one Cab will be visible -->
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/con1"
-        android:tag="c1"
-        android:name="com.traincon.modelleisenbahn_controller.ui.ControllerFragment"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/cabSelection"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_height="wrap_content">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/con2"
-        android:tag="c2"
-        android:name="com.traincon.modelleisenbahn_controller.ui.ControllerFragment"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:visibility="gone"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tab_cab_1"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tab_cab_2"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tab_cab_3"/>
+    </com.google.android.material.tabs.TabLayout>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/con3"
-        android:tag="c3"
-        android:name="com.traincon.modelleisenbahn_controller.ui.ControllerFragment"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:visibility="gone"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/con1"
+            android:tag="c1"
+            android:name="com.traincon.modelleisenbahn_controller.ui.ControllerFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/con2"
+            android:tag="c2"
+            android:name="com.traincon.modelleisenbahn_controller.ui.ControllerFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/con3"
+            android:tag="c3"
+            android:name="com.traincon.modelleisenbahn_controller.ui.ControllerFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+    </FrameLayout>
     <include
         android:id="@+id/accessory"
         layout="@layout/content_main_accessory"
@@ -42,4 +64,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/con3"
         app:layout_constraintTop_toTopOf="parent" />
-</FrameLayout>
+</LinearLayout>

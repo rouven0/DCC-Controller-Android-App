@@ -6,8 +6,8 @@ android {
         applicationId "com.traincon.modelleisenbahn_controller"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 45
-        versionName '2.8.7'
+        versionCode 46
+        versionName '2.8.8'
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {

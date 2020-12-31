@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -15,9 +16,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 
+import com.google.android.material.tabs.TabLayout;
 import com.traincon.CBusMessage.CBusMessage;
 import com.traincon.modelleisenbahn_controller.AccessoryController;
 import com.traincon.modelleisenbahn_controller.BoardManager;
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private final String KEY_LIGHTSTATE = "lightState";
     private ConstraintLayout accessoryFrame;
     private Fragment[] controllers;
+    private FragmentContainerView[] cabContainers;
     private Menu menu;
     private Handler handler;
     private Runnable updateSwitchStates;
@@ -153,17 +157,55 @@ public class MainActivity extends AppCompatActivity {
     private void initLayout() {
         String[] controllerTags = new String[]{"c1", "c2", "c3"};
         controllers = new Fragment[controllerTags.length];
+
+        int[] containerTags = new int[]{R.id.con1, R.id.con2, R.id.con3};
+        cabContainers = new FragmentContainerView[containerTags.length];
+
         for (int i = 0; i < controllers.length; i++) {
             controllers[i] = fragmentManager.findFragmentByTag(controllerTags[i]);
             Bundle bundle = new Bundle();
             bundle.putParcelable("boardManager", boardManager);
             assert controllers[i] != null;
             controllers[i].setArguments(bundle);
+
+            cabContainers[i] = findViewById(containerTags[i]);
         }
         accessoryFrame = findViewById(R.id.accessory);
+        initTabs();
         initSwitches();
         initSections();
         initUpdates();
+    }
+
+    private void initTabs(){
+        TabLayout cabSelection = findViewById(R.id.cabSelection);
+        cabSelection.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                showCab(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
+    private void showCab(int cab){
+        for(int i=0; i<cabContainers.length; i++){
+            if(i==cab){
+                cabContainers[i].setVisibility(View.VISIBLE);
+                cabContainers[i].startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.nav_default_enter_anim));
+            } else {
+                cabContainers[i].setVisibility(View.GONE);
+            }
+        }
     }
 
     private void initSwitches() {
