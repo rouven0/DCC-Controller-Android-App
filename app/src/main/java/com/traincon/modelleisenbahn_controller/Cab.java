@@ -84,7 +84,7 @@ public class Cab {
 
     public void setSpeedDir(int targetSpeedDir) {
         if (isSession && Math.abs(targetSpeedDir) != 1) {
-            if (targetSpeedDir > 0) {
+            if (targetSpeedDir > -1) {
                 targetSpeedDir = targetSpeedDir + 128;
             }
             speedDir = Integer.toHexString(Math.abs(targetSpeedDir)).toUpperCase();
