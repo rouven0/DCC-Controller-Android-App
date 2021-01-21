@@ -85,7 +85,7 @@ public class BoardManager implements Parcelable {
                     //Add messages to the list
                     for (String frame : receivedFrames) {
                         if (!frame.equals("")) {
-                            CBusMessage receivedMessage = getReceivedCBusMessage(frame);
+                            CBusMessage receivedMessage = CBusMessage.getFromString(frame);
                             Log.v(TAG, "received Event: " + receivedMessage.getEvent());
                             receivedMessages.add(receivedMessage);
                         }
@@ -107,22 +107,13 @@ public class BoardManager implements Parcelable {
             try {
                 byte[] bMessage = message.getBytes(StandardCharsets.UTF_8);
                 socketOutputStream.write(bMessage);
-                Log.v(TAG, "send: " + message + getReceivedCBusMessage(message).getEvent());
+                Log.v(TAG, "send: " + message + CBusMessage.getFromString(message).getEvent());
             } catch (IOException | NullPointerException ignored) {
-                Log.v(TAG, "Failed to send a frame: " + message + getReceivedCBusMessage(message).getEvent());
+                Log.v(TAG, "Failed to send a frame: " + message + CBusMessage.getFromString(message).getEvent());
             }
 
         });
         thread.start();
-    }
-
-    public CBusMessage getReceivedCBusMessage(String receivedFrame) {
-        String event = receivedFrame.substring(7, 9);
-        String[] data = new String[receivedFrame.substring(9).length() / 2];
-        for (int i = 0; i < data.length; i++) {
-            data[i] = receivedFrame.substring(9 + (2 * i), 11 + (2 * i));
-        }
-        return new CBusMessage(event, data);
     }
 
     public List<CBusMessage> getReceivedMessages() {

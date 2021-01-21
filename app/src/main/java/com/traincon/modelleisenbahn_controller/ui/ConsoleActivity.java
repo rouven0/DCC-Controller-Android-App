@@ -134,7 +134,7 @@ public class ConsoleActivity extends AppCompatActivity {
                             rawLogTextView.setText(combinedLog);
                             rawLogScrollView.postDelayed(() -> rawLogScrollView.fullScroll(View.FOCUS_DOWN), 300);
                             //processed string
-                            String combinedLog_processed = oldLog_processed + "\n" + getResources().getString(R.string.info_event) + " " + boardManager.getReceivedCBusMessage(frame).getEvent() + ", " + getResources().getString(R.string.info_data) + " " + Arrays.toString(boardManager.getReceivedCBusMessage(frame).getData());
+                            String combinedLog_processed = oldLog_processed + "\n" + getResources().getString(R.string.info_event) + " " + CBusMessage.getFromString(frame).getEvent() + ", " + getResources().getString(R.string.info_data) + " " + Arrays.toString(CBusMessage.getFromString(frame).getData());
                             processedLogTextView.setText(combinedLog_processed);
                             processedLogScrollView.postDelayed(() -> processedLogScrollView.fullScroll(View.FOCUS_DOWN), 300);
                         }

@@ -3,15 +3,92 @@ package com.traincon.CBusMessage;
 public class CBusMessage {
     public static final String[] NO_DATA = new String[0];
 
-    public static String getAddressByEvent(String event) {
+    public static CBusMessage getFromString(String frame){
+        String event = frame.substring(7, 9);
+        String[] data = new String[frame.substring(9).length() / 2];
+        for (int i = 0; i < data.length; i++) {
+            data[i] = frame.substring(9 + (2 * i), 11 + (2 * i));
+        }
+        return new CBusMessage(event, data);
+    }
+
+    private String eventAddress;
+    private String[] data;
+
+    public CBusMessage(String event, String[] data) {
+        if (event.length() == 2) {
+            this.eventAddress = event;
+        } else {
+            this.eventAddress = getAddressByEvent(event);
+        }
+        this.data = data;
+    }
+
+    public String getEventAddress() {
+        return eventAddress;
+    }
+
+    public String getEvent() {
+        return getEventByAddress(eventAddress);
+    }
+
+    public void setEvent(String event) {
+        if (event.length() == 2) {
+            this.eventAddress = event;
+        } else {
+            this.eventAddress = getAddressByEvent(event);
+        }
+    }
+
+    public String[] getData() {
+        return data;
+    }
+
+    public void setData(String[] data) {
+        this.data = data;
+    }
+
+    private String getAddressByEvent(String event) {
         return getEventStringArray()[indexOfEvent(event.toUpperCase())][1];
     }
 
-    public static String getEventByAddress(String address) {
+    private String getEventByAddress(String address) {
         return getEventStringArray()[indexOfAddress(address)][0];
     }
 
-    private static String[][] getEventStringArray() {
+    private int indexOfEvent(String targetEvent) {
+        boolean found = false;
+        int count = 0;
+        while (!found) {
+            count = count + 1;
+            if (count == getEventStringArray().length) {
+                count = 0;
+                break;
+            }
+            if (getEventStringArray()[count][0].equals(targetEvent)) {
+                found = true;
+            }
+        }
+        return count;
+    }
+
+    private int indexOfAddress(String targetAddress) {
+        boolean found = false;
+        int count = 0;
+        while (!found) {
+            count = count + 1;
+            if (count == getEventStringArray().length - 1) {
+                count = 0;
+                break;
+            }
+            if (getEventStringArray()[count][1].equals(targetAddress)) {
+                found = true;
+            }
+        }
+        return count;
+    }
+
+    private String[][] getEventStringArray() {
         return new String[][]
                 {
                         //0 data bytes
@@ -155,74 +232,5 @@ public class CBusMessage {
                         {"ARSOF3", "FE"},
                         {"EXTC6", "FF"}
                 };
-    }
-
-    private static int indexOfEvent(String targetEvent) {
-        boolean found = false;
-        int count = 0;
-        while (!found) {
-            count = count + 1;
-            if (count == getEventStringArray().length) {
-                count = 0;
-                break;
-            }
-            if (getEventStringArray()[count][0].equals(targetEvent)) {
-                found = true;
-            }
-        }
-        return count;
-    }
-
-
-    private static int indexOfAddress(String targetAddress) {
-        boolean found = false;
-        int count = 0;
-        while (!found) {
-            count = count + 1;
-            if (count == getEventStringArray().length-1) {
-                count = 0;
-                break;
-            }
-            if (getEventStringArray()[count][1].equals(targetAddress)) {
-                found = true;
-            }
-        }
-        return count;
-    }
-
-    private String eventAddress;
-    private String[] data;
-
-    public CBusMessage(String event, String[] data) {
-        if (event.length() == 2) {
-            this.eventAddress = event;
-        } else {
-            this.eventAddress = getAddressByEvent(event);
-        }
-        this.data = data;
-    }
-
-    public String getEventAddress() {
-        return eventAddress;
-    }
-
-    public String getEvent(){
-        return getEventByAddress(eventAddress);
-    }
-
-    public void setEvent(String event) {
-        if (event.length() == 2) {
-            this.eventAddress = event;
-        } else {
-            this.eventAddress = getAddressByEvent(event);
-        }
-    }
-
-    public String[] getData() {
-        return data;
-    }
-
-    public void setData(String[] data) {
-        this.data = data;
     }
 }
