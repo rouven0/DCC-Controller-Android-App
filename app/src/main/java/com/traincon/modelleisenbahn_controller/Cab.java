@@ -3,11 +3,26 @@ package com.traincon.modelleisenbahn_controller;
 import com.traincon.CBusMessage.CBusAsciiMessageBuilder;
 import com.traincon.CBusMessage.CBusMessage;
 
+/**
+ * The cab is the controlling unit
+ * It is able to allocate a session and control any locos the command station can control
+ * It communicates with the boardManager and CBusMessages
+ * @see BoardManager
+ * @see CBusMessage
+ */
 public class Cab {
     private final BoardManager boardManager;
     private final boolean[] functions = new boolean[12];
-    boolean isSession = false;
+    boolean hasSession = false;
+
+    /**
+     * Address of the current controlled loco
+     */
     int locoAddress;
+
+    /**
+     * Session number for targeting the commands
+     */
     private String session;
     private String speedDir = "00";
 
@@ -16,24 +31,42 @@ public class Cab {
         this.boardManager = boardManager;
     }
 
+    /**
+     * Requests an emergency stop
+     * @param boardManager is required to send a message
+     */
     public static void estop(BoardManager boardManager) {
         boardManager.send(CBusAsciiMessageBuilder.build(new CBusMessage("RESTP", CBusMessage.NO_DATA)));
     }
 
+    /**
+     * Resets all nodes in case of a crash
+     * @param boardManager is required to send a message
+     */
     public static void reset(BoardManager boardManager){
         boardManager.send(CBusAsciiMessageBuilder.build(new CBusMessage("ARST", CBusMessage.NO_DATA)));
     }
 
+    /**
+     * Allocates a session to s specific loco
+     * With this session all commands are sent to the right loco
+     * @param locoAddress says which loco should be controlled
+     */
     public void allocateSession(final int locoAddress) {
         this.locoAddress = locoAddress;
         boardManager.send(CBusAsciiMessageBuilder.build(new CBusMessage("RLOC", getHexAddress(locoAddress))));
     }
 
+    /**
+     * This reads all data from the allocation message and applies it
+     * @param cBusMessage RLOC message received by the boardManager
+     * @return When the allocated session was requested by this cab the UI will show it
+     */
     public boolean onSessionAllocated(CBusMessage cBusMessage) {
         if (cBusMessage.getData()[1].equals(getHexAddress(locoAddress)[0]) && cBusMessage.getData()[2].equals(getHexAddress(locoAddress)[1])) {
             session = cBusMessage.getData()[0];
             speedDir = cBusMessage.getData()[3];
-            isSession = true;
+            hasSession = true;
             StringBuilder[] byteCodes = new StringBuilder[3];
             for (int i = 0; i < byteCodes.length; i++) {
                 byteCodes[i] = new StringBuilder(Integer.toBinaryString(Integer.parseInt(cBusMessage.getData()[4 + i], 16)));
@@ -54,24 +87,31 @@ public class Cab {
                 }
             }
         }
-        return isSession;
+        return hasSession;
     }
 
     public void releaseSession() {
-        if (isSession) {
+        if (hasSession) {
             boardManager.send(CBusAsciiMessageBuilder.build(new CBusMessage("KLOC", new String[]{session})));
-            isSession = false;
+            hasSession = false;
             session = null;
             locoAddress = 0;
         }
     }
 
+    /**
+     * Sends DKEEP frames to keep the session alive
+     * When something crashes and no DKEEP is received by the command station this session will be released
+     */
     public void keepAlive() {
-        if (isSession) {
+        if (hasSession) {
             boardManager.send(CBusAsciiMessageBuilder.build(new CBusMessage("DKEEP", new String[]{session})));
         }
     }
 
+    /**
+     * @return Returns the speedDir as an integer to display it in the UI
+     */
     public int getSpeedDir() {
         int intSpeedDir = Integer.valueOf(speedDir, 16);
         if (intSpeedDir > 127) {
@@ -82,8 +122,12 @@ public class Cab {
         return intSpeedDir;
     }
 
+    /**
+     * Sets the speedDir and sends it to the board
+     * @param targetSpeedDir speed that the Loco should have
+     */
     public void setSpeedDir(int targetSpeedDir) {
-        if (isSession && Math.abs(targetSpeedDir) != 1) {
+        if (hasSession && Math.abs(targetSpeedDir) != 1) {
             if (targetSpeedDir > -1) {
                 targetSpeedDir = targetSpeedDir + 128;
             }
@@ -92,6 +136,9 @@ public class Cab {
         }
     }
 
+    /**
+     * Stop with delay
+     */
     public void idle() {
         setSpeedDir(0);
     }
@@ -109,6 +156,12 @@ public class Cab {
         }
     }
 
+    /**
+     * This method converts the integer address to a Hex string
+     * When the int address is bigger that 127 (long address), the two highest bytes will be set 1
+     * @param address Integer address given by the user
+     * @return HexString for the CBUS protocol
+     */
     private String[] getHexAddress(int address) {
         if(address > 127){
             //set the highest 2 bits to 1 with 2^15 + 2^14; The address input will be limited to 2*14 (16383)

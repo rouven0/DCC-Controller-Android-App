@@ -1,6 +1,5 @@
 package com.traincon.modelleisenbahn_controller.database;
 
-
 import java.util.List;
 
 import androidx.room.Dao;
@@ -9,6 +8,9 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+/**
+ * @see Dao
+ */
 @Dao
 public interface LocoDao {
     @Query("SELECT * FROM loco")

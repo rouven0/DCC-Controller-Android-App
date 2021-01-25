@@ -50,6 +50,9 @@ public class LocoConfigActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Only leave the activity when the ListFragment is shown
+     */
     @Override
     public void onBackPressed() {
         if(Objects.requireNonNull(getSupportFragmentManager().getPrimaryNavigationFragment()).getChildFragmentManager().getFragments().get(0) instanceof LocoListFragment){

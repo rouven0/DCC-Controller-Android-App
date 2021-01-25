@@ -6,6 +6,11 @@ import android.util.AttributeSet;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+/**
+ * @see androidx.appcompat.widget.AppCompatSeekBar
+ * This widget is a seekbar but the value 0 is in the middle of the bar
+ */
+
 public class TwoDirSeekBar extends androidx.appcompat.widget.AppCompatSeekBar {
 
     public TwoDirSeekBar(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {

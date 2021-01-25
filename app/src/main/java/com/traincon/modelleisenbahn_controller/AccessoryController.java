@@ -9,6 +9,11 @@ import java.util.Arrays;
 
 import static android.content.ContentValues.TAG;
 
+//This is still hardcoded
+/**
+ * The AccessoryController controls all switches and sections and gets their states
+ * The boardManager is given by the mainActivity
+ */
 public class AccessoryController {
     public final BoardManager boardManager;
 
@@ -70,6 +75,11 @@ public class AccessoryController {
         boardManager.send(CBusAsciiMessageBuilder.build(new CBusMessage("NVRD", new String[]{NN_SWITCH_HI, NN_SWITCH_LO, DN_SWITCH_2})));
     }
 
+    /**
+     * When an NVANS event is detected it will get here
+     * The NV will be converted in to a boolean array that the mainActivity can read to display the states
+     * @param cBusMessage is received by the boarManager
+     */
     public void onReceiveSwitchStates(CBusMessage cBusMessage) {
         if (cBusMessage.getData()[0].equals(NN_SWITCH_HI) && cBusMessage.getData()[1].equals(NN_SWITCH_LO)) {
             StringBuilder binaryStates = new StringBuilder(Integer.toBinaryString(Integer.parseInt(cBusMessage.getData()[3], 16)));

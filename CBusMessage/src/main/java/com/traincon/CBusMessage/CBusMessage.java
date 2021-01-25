@@ -1,8 +1,17 @@
 package com.traincon.CBusMessage;
 
 public class CBusMessage {
+    /**
+     * This is sent when the event has 0 daa bytes
+     */
     public static final String[] NO_DATA = new String[0];
 
+    /**
+     * This method os the opposite of the CBusAsciiMessageBuilder
+     * It returns a CBusMessage created from a string in the CBUS Ascii format
+     * @param frame received by the BoardManager
+     * @return Returns a CBusMessage read from this frame
+     */
     public static CBusMessage getFromString(String frame){
         String event = frame.substring(7, 9);
         String[] data = new String[frame.substring(9).length() / 2];
@@ -12,7 +21,14 @@ public class CBusMessage {
         return new CBusMessage(event, data);
     }
 
+    /**
+     * Hexadecimal event number is used to trigger specific actions in the command station and the layout
+     */
     private String eventAddress;
+
+    /**
+     * Data sent with this event
+     */
     private String[] data;
 
     public CBusMessage(String event, String[] data) {
@@ -56,6 +72,10 @@ public class CBusMessage {
         return getEventStringArray()[indexOfAddress(address)][0];
     }
 
+    /**
+     * @param targetEvent event name
+     * @return index of this event used to convert name to address
+     */
     private int indexOfEvent(String targetEvent) {
         boolean found = false;
         int count = 0;
@@ -72,6 +92,10 @@ public class CBusMessage {
         return count;
     }
 
+    /**
+     * @param targetAddress Event number
+     * @return index of this event used to convert address to name
+     */
     private int indexOfAddress(String targetAddress) {
         boolean found = false;
         int count = 0;
@@ -88,6 +112,9 @@ public class CBusMessage {
         return count;
     }
 
+    /**
+     * @return Returns the Array with all events and its addresses
+     */
     private String[][] getEventStringArray() {
         return new String[][]
                 {

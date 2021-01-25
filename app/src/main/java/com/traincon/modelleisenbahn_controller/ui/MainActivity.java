@@ -17,7 +17,6 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainerView;
-import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -34,16 +33,23 @@ public class MainActivity extends AppCompatActivity {
     final private int[] sectionIdArray = {R.id.section_1, R.id.section_2, R.id.section_3, R.id.section_4, R.id.section_5, R.id.section_6, R.id.section_7, R.id.section_8, R.id.section_9, R.id.section_10, R.id.section_11, R.id.section_12, R.id.section_13};
     final private ToggleButton[] switches = new ToggleButton[switchIdArray.length];
     final private SwitchCompat[] sections = new SwitchCompat[sectionIdArray.length];
-    private final FragmentManager fragmentManager = getSupportFragmentManager();
     private final String KEY_LIGHTSTATE = "lightState";
     private ConstraintLayout accessoryFrame;
+    private FragmentContainerView[] controllerContainers;
     private Fragment[] controllers;
-    private FragmentContainerView[] cabContainers;
     private Menu menu;
     private Handler handler;
     private Runnable updateSwitchStates;
+
+    /**
+     * @see BoardManager
+     */
     private BoardManager boardManager;
     private Runnable cbusUpdateRunnable;
+
+    /**
+     * @see AccessoryController
+     */
     private AccessoryController accessoryController;
 
     @Override
@@ -159,16 +165,16 @@ public class MainActivity extends AppCompatActivity {
         controllers = new Fragment[controllerTags.length];
 
         int[] containerTags = new int[]{R.id.con1, R.id.con2, R.id.con3};
-        cabContainers = new FragmentContainerView[containerTags.length];
+        controllerContainers = new FragmentContainerView[containerTags.length];
 
         for (int i = 0; i < controllers.length; i++) {
-            controllers[i] = fragmentManager.findFragmentByTag(controllerTags[i]);
+            controllers[i] = getSupportFragmentManager().findFragmentByTag(controllerTags[i]);
             Bundle bundle = new Bundle();
             bundle.putParcelable("boardManager", boardManager);
             assert controllers[i] != null;
             controllers[i].setArguments(bundle);
 
-            cabContainers[i] = findViewById(containerTags[i]);
+            controllerContainers[i] = findViewById(containerTags[i]);
         }
         accessoryFrame = findViewById(R.id.accessory);
         initTabs();
@@ -177,6 +183,9 @@ public class MainActivity extends AppCompatActivity {
         initUpdates();
     }
 
+    /**
+     * This shows a TabLayout in portrait mode to choose a controller
+     */
     private void initTabs(){
         TabLayout cabSelection = findViewById(R.id.cabSelection);
         cabSelection.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -198,12 +207,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showCab(int cab){
-        for(int i=0; i<cabContainers.length; i++){
+        for(int i = 0; i< controllerContainers.length; i++){
             if(i==cab){
-                cabContainers[i].setVisibility(View.VISIBLE);
-                cabContainers[i].startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.nav_default_enter_anim));
+                controllerContainers[i].setVisibility(View.VISIBLE);
+                controllerContainers[i].startAnimation(AnimationUtils.loadAnimation(getBaseContext(), R.anim.nav_default_enter_anim));
             } else {
-                cabContainers[i].setVisibility(View.GONE);
+                controllerContainers[i].setVisibility(View.GONE);
             }
         }
     }
@@ -255,6 +264,10 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
+    /**
+     * All received messages will be processed here
+     * @see CBusMessage
+     */
     private void processCbusMessages(){
         List<CBusMessage> receivedMessages = boardManager.getReceivedMessages();
         for (CBusMessage cbusMessage : receivedMessages) {
@@ -287,6 +300,10 @@ public class MainActivity extends AppCompatActivity {
         receivedMessages.clear();
     }
 
+    /**
+     * This is called in onResume
+     * The accessoryFrame is shown depending on the LocoConfig preferences
+     */
     private void updateLayout() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         if (sharedPreferences.getBoolean("is_accessory_on", false)) {

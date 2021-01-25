@@ -12,6 +12,12 @@ import com.traincon.modelleisenbahn_controller.R;
 
 import java.util.List;
 
+/**
+ * @see android.widget.Adapter
+ * @see android.widget.BaseAdapter
+ * @see android.widget.ListAdapter
+ * @see android.widget.SpinnerAdapter
+ */
 public class DatabaseSpinnerAdapter extends BaseAdapter implements SpinnerAdapter {
 
     private final LayoutInflater inflater;

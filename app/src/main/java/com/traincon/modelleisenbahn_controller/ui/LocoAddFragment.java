@@ -46,6 +46,7 @@ public class LocoAddFragment extends Fragment {
 
                         final Thread thread = new Thread(() -> database.locoDao().insertLoco(loco));
 
+                        //ThreadWatcher
                         Runnable getThreadStateRunnable = new Runnable() {
                             @Override
                             public void run() {

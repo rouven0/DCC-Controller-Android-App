@@ -17,6 +17,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The boardManager establishes a connection to the board and sends and receives all frames
+ * @see Socket
+ * @see Parcelable
+ */
 public class BoardManager implements Parcelable {
     public static final Creator<BoardManager> CREATOR = new Creator<BoardManager>() {
         @Override
@@ -29,12 +34,22 @@ public class BoardManager implements Parcelable {
             return new BoardManager[size];
         }
     };
+
     public final String host;
     public final int port;
+
+    /**
+     * All received messages will be stored here
+     */
     private final List<CBusMessage> receivedMessages = new ArrayList<>();
     private final Handler handler = new Handler(Looper.getMainLooper());
+
+    /**
+     * Tag used in log messages
+     */
     private final String TAG = "DCC-Controller: Network";
     public Runnable getMessagesRunnable;
+
     private Socket mainSocket;
     private DataInputStream socketInputStream;
     private DataOutputStream socketOutputStream;
@@ -73,6 +88,9 @@ public class BoardManager implements Parcelable {
         }
     }
 
+    /**
+     * This starts the runnable that reads all messages and puts them into the list
+     */
     public void onStartFrameListener() {
         getMessagesRunnable = new Runnable() {
             @Override
@@ -102,6 +120,11 @@ public class BoardManager implements Parcelable {
         handler.removeCallbacks(getMessagesRunnable);
     }
 
+    /**
+     * Send a frame to the board
+     * @param message CBus Ascii message that is sent
+     * @see com.traincon.CBusMessage.CBusAsciiMessageBuilder
+     */
     public void send(final String message) {
         Thread thread = new Thread(() -> {
             try {
@@ -116,10 +139,12 @@ public class BoardManager implements Parcelable {
         thread.start();
     }
 
-    public List<CBusMessage> getReceivedMessages() {
-        return receivedMessages;
-    }
-
+    /**
+     * Receive a specific number of bytes
+     * @param length This says how many bytes should be received
+     * @return This returns the received message
+     * @throws InterruptedException caused by the Threading
+     */
     public String receive(int length) throws InterruptedException {
         final String[] message = new String[]{""};
         final byte[] rawMessage = new byte[length];
@@ -139,6 +164,10 @@ public class BoardManager implements Parcelable {
             Log.v(TAG, "received: length=" + length + " message: " + message[0]);
         }
         return message[0];
+    }
+
+    public List<CBusMessage> getReceivedMessages() {
+        return receivedMessages;
     }
 
     public Handler getHandler() {

@@ -37,6 +37,10 @@ public class ControllerFragment extends Fragment {
     private final String KEY_SELECTED_ITEM = "selectedItem";
     private Handler handler;
     private BoardManager boardManager;
+
+    /**
+     * @see Cab
+     */
     private Cab cab;
     private SwitchCompat sessionSwitch;
     private TwoDirSeekBar controllerSeekBar;
@@ -47,8 +51,20 @@ public class ControllerFragment extends Fragment {
     private List<Loco> locos;
     private Spinner spinner;
     private Bundle savedInstanceState;
+
+    /**
+     * This prevents crashes when the size of the AppDatabase is changed (when an element is deleted)
+     */
     private boolean deletionInLocos = false;
+
+    /**
+     * This boolean is used to prevent the spinner item to jump to the last saved after opening another activity
+     */
     private boolean paused = false;
+
+    /**
+     * When the phone is rotated the spinner item number is saved
+     */
     private int selectedSpinnerItem = 0;
 
     public ControllerFragment() {
@@ -168,6 +184,10 @@ public class ControllerFragment extends Fragment {
         }
     }
 
+
+    /**
+     * This inserts the Locos from the database into the spinner
+     */
     private void loadSpinnerItems() {
         deletionInLocos = false;
         List<Loco> oldLocos = locos;
@@ -184,6 +204,10 @@ public class ControllerFragment extends Fragment {
         }
     }
 
+    /**
+     * @param message received by the boardManager
+     * @see Cab
+     */
     public void onSessionAllocated(CBusMessage message) {
         boolean success = cab.onSessionAllocated(message);
         sessionSwitch.setChecked(success);
@@ -195,8 +219,13 @@ public class ControllerFragment extends Fragment {
         }
     }
 
-    public boolean onSessionCancelled(CBusMessage cBusMessage) {
-        if (cBusMessage.getData()[0].equals(cab.getSession())) {
+    /**
+     *
+     * @param message received by the boardManager
+     * @return checks if the cancelled session was controlled by the cab in this fragment
+     */
+    public boolean onSessionCancelled(CBusMessage message) {
+        if (message.getData()[0].equals(cab.getSession())) {
             sessionSwitch.setChecked(false);
             return true;
         } else {
@@ -204,6 +233,9 @@ public class ControllerFragment extends Fragment {
         }
     }
 
+    /**
+     * This displays warning messages when an ESTOP event is received
+     */
     public void displayEstop() {
         TextView textView = requireView().findViewById(R.id.message_estop);
         textView.setVisibility(View.VISIBLE);

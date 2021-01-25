@@ -26,15 +26,42 @@ import com.traincon.modelleisenbahn_controller.R;
 import java.io.IOException;
 import java.util.Arrays;
 
+/**
+ * The console is used to receive and process all frames coming from the board.
+ */
 public class ConsoleActivity extends AppCompatActivity {
     private final int[] editTextIdArray = new int[]{R.id.input_event, R.id.input_dat1, R.id.input_dat2, R.id.input_dat3, R.id.input_dat4, R.id.input_dat5, R.id.input_dat6, R.id.input_dat7};
-    private final EditText[] currentPartialMessage = new EditText[editTextIdArray.length];
-    private final CBusMessage currentCBusMessage = new CBusMessage("", null); //message that is sent to the board
+    private final EditText[] messagePartEditTexts = new EditText[editTextIdArray.length];
+
+    /**
+     * This the CBusMessage object that is created from the EditTexts and the sent to the board as ASCII Frame
+     * @see CBusMessage
+     */
+    private final CBusMessage currentCBusMessage = new CBusMessage("", null);
+
+    /**
+     * The last sent message will be cached here in its parts
+     * It will be loaded into the Edittext when the cache button is pressed
+     */
     private final String[] lastPartialMessage = new String[editTextIdArray.length];
+
+    /**
+     * This is the preview of the message that is sent to the board
+     */
+    private EditText currentMessageString;
+
+    /**
+     * BoardManager instance to communicate with the board
+     * @see BoardManager
+     */
     private BoardManager boardManager;
-    private EditText currentMessage;
+
     private Handler handler;
     private Runnable logUpdateRunnable;
+
+    /**
+     * Boolean used for the play/pause button
+     */
     private boolean isRunning = true;
 
     private TextView rawLogTextView;
@@ -98,7 +125,13 @@ public class ConsoleActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //Log functions
+    /**
+     * After creating the layout the runnable to get the logs is started
+     * The runnable gets everything from the socketInputStream of the boardManager, splits it and prints it to the logs
+     * The frame will be processed into a CBusMessage for event and data output
+     * @see CBusMessage
+     * @param savedInstanceState is used to load the log when the phone is rotated
+     */
     private void initLog(Bundle savedInstanceState) {
         final ScrollView rawLogScrollView = findViewById(R.id.scrollView_raw);
         final ScrollView processedLogScrollView = findViewById(R.id.scrollView_processed);
@@ -109,6 +142,7 @@ public class ConsoleActivity extends AppCompatActivity {
             processedLogTextView.setText(savedInstanceState.getString(KEY_LOG_PROCESSED));
         }
         handler = new Handler(getMainLooper());
+
         logUpdateRunnable = new Runnable() {
             @Override
             public void run() {
@@ -156,9 +190,9 @@ public class ConsoleActivity extends AppCompatActivity {
 
     //Functions to send messages
     private void initSendRow() {
-        for (int i = 0; i < currentPartialMessage.length; i++) {
-            currentPartialMessage[i] = findViewById(editTextIdArray[i]);
-            currentPartialMessage[i].addTextChangedListener(new TextWatcher() {
+        for (int i = 0; i < messagePartEditTexts.length; i++) {
+            messagePartEditTexts[i] = findViewById(editTextIdArray[i]);
+            messagePartEditTexts[i].addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -175,14 +209,14 @@ public class ConsoleActivity extends AppCompatActivity {
                 }
             });
         }
-        currentMessage = findViewById(R.id.input_message);
+        currentMessageString = findViewById(R.id.input_message);
         FloatingActionButton sendButton = findViewById(R.id.fab_send);
         sendButton.setOnClickListener(view -> {
             updateMessage();
             boardManager.send((CBusAsciiMessageBuilder.build(currentCBusMessage)));
             //Save the message
             for (int i = 0; i < lastPartialMessage.length; i++) {
-                lastPartialMessage[i] = currentPartialMessage[i].getText().toString();
+                lastPartialMessage[i] = messagePartEditTexts[i].getText().toString();
             }
             clearInput();
         });
@@ -190,26 +224,30 @@ public class ConsoleActivity extends AppCompatActivity {
         cachedButton.setOnClickListener(v -> getLastMessage());
     }
 
+    /**
+     *  When one of the EditTexts changes currentMessageString will be updated
+     *  A CBusAsciiMessage will be built and loaded into the currentMessageString
+     */
     private void updateMessage() {
         String[] data = new String[7];
         for (int i = 0; i < data.length; i++) {
-            data[i] = currentPartialMessage[i + 1].getText().toString();
+            data[i] = messagePartEditTexts[i + 1].getText().toString();
         }
-        currentCBusMessage.setEvent(currentPartialMessage[0].getText().toString());
+        currentCBusMessage.setEvent(messagePartEditTexts[0].getText().toString());
         currentCBusMessage.setData(data);
-        currentMessage.setText(CBusAsciiMessageBuilder.build(currentCBusMessage));
+        currentMessageString.setText(CBusAsciiMessageBuilder.build(currentCBusMessage));
     }
 
     private void clearInput() {
-        for (EditText editText : currentPartialMessage) {
+        for (EditText editText : messagePartEditTexts) {
             editText.setText("");
         }
-        currentMessage.setText("");
+        currentMessageString.setText("");
     }
 
     private void getLastMessage() {
         for (int i = 0; i < lastPartialMessage.length; i++) {
-            currentPartialMessage[i].setText(lastPartialMessage[i]);
+            messagePartEditTexts[i].setText(lastPartialMessage[i]);
         }
         updateMessage();
     }

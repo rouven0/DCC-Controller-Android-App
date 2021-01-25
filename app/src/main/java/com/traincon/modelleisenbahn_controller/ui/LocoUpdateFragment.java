@@ -16,6 +16,10 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+/**
+ * This is the dialog that is shown to change and update a loco
+ * @see androidx.fragment.app.DialogFragment
+ */
 public class LocoUpdateFragment extends DialogFragment {
     private final ItemRecyclerViewAdapter parentViewAdapter;
     private final AppDatabase database;

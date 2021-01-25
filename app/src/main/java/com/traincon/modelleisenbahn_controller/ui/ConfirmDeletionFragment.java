@@ -13,6 +13,10 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+/**
+ * This is the confirmation dialog box for the deletion of a loco
+ * @see androidx.fragment.app.DialogFragment
+ */
 public class ConfirmDeletionFragment extends DialogFragment {
     private final ItemRecyclerViewAdapter parentViewAdapter;
     private final AppDatabase database;
