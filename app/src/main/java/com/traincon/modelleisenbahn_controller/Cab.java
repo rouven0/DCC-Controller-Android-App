@@ -1,7 +1,11 @@
 package com.traincon.modelleisenbahn_controller;
 
+import android.util.Log;
+
 import com.traincon.CBusMessage.CBusAsciiMessageBuilder;
 import com.traincon.CBusMessage.CBusMessage;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * The cab is the controlling unit
@@ -131,7 +135,11 @@ public class Cab {
             if (targetSpeedDir > -1) {
                 targetSpeedDir = targetSpeedDir + 128;
             }
-            speedDir = Integer.toHexString(Math.abs(targetSpeedDir)).toUpperCase();
+            StringBuilder newSpeedDir = new StringBuilder(Integer.toHexString(Math.abs(targetSpeedDir)).toUpperCase());
+            if(newSpeedDir.length()<2){
+                newSpeedDir.insert(0, "0");
+            }
+            speedDir = newSpeedDir.toString();
             boardManager.send(CBusAsciiMessageBuilder.build(new CBusMessage("DSPD", new String[]{session, speedDir})));
         }
     }
