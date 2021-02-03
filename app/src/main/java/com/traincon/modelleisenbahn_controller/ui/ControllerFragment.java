@@ -97,7 +97,7 @@ public class ControllerFragment extends Fragment {
         if (savedInstanceState != null && !deletionInLocos) {
             spinner.setSelection(savedInstanceState.getInt(KEY_SELECTED_ITEM));
         }
-        if(paused){
+        if(paused && !deletionInLocos){
             spinner.setSelection(selectedSpinnerItem);
         }
         super.onResume();
