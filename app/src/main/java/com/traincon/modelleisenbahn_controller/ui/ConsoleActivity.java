@@ -35,6 +35,7 @@ public class ConsoleActivity extends AppCompatActivity {
 
     /**
      * This the CBusMessage object that is created from the EditTexts and the sent to the board as ASCII Frame
+     *
      * @see CBusMessage
      */
     private final CBusMessage currentCBusMessage = new CBusMessage("", null);
@@ -44,31 +45,28 @@ public class ConsoleActivity extends AppCompatActivity {
      * It will be loaded into the Edittext when the cache button is pressed
      */
     private final String[] lastPartialMessage = new String[editTextIdArray.length];
-
+    private final String KEY_LOG_RAW = "logText_raw";
+    private final String KEY_LOG_PROCESSED = "logText_processed";
     /**
      * This is the preview of the message that is sent to the board
      */
     private EditText currentMessageString;
-
     /**
      * BoardManager instance to communicate with the board
+     *
      * @see BoardManager
      */
     private BoardManager boardManager;
-
     private Handler handler;
     private Runnable logUpdateRunnable;
-
     /**
      * Boolean used for the play/pause button
      */
     private boolean isRunning = true;
-
     private TextView rawLogTextView;
     private TextView processedLogTextView;
-
-    private final String KEY_LOG_RAW = "logText_raw";
-    private final String KEY_LOG_PROCESSED = "logText_processed";
+    private String oldLog = " ";
+    private String oldLog_processed = " ";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -107,7 +105,7 @@ public class ConsoleActivity extends AppCompatActivity {
             return true;
         }
 
-        if(item.getItemId() == R.id.action_clear){
+        if (item.getItemId() == R.id.action_clear) {
             clear();
         }
 
@@ -129,15 +127,16 @@ public class ConsoleActivity extends AppCompatActivity {
      * After creating the layout the runnable to get the logs is started
      * The runnable gets everything from the socketInputStream of the boardManager, splits it and prints it to the logs
      * The frame will be processed into a CBusMessage for event and data output
-     * @see CBusMessage
+     *
      * @param savedInstanceState is used to load the log when the phone is rotated
+     * @see CBusMessage
      */
     private void initLog(Bundle savedInstanceState) {
         final ScrollView rawLogScrollView = findViewById(R.id.scrollView_raw);
         final ScrollView processedLogScrollView = findViewById(R.id.scrollView_processed);
         rawLogTextView = findViewById(R.id.log_raw);
         processedLogTextView = findViewById(R.id.log_processed);
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             rawLogTextView.setText(savedInstanceState.getString(KEY_LOG_RAW));
             processedLogTextView.setText(savedInstanceState.getString(KEY_LOG_PROCESSED));
         }
@@ -156,21 +155,28 @@ public class ConsoleActivity extends AppCompatActivity {
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                     }
-                    receivedFrames = receivedString.split(";");
+                    if (!receivedString.equals("")) {
+                        receivedFrames = receivedString.split(";");
 
-                    for (String frame : receivedFrames) {
-                        String oldLog = rawLogTextView.getText().toString();
-                        String oldLog_processed = processedLogTextView.getText().toString();
-                        //update the log
-                        if (!receivedString.equals("")) {
+                        for (String frame : receivedFrames){
+                            CBusMessage message = CBusMessage.getFromString(frame);
+                            if (!message.getEvent().equals("DSPD")) {
+                                oldLog = rawLogTextView.getText().toString();
+                                oldLog_processed = processedLogTextView.getText().toString();
+                            }
+                            //update the log
                             //raw string
                             String combinedLog = oldLog + "\n" + frame;
                             rawLogTextView.setText(combinedLog);
                             rawLogScrollView.postDelayed(() -> rawLogScrollView.fullScroll(View.FOCUS_DOWN), 300);
                             //processed string
-                            String combinedLog_processed = oldLog_processed + "\n" + getResources().getString(R.string.info_event) + " " + CBusMessage.getFromString(frame).getEvent() + ", " + getResources().getString(R.string.info_data) + " " + Arrays.toString(CBusMessage.getFromString(frame).getData());
+                            String combinedLog_processed = oldLog_processed + "\n" + getResources().getString(R.string.info_event) + " " + message.getEvent() + ", " + getResources().getString(R.string.info_data) + " " + Arrays.toString(message.getData());
                             processedLogTextView.setText(combinedLog_processed);
                             processedLogScrollView.postDelayed(() -> processedLogScrollView.fullScroll(View.FOCUS_DOWN), 300);
+                            if (!message.getEvent().equals("DSPD")) {
+                                oldLog = combinedLog;
+                                oldLog_processed = combinedLog_processed;
+                            }
                         }
                     }
 
@@ -183,7 +189,7 @@ public class ConsoleActivity extends AppCompatActivity {
         handler.post(logUpdateRunnable);
     }
 
-    public void clear(){
+    public void clear() {
         rawLogTextView.setText("");
         processedLogTextView.setText("");
     }
@@ -225,8 +231,8 @@ public class ConsoleActivity extends AppCompatActivity {
     }
 
     /**
-     *  When one of the EditTexts changes currentMessageString will be updated
-     *  A CBusAsciiMessage will be built and loaded into the currentMessageString
+     * When one of the EditTexts changes currentMessageString will be updated
+     * A CBusAsciiMessage will be built and loaded into the currentMessageString
      */
     private void updateMessage() {
         String[] data = new String[7];

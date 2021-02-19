@@ -64,7 +64,7 @@ public class LocoUpdateFragment extends DialogFragment {
                     thread.start();
                     try {
                         thread.join();
-                        parentViewAdapter.notifyDataSetChanged();
+                        parentViewAdapter.notifyItemChanged(position);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

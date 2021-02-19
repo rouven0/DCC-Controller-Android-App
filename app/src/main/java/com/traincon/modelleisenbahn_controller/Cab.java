@@ -1,11 +1,7 @@
 package com.traincon.modelleisenbahn_controller;
 
-import android.util.Log;
-
 import com.traincon.CBusMessage.CBusAsciiMessageBuilder;
 import com.traincon.CBusMessage.CBusMessage;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * The cab is the controlling unit

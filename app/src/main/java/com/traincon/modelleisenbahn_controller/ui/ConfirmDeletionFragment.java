@@ -43,7 +43,7 @@ public class ConfirmDeletionFragment extends DialogFragment {
                     thread.start();
                     try {
                         thread.join();
-                        parentViewAdapter.notifyDataSetChanged();
+                        parentViewAdapter.notifyItemRemoved(position);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
