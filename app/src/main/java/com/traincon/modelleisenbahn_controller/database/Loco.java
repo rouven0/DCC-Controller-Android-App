@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey;
  * A loco is given to a Controller to allocate a session
  * @see com.traincon.modelleisenbahn_controller.ui.ControllerFragment
  */
+@SuppressWarnings("unused")
 @Entity
 public class Loco {
 

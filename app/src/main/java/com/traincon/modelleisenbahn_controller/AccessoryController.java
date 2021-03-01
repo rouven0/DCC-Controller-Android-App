@@ -40,6 +40,17 @@ public class AccessoryController {
         }
     }
 
+    public void setSwitchState(CBusMessage cBusMessage){
+        if(cBusMessage.getData()[2].equals("23")){
+            try{
+                switchStates[Integer.parseInt(cBusMessage.getData()[3], 16)] = cBusMessage.getEvent().equals("ASON");
+            } catch (IndexOutOfBoundsException e){
+                e.printStackTrace();
+            }
+
+        }
+    }
+
     public void setSection(int targetSection, boolean targetState) {
         sectionStates[targetSection] = targetState;
         if (targetState) {

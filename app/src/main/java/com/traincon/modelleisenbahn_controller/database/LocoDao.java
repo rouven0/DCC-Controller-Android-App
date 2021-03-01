@@ -11,6 +11,7 @@ import androidx.room.Update;
 /**
  * @see Dao
  */
+@SuppressWarnings("unused")
 @Dao
 public interface LocoDao {
     @Query("SELECT * FROM loco")

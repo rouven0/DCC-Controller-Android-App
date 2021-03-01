@@ -246,12 +246,9 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         handler.post(cbusUpdateRunnable);
-
-
         updateSwitchStates = new Runnable() {
             @Override
             public void run() {
-                accessoryController.requestSwitchStates();
                 for (int i = 0; i < accessoryController.switchStates.length; i++) {
                     switches[i].setChecked(accessoryController.switchStates[i]);
                 }
@@ -259,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < accessoryController.sectionStates.length; i++) {
                     sections[i].setChecked(accessoryController.sectionStates[i]);
                 }
-                handler.postDelayed(this, 1000);
+                handler.postDelayed(this, 10);
             }
         };
     }
@@ -295,6 +292,9 @@ public class MainActivity extends AppCompatActivity {
                 case "NVANS":
                     accessoryController.onReceiveSwitchStates(cbusMessage);
                     break;
+                case "ASON":
+                case "ASOF":
+                    accessoryController.setSwitchState(cbusMessage);
             }
         }
         receivedMessages.clear();
@@ -322,6 +322,7 @@ public class MainActivity extends AppCompatActivity {
     private void applyAccessoryMode() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         if (sharedPreferences.getBoolean("is_accessory_on", false)) {
+            accessoryController.requestSwitchStates();
             handler.post(updateSwitchStates);
         } else {
             handler.removeCallbacks(updateSwitchStates);
