@@ -6,7 +6,6 @@
     <dimen name="editText_margin_vertical_dialog">5dp</dimen>
     <dimen name="editText_margin_horizontal">30dp</dimen>
     <dimen name="editText_margin_vertical">25dp</dimen>
-    <dimen name="text_margin">16dp</dimen>
     <dimen name="seekbar_margin">0dp</dimen>
     <dimen name="seekbarTextView_margin">35dp</dimen>
 </resources>

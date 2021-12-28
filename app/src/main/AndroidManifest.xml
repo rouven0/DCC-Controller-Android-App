@@ -12,9 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".ui.ControllerConfigActivity"
-            android:label="@string/label_activity_controller_config" />
+
         <activity
             android:name=".ui.LocoConfigActivity"
             android:label="@string/label_activity_loco_config"/>

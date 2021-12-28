@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/action_light"
-        android:title="@string/action_light"
-        android:icon="@drawable/ic_light_bulb_off_24"
-        app:showAsAction="always"
-        android:visible="false" />
 
     <item
         android:id="@+id/action_estop"
         android:title="@string/action_estop"
         android:icon="@drawable/ic_stop_sign_icon_24"
         app:showAsAction="always" />
-
-    <item
-        android:id="@+id/action_config"
-        android:title="@string/action_config"
-        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_locoList"

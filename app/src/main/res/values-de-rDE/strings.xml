@@ -2,12 +2,10 @@
 <resources>
     <!--Activity Labels and App Name-->
     <string name="label_activity_console">Konsole</string>
-    <string name="label_activity_controller_config">Konfigurieren</string>
     <string name="label_activity_loco_config">Züge bearbeiten</string>
     <string name="label_loco_add">Lokomotive hinzufügen</string>
 
     <!--LauncherActivity item titles-->
-    <string name="item_settings">Einstellungen</string>
     <string name="item_console" >CBUS-Konsole</string>
     <string name="item_locoList">Züge bearbeiten</string>
 
@@ -25,8 +23,6 @@
     <string name="action_clear">Alles Löschen</string>
 
     <!-- Strings for the menu-->
-    <string name="action_light">Licht</string>
-    <string name="action_config">Konfigurieren</string>
     <string name="action_reconnect">Neu verbinden</string>
     <string name="action_exit">Beenden</string>
 
@@ -37,11 +33,8 @@
     <string name="messageString_estop">Gestoppt</string>
 
     <!-- Config headers -->
-    <string name="accessory_header">Weichen &amp; Gleise</string>
 
     <!-- Config items -->
-    <string name="title_is_accessory_on">Zubehörsteuerung</string>
-    <string name="summary_is_accessory_on">Steuert zusätzliche Elemente</string>
 
     <!--Loco Config-->
     <string name="contentDescription_add">Lokomotive hinzufügen</string>

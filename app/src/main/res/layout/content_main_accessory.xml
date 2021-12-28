@@ -30,82 +30,66 @@
             android:orientation="vertical">
 
             <ToggleButton
-                android:id="@+id/switch_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <ToggleButton
-                android:id="@+id/switch_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <ToggleButton
-                android:id="@+id/switch_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <ToggleButton
-                android:id="@+id/switch_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <ToggleButton
-                android:id="@+id/switch_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <ToggleButton
-                android:id="@+id/switch_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <ToggleButton
-                android:id="@+id/switch_7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <ToggleButton
-                android:id="@+id/switch_8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <ToggleButton
-                android:id="@+id/switch_9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <ToggleButton
-                android:id="@+id/switch_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <ToggleButton
-                android:id="@+id/switch_11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <ToggleButton
-                android:id="@+id/switch_12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <ToggleButton
-                android:id="@+id/switch_13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <ToggleButton
-                android:id="@+id/switch_14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <ToggleButton
-                android:id="@+id/switch_15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <ToggleButton
-                android:id="@+id/switch_16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -134,67 +118,54 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/section_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/section_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/section_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/section_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/section_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/section_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/section_7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/section_8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/section_9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/section_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/section_11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/section_12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/section_13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>

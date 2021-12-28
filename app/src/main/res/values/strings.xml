@@ -2,12 +2,10 @@
     <!-- Activity labels and App Name -->
     <string name="app_name" translatable="false">DCC-Controller</string>
     <string name="label_activity_console">Console</string>
-    <string name="label_activity_controller_config">Configure</string>
     <string name="label_activity_loco_config">Edit Locos</string>
     <string name="label_loco_add">Add Loco</string>
 
     <!--LauncherActivity item titles -->
-    <string name="item_settings">Preferences</string>
     <string name="item_console">CBUS-Console</string>
     <string name="item_locoList">Edit Locos</string>
 
@@ -37,8 +35,6 @@
     <string name="action_clear">Clear</string>
 
     <!-- Strings for the Menu-->
-    <string name="action_light">Light</string>
-    <string name="action_config">Configure</string>
     <string name="action_reset" translatable="false">Reset</string>
     <string name="action_reconnect">Reconnect</string>
     <string name="action_estop">Emergency stop</string>
@@ -66,11 +62,8 @@
 
 
     <!-- Config headers -->
-    <string name="accessory_header">Accessory</string>
 
     <!-- Config items -->
-    <string name="title_is_accessory_on">Control accessory</string>
-    <string name="summary_is_accessory_on">Control additional elements</string>
 
     <!--Loco Config strings-->
     <string name="contentDescription_add">Add loco</string>
