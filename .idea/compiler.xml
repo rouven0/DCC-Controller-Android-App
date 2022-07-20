@@ -5,6 +5,7 @@
       <module name="CBusAsciiMessage" target="1.7" />
       <module name="CBusMessage" target="1.7" />
       <module name="DCC-Controller-Android-App.app" target="11" />
+      <module name="DCC-controller-android-app.app" target="11" />
       <module name="ModelleisenbahnController.app" target="11" />
     </bytecodeTargetLevel>
   </component>
